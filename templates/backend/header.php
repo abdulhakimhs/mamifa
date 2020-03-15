@@ -19,19 +19,19 @@
 
     <!-- ace styles -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/backend/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
-
     <link rel="stylesheet" href="<?= base_url() ?>assets/backend/css/ace-skins.min.css" />
     <link rel="stylesheet" href="<?= base_url() ?>assets/backend/css/ace-rtl.min.css" />
     <link rel="stylesheet" href="<?= base_url() ?>assets/backend/css/bootstrap-datepicker3.min.css" />
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+
     <script src="<?= base_url() ?>assets/backend/js/jquery-2.1.4.min.js"></script>
     <script src="<?= base_url() ?>assets/backend/js/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 
     <!--[if lte IE 9]>

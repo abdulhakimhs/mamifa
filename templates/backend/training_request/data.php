@@ -32,33 +32,11 @@
                             <th>Nama Lengkap</th>
                             <th>Level</th>
                             <th>Jenis Pelatihan</th>
+                            <th>Status</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
 		            </thead>
 		            <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>765521</td>
-                            <td>ABDUL HAKIM HASSAN</td>
-                            <td><span class="label label-danger">FIBER ACADEMY PEKALONGAN</span></td>
-                            <td>BREVET</td>
-                            <td>
-                                <a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>765652</td>
-                            <td>MUHAMMAD RIDHO HASSAN</td>
-                            <td><span class="label label-danger">FIBER ACADEMY PEKALONGAN</span></td>
-                            <td>SHERING SASSION</td>
-                            <td>
-                                <a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-
 		            </tbody>
 	            </table>
 			</div>
@@ -74,7 +52,23 @@ $(document).ready(function() {
  
     //datatables
     table = $('#table').DataTable({ 
- 
+		"processing": true, //Feature control the processing indicator.
+		"serverSide": true, //Feature control DataTables' server-side processing mode.
+		"order": [], //Initial no order.
+
+		// Load data for the table's content from an Ajax source
+		"ajax": {
+			"url": "<?php echo site_url('admin/training_request/get_ajax') ?>",
+			"type": "POST"
+		},
+
+		//Set column definition initialisation properties.
+		"columnDefs": [
+			{ 
+				"targets": [ 0 ], //first column / numbering column
+				"orderable": false, //set not orderable
+			}
+		]
     });
  
 });
