@@ -22,6 +22,13 @@
   <link href="<?= base_url() ?>assets/frontend/css/landing-page.min.css" rel="stylesheet">
   <link href="<?= base_url() ?>assets/frontend/css/custom.css" rel="stylesheet">
 
+  <style>
+    .error {
+      color: red;
+      font-size: 11px;
+    }
+  </style>
+
 </head>
 
 <body>
