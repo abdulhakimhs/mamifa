@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'luna.jagoanhosting.com',
-	'username' => 'jarvisid_jarvisuser',
-	'password' => 'jarvisuser123456789',
-	'database' => 'jarvisid_newjarvis',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'mamifa',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
