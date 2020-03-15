@@ -53,15 +53,14 @@
   <div class="form-group row">
     <label class="col-sm-2 col-form-label"><b>Koordinat / Nama ODP</b></label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="lokasi" id="lokasi">
-      <?= form_error('lokasi', '<div class="error">', '</div>'); ?>
+      <input type="text" class="form-control" name="odp_koordinat" id="odp_koordinat">
+      <?= form_error('odp_koordinat', '<div class="error">', '</div>'); ?>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-sm-2 col-form-label"><b>File Evident</b></label>
     <div class="col-sm-10">
       <input type="file" class="form-control" name="file_evident">
-      <?= form_error('file', '<div class="error">', '</div>'); ?>
     </div>
   </div>
   <div class="form-group row">

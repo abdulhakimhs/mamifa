@@ -16,9 +16,8 @@ class Monila extends MY_Controller {
 		$this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required');
 		$this->form_validation->set_rules('nik', 'NIK', 'required');
 		$this->form_validation->set_rules('sto', 'STO', 'required');
-		$this->form_validation->set_rules('lokasi', 'Lokasi', 'required');
-		$this->form_validation->set_rules('file_evident', 'File Evident', 'required');
-		$this->form_validation->set_rules('saran', 'Jenis Laporan', 'required');
+		$this->form_validation->set_rules('odp_koordinat', 'Koordinat / Nama ODP', 'required');
+		$this->form_validation->set_rules('saran', 'Saran Perbaikan', 'required');
 
 		if($this->form_validation->run() == false) {
 			$data['title'] 			= 'MAMI FA';
@@ -44,14 +43,14 @@ class Monila extends MY_Controller {
                 } else {
                     echo $this->upload->display_errors();
                 }
-            }
+			}
 
 			$data = [
 				'jenis_lap_id' 		=> $this->input->post('jenis_laporan'),
 				'nama_lengkap' 		=> $this->input->post('nama_lengkap'),
 				'nik' 				=> $this->input->post('nik'),
 				'lokasi_temuan' 	=> $this->input->post('sto'),
-				'odp_koordinat'		=> $this->input->post('lokasi'),
+				'odp_koordinat'		=> $this->input->post('odp_koordinat'),
 				'file_evident' 		=> $nama_file,
 				'saran_perbaikan'	=> $this->input->post('saran')
 			];

@@ -19,11 +19,6 @@ class Training_request extends MY_Controller {
 		]);
 	}
 
-	function cek(){
-		$cek = $this->m_trainingrequest->get_datatables();
-		var_dump($cek);
-	}
-
 	function get_ajax() {
         $list = $this->m_trainingrequest->get_datatables();
         $data = array();

@@ -33,35 +33,11 @@
                             <th>Jenis Laporan</th>
                             <th>Lokasi Temuan</th>
                             <th>Koordinat/ODP</th>
+                            <th>Status</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
 		            </thead>
 		            <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>765521</td>
-                            <td>ABDUL HAKIM HASSAN</td>
-                            <td><span class="label label-danger">FAKTA BRUTAL</span></td>
-                            <td>BTG</td>
-                            <td>ODP-BTG-FA/001</td>
-                            <td>
-                                <a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>765652</td>
-                            <td>MUHAMMAD RIDHO HASSAN</td>
-                            <td><span class="label label-warning">K3</span></td>
-                            <td>SLW</td>
-                            <td>ODP-SLW-FF/001</td>
-                            <td>
-                                <a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-
 		            </tbody>
 	            </table>
 			</div>
@@ -77,7 +53,23 @@ $(document).ready(function() {
  
     //datatables
     table = $('#table').DataTable({ 
- 
+        "processing": true, //Feature control the processing indicator.
+        "serverSide": true, //Feature control DataTables' server-side processing mode.
+        "order": [], //Initial no order.
+
+        // Load data for the table's content from an Ajax source
+        "ajax": {
+            "url": "<?php echo site_url('admin/monila/get_ajax') ?>",
+            "type": "POST"
+        },
+
+        //Set column definition initialisation properties.
+        "columnDefs": [
+            { 
+                "targets": [ 0 ], //first column / numbering column
+                "orderable": false, //set not orderable
+            }
+        ]
     });
  
 });
