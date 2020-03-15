@@ -31,9 +31,9 @@
     <div class="col-sm-10">
     <select name="level" id="level" class="form-control" required>
         <option value="">-Pilih Level-</option>
-        <option value="S">STAFF</option>
-        <option value="TL">TEAM LEADER</option>
-        <option value="SM">SITE MANAGER</option>
+        <option value="STAFF">STAFF</option>
+        <option value="TEAM LEADER">TEAM LEADER</option>
+        <option value="SITE MANAGER">SITE MANAGER</option>
       </select>
       <?= form_error('level', '<div class="error">', '</div>'); ?>
     </div>
@@ -41,7 +41,7 @@
   <div class="form-group row">
     <label class="col-sm-2 col-form-label"><b></b></label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="lokasi" id="lokasi" readonly>
+      <input type="text" class="form-control" name="sub_level" id="sub_level" readonly>
     </div>
   </div>
   <div class="form-group row">
@@ -67,3 +67,15 @@
   <button type="reset" class="btn btn-danger"><i class="fa fa-ban"></i> Reset</button>
 </form>
 </div>
+
+<script>
+  $("#level").change(function(){
+    if($("#level").val() == 'STAFF') {
+      $("#sub_level").val('FIBER ACADEMY PEKALONGAN');
+    } else if($("#level").val() == '') {
+      $("#sub_level").val('');
+    } else {
+      $("#sub_level").val('REGIONAL');
+    }
+  });
+</script>

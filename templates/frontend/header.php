@@ -22,6 +22,8 @@
   <link href="<?= base_url() ?>assets/frontend/css/landing-page.min.css" rel="stylesheet">
   <link href="<?= base_url() ?>assets/frontend/css/custom.css" rel="stylesheet">
 
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
   <style>
     .error {
       color: red;

@@ -17,7 +17,7 @@ class Monila extends MY_Controller {
 		$this->form_validation->set_rules('nik', 'NIK', 'required');
 		$this->form_validation->set_rules('sto', 'STO', 'required');
 		$this->form_validation->set_rules('lokasi', 'Lokasi', 'required');
-		// $this->form_validation->set_rules('file_evident', 'File Evident', 'required');
+		$this->form_validation->set_rules('file_evident', 'File Evident', 'required');
 		$this->form_validation->set_rules('saran', 'Jenis Laporan', 'required');
 
 		if($this->form_validation->run() == false) {
