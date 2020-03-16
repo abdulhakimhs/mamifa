@@ -1,17 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_monila extends CI_Model
+class M_kelas extends CI_Model
 {
-    var $table = 'tb_monila';
-    var $column_order = array(null, 'nik','nama_lengkap','jenis_laporan','lokasi_temuan','odp_koordinat', 'status');
-    var $column_search = array('nik','nama_lengkap','jenis_laporan','lokasi_temuan','odp_koordinat', 'status');
-    var $order = array('monila_id' => 'desc');
+    var $column_order = array(null, 'nama_kelas');
+    var $column_search = array('nama_kelas');
+    var $order = array('kelas_id' => 'desc');
  
     private function _get_datatables_query() {
-        $this->db->select('jp.jenis_laporan, m.monila_id, m.nik, m.nama_lengkap, m.lokasi_temuan, m.odp_koordinat, m.status');
-        $this->db->from('tb_monila as m');
-        $this->db->join('tb_jenis_laporan as jp', 'jp.jenis_lap_id = m.jenis_lap_id');
+        $this->db->select('*');
+        $this->db->from('tb_kelas');
 
         //Filter
         /*
@@ -59,38 +57,16 @@ class M_monila extends CI_Model
     }
 
     function count_all() {
-        $this->db->from('tb_monila');
+        $this->db->from('tb_kelas');
         return $this->db->count_all_results();
     }
-    
+
     public function ambil()
     {
         $this->db->select('*');
-        $this->db->from('tb_monila');
-        $this->db->join('tb_jenis_laporan', 'tb_jenis_laporan.pelatihan_id = tb_monila.pelatihan_id');
+        $this->db->from('tb_kelas');
         $data = $this->db->get('');
         return $data;
-    }
-
-    public function get_by_id($id)
-    {
-        $this->db->from('tb_monila');
-        $this->db->join('tb_jenis_laporan', 'tb_jenis_laporan.jenis_lap_id = tb_monila.jenis_lap_id');
-        $this->db->where('monila_id',$id);
-        $query = $this->db->get();
-        return $query->row();
-    }
-
-    public function update($where, $data)
-    {
-        $this->db->update($this->table, $data, $where);
-        return $this->db->affected_rows();
-    }
- 
-    public function delete_by_id($id)
-    {
-        $this->db->where('monila_id', $id);
-        $this->db->delete($this->table);
     }
 
     public function edit($where, $tabel, $data)

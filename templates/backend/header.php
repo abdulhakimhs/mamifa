@@ -58,7 +58,7 @@
           <a href="index.html" class="navbar-brand">
             <small>
               <i class="fa fa-leaf"></i>
-              JARVIS SALES DASHBOARD
+              FIBER ACADEMY PEKALONGAN
             </small>
           </a>
 
