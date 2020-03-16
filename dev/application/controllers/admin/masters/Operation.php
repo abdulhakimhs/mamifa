@@ -26,6 +26,7 @@ class Operation extends MY_Controller {
 		  $no++;
 		  $row = array();
 		  $row[] = $no;
+		  $row[] = $operation->operation_code;
 		  $row[] = $operation->operation_name;
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()">
 				<i class="fa fa-edit"></i>

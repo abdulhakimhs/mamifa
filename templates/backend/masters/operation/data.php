@@ -23,13 +23,14 @@
 		</div>
 		<div class="widget-body">
 			<div class="widget-main">
-				<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-plus"></i> Tambah Data</a>
+			<button class="btn btn-danger" onclick="add_data()"><i class="fa fa-plus"></i> Tambah Data</button>
 				<div id="pesan" style="margin: 10px 5px;"></div>
 	            <table id="table" class="table table-bordered table-hover table-sm text-nowrap" cellspacing="0" width="100%">
 	                <thead>
 		                <tr>
                             <th width="10">NO</th>
-                            <th>Operation</th>
+                            <th>Operation Code</th>
+							<th>Operation Name</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
 		            </thead>
@@ -44,6 +45,7 @@
 <script type="text/javascript">
  
 var table;
+var save_method;
  
 $(document).ready(function() {
  
@@ -69,4 +71,52 @@ $(document).ready(function() {
     });
  
 });
+
+function add_data()
+{
+    save_method = 'add';
+    $('#form')[0].reset(); // reset form on modals
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+    $('#modal_form').modal('show'); // show bootstrap modal
+    $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
+}
 </script>
+
+<!-- Bootstrap modal -->
+<div class="modal fade" id="modal_form" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Data Form</h3>
+            </div>
+            <div class="modal-body form">
+                <form action="#" id="form" class="form-horizontal">
+                    <input type="hidden" value="" name="id"/> 
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Operation Code</label>
+                            <div class="col-md-9">
+                                <input name="operation_code" class="form-control" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="control-label col-md-3">Operation Name</label>
+                            <div class="col-md-9">
+                                <input name="operation_name" class="form-control" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End Bootstrap modal -->
