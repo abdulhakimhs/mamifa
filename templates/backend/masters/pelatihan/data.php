@@ -35,25 +35,6 @@
 		                </tr>
 		            </thead>
 		            <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Pelatihan</td>
-                            <td><span class="label label-success">Aktif</span></td>
-                            <td>
-                                <a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Brevet</td>
-                            <td><span class="label label-danger">Tidak Aktif</span></td>
-                            <td>
-                                <a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()"><i class="fa fa-edit"></i></a>
-                                <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()"><i class="fa fa-trash"></i></a>
-                            </td>
-                        </tr>
-
 		            </tbody>
 	            </table>
 			</div>
@@ -69,7 +50,23 @@ $(document).ready(function() {
  
     //datatables
     table = $('#table').DataTable({ 
- 
+		"processing": true, //Feature control the processing indicator.
+		"serverSide": true, //Feature control DataTables' server-side processing mode.
+		"order": [], //Initial no order.
+
+		// Load data for the table's content from an Ajax source
+		"ajax": {
+			"url": "<?php echo site_url('admin/masters/pelatihan/get_ajax') ?>",
+			"type": "POST"
+		},
+
+		//Set column definition initialisation properties.
+		"columnDefs": [
+			{ 
+				"targets": [ 0 ], //first column / numbering column
+				"orderable": false, //set not orderable
+			}
+		]
     });
  
 });

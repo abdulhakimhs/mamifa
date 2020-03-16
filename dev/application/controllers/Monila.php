@@ -10,7 +10,7 @@ class Monila extends MY_Controller {
 
 	public function index()
 	{
-		$this->load->model('m_jenislaporan');
+		$this->load->model('masters/m_jenislaporan');
 
 		$this->form_validation->set_rules('jenis_laporan', 'Jenis Laporan', 'required');
 		$this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required');

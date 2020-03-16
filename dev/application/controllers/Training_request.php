@@ -10,7 +10,7 @@ class Training_request extends MY_Controller {
 
 	public function index()
 	{
-		$this->load->model('m_pelatihan');
+		$this->load->model('masters/m_pelatihan');
 
 		$this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required');
 		$this->form_validation->set_rules('nik', 'NIK', 'required');
