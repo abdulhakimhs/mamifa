@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_trainingrequest extends CI_Model
 {
+    var $table = 'tb_training_request';
     var $column_order = array(null, 'nik','nama_lengkap','level','jenis_pelatihan','status');
     var $column_search = array('nik','nama_lengkap','level','jenis_pelatihan','status');
     var $order = array('training_request_id' => 'desc');
@@ -71,15 +72,24 @@ class M_trainingrequest extends CI_Model
         return $data;
     }
 
-    public function edit($where, $tabel, $data)
+    public function get_by_id($id)
     {
-    	$this->db->where($where);
-        $this->db->update($tabel, $data);
+        $this->db->from('tb_training_request');
+        $this->db->join('tb_pelatihan', 'tb_pelatihan.pelatihan_id = tb_training_request.pelatihan_id');
+        $this->db->where('training_request_id',$id);
+        $query = $this->db->get();
+        return $query->row();
     }
 
-    public function hapus($where, $tabel)
+    public function update($where, $data)
     {
-    	$this->db->where($where);
-        $this->db->delete($tabel);
+        $this->db->update($this->table, $data, $where);
+        return $this->db->affected_rows();
+    }
+ 
+    public function delete_by_id($id)
+    {
+        $this->db->where('training_request_id', $id);
+        $this->db->delete($this->table);
     }
 }

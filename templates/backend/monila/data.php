@@ -292,5 +292,3 @@ function delete_data(id)
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!-- End Bootstrap modal -->
-
-</script>

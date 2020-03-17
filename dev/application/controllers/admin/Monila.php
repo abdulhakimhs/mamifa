@@ -88,23 +88,23 @@ class Monila extends MY_Controller {
   }
 
   private function _validate()
+  {
+    $data = array();
+    $data['error_string'] = array();
+    $data['inputerror'] = array();
+    $data['status'] = TRUE;
+
+    if($this->input->post('status_monila') == '')
     {
-        $data = array();
-        $data['error_string'] = array();
-        $data['inputerror'] = array();
-        $data['status'] = TRUE;
- 
-        if($this->input->post('status_monila') == '')
-        {
-            $data['inputerror'][] = 'status_monila';
-            $data['error_string'][] = 'Status update is required';
-            $data['status'] = FALSE;
-        }
- 
-        if($data['status'] === FALSE)
-        {
-            echo json_encode($data);
-            exit();
-        }
+        $data['inputerror'][] = 'status_monila';
+        $data['error_string'][] = 'Status update is required';
+        $data['status'] = FALSE;
     }
+
+    if($data['status'] === FALSE)
+    {
+        echo json_encode($data);
+        exit();
+    }
+  }
 }
