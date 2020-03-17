@@ -111,7 +111,7 @@ class Pelatihan extends MY_Controller {
     if($this->input->post('jenis_pelatihan') == '')
     {
         $data['inputerror'][] = 'jenis_pelatihan';
-        $data['error_string'][] = 'Jenis Pelatihan update is required';
+        $data['error_string'][] = 'Jenis Pelatihan is required';
         $data['status'] = FALSE;
     }
 
