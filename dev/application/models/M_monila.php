@@ -92,16 +92,4 @@ class M_monila extends CI_Model
         $this->db->where('monila_id', $id);
         $this->db->delete($this->table);
     }
-
-    public function edit($where, $tabel, $data)
-    {
-    	$this->db->where($where);
-        $this->db->update($tabel, $data);
-    }
-
-    public function hapus($where, $tabel)
-    {
-    	$this->db->where($where);
-        $this->db->delete($tabel);
-    }
 }

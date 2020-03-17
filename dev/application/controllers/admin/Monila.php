@@ -34,7 +34,7 @@ class Monila extends MY_Controller {
           if($monila->status == 0) {
             $row[] = '<td><span class="badge badge-warning">Belum Diterima</span></td>';
           } else {
-            $row[] = '<td><span class="badge badge-danger">Sudah Diterima</span></td>';
+            $row[] = '<td><span class="badge badge-success">Sudah Diterima</span></td>';
           }
           $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$monila->monila_id."'".')">
                 <i class="fa fa-edit"></i>

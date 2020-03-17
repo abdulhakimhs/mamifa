@@ -93,7 +93,7 @@ function detail(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "<?php echo site_url('admin/monila/ajax_edit/')?>/" + id,
+        url : "<?php echo site_url('admin/monila/ajax_edit/')?>" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -106,12 +106,9 @@ function detail(id)
             $('[name="lokasi_temuan"]').val(data.lokasi_temuan);
 			$('[name="odp_koordinat"]').val(data.odp_koordinat);
 			$('[name="saran_perbaikan"]').val(data.saran_perbaikan);
-            $('[name="file_evident"]').datepicker('update',data.dob);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Follow Up'); // Set title to Bootstrap modal title
 			
-			$('#photo-preview').show();
-			$('#label-photo').text('Change Photo'); // label photo upload
 			$('#photo-preview div').html('<img src="'+base_url+'assets/backend/images/file_evident/'+data.file_evident+'" class="img-responsive">'); // show photo
  
         },
