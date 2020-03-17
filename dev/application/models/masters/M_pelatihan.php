@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_pelatihan extends CI_Model
 {
+    var $table = 'tb_pelatihan';
     var $column_order = array(null, 'jenis_pelatihan','status');
     var $column_search = array('jenis_pelatihan','status');
     var $order = array('pelatihan_id' => 'desc');
@@ -69,15 +70,23 @@ class M_pelatihan extends CI_Model
         return $data;
     }
 
-    public function edit($where, $tabel, $data)
+    public function get_by_id($id)
     {
-    	$this->db->where($where);
-        $this->db->update($tabel, $data);
+        $this->db->from($this->table);
+        $this->db->where('pelatihan_id',$id);
+        $query = $this->db->get();
+        return $query->row();
     }
 
-    public function hapus($where, $tabel)
+    public function update($where, $data)
     {
-    	$this->db->where($where);
-        $this->db->delete($tabel);
+        $this->db->update($this->table, $data, $where);
+        return $this->db->affected_rows();
+    }
+ 
+    public function delete_by_id($id)
+    {
+        $this->db->where('pelatihan_id', $id);
+        $this->db->delete($this->table);
     }
 }

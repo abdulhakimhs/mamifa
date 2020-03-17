@@ -110,5 +110,4 @@ class Training_request extends MY_Controller {
     }
   }
 
-
 }
