@@ -27,9 +27,14 @@ class Kelas extends MY_Controller {
 		  $row = array();
 		  $row[] = $no;
 		  $row[] = $kelas->nama_kelas;
-		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail()">
+		  if($kelas->status == 1) {
+			$row[] = '<span class="label label-success">Aktif</span>';
+		  } else {
+			$row[] = '<span class="label label-danger">Tidak Aktif</span>';
+		  }
+		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$kelas->kelas_id."'".')">
 				<i class="fa fa-edit"></i>
-			  </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data()">
+			  </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$kelas->kelas_id."'".')">
 		  <i class="fa fa-trash"></i>
 		  </a>';
 	
@@ -43,5 +48,76 @@ class Kelas extends MY_Controller {
 					"data" => $data,
 				);
 		echo json_encode($output);
+	}
+
+	public function ajax_add()
+	{
+		$this->_validate();
+		$data = [
+			'nama_kelas'  	=> $this->input->post('nama_kelas'),
+			'status'  		=> $this->input->post('status')
+		];
+
+		$this->db->insert('tb_kelas', $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully added!</div>'
+			)
+		);
+	}
+
+	public function ajax_edit($id)
+	{
+		$data = $this->m_kelas->get_by_id($id);
+		echo json_encode($data);
+	}
+
+	public function ajax_delete($id)
+	{
+		$this->m_kelas->delete_by_id($id);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully removed!</div>'
+			)
+		);
+	}
+
+	public function ajax_update()
+	{
+		$this->_validate();
+		$data = array(
+				'nama_kelas'  	=> $this->input->post('nama_kelas'),
+				'status'  		=> $this->input->post('status')
+			);
+		$this->m_kelas->update(array('kelas_id' => $this->input->post('id')), $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully updated!</div>'
+			)
+		);
+	}
+
+	private function _validate()
+	{
+		$data = array();
+		$data['error_string'] = array();
+		$data['inputerror'] = array();
+		$data['status'] = TRUE;
+
+		if($this->input->post('nama_kelas') == '')
+		{
+			$data['inputerror'][] = 'nama_kelas';
+			$data['error_string'][] = 'Nama Kelas is required';
+			$data['status'] = FALSE;
+		}
+
+		if($data['status'] === FALSE)
+		{
+			echo json_encode($data);
+			exit();
+		}
 	}
 }
