@@ -206,7 +206,7 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3">Name Of Training</label>
                             <div class="col-md-9">
-                                <input name="name_of_training" class="form-control" type="text">
+                                <input name="name_of_training" class="form-control" placeholder="Nama Training" type="text">
                                 <span class="help-block"></span>
                             </div>
                         </div>
