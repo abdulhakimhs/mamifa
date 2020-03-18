@@ -155,24 +155,24 @@ function reload_table()
 			for(var i=0; i<data.length; i++){
 				isi += '<tr>'+
 							'<td>'+ data[i].training_plan_id +'</td>'+
-							'<td>Kelas</td>'+
-							'<td>Pelatihan</td>'+
-							'<td>Training</td>'+
-							'<td></td>'+
-							'<td>25</td>'+
-							'<td></td>'+
-							'<td></td>'+
-							'<td><i class="fa fa-check"></i></td>'+
-							'<td></td>'+
-							'<td></td>'+
-							'<td><i class="fa fa-check"></i></td>'+
-							'<td></td>'+
-							'<td></td>'+
-							'<td></td>'+
-							'<td></td>'+
-							'<td><i class="fa fa-check"></i></td>'+
-							'<td><i class="fa fa-check"></i></td>'+
-							'<td><i class="fa fa-check"></i></td>'+
+							'<td>'+ data[i].nama_kelas +'</td>'+
+							'<td>'+ data[i].jenis_pelatihan +'</td>'+
+							'<td>'+ data[i].name_of_training +'</td>'+
+							'<td>'+ (data[i].ta_bop == null ? '' : data[i].ta_bop) +'</td>'+
+							'<td>'+ (data[i].ta_pelatihan == null ? '' : data[i].ta_pelatihan) +'</td>'+
+							'<td>'+ (data[i].mitra_pelatihan == null ? '' : data[i].mitra_pelatihan) +'</td>'+
+							'<td>'+ (data[i].nama_mitra == null ? '' : data[i].nama_mitra) +'</td>'+
+							'<td>'+ (data[i].staff_teknisi == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].team_leader == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].officer == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].site_manager == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].mgr == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].mitra == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].senin == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].selasa == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].rabu == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].kamis == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].jumat == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>25</td>'+
 						'</tr>';
 			}
