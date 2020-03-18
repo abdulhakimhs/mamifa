@@ -57,22 +57,69 @@
         </button>
       </div>
       <div class="modal-body">
-      <form>
+      <form action="#" id="form" class="form-horizontal">
         <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label for="username">username</label>
+          <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter Username">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
       </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger">Login</button>
+        <button type="button" class="btn btn-danger" id="btnLogin" onclick="login()">Login</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    function login()
+    {
+        $('#btnLogin').text('wait...'); //change button text
+        $('#btnLogin').attr('disabled',true); //set button disable 
+        var url;
+    
+        url = "<?php echo site_url('welcome/login')?>";
+    
+        // ajax adding data to database
+        $.ajax({
+            url : url,
+            type: "POST",
+            data: $('#form').serialize(),
+            dataType: "JSON",
+            success: function(data)
+            {
+    
+                if(data.status) //if success close modal and reload ajax table
+                {
+                    $('#modal_form').modal('hide');
+                    reload_table();
+                    document.getElementById('pesan').innerHTML = data.pesan;
+                }
+                else
+                {
+                    for (var i = 0; i < data.inputerror.length; i++) 
+                    {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
+                }
+                $('#btnLogin').text('save'); //change button text
+                $('#btnLogin').attr('disabled',false); //set button enable 
+    
+    
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error adding / update data');
+                $('#btnLogin').text('save'); //change button text
+                $('#btnLogin').attr('disabled',false); //set button enable 
+    
+            }
+        });
+    }
+</script>

@@ -66,6 +66,7 @@ class M_pelatihan extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('tb_pelatihan');
+        $this->db->where('status', 1);
         $data = $this->db->get('');
         return $data;
     }

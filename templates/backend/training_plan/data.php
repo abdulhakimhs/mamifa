@@ -80,8 +80,7 @@
 							<th>31</th>
 						</tr>
 					</thead>
-					<tbody>
-						
+					<tbody id="tabel_trainingplan">
 					</tbody>
 				</table>
 			</div>
@@ -92,7 +91,10 @@
 <script type="text/javascript">
 
 var save_method;
-var table;
+
+$(document).ready(function() {
+	reload_table();
+});
 	
 function add_plan()
 {
@@ -102,6 +104,161 @@ function add_plan()
     $('.help-block').empty();
     $('#modal_form').modal('show');
     $('.modal-title').text('Add Plan');
+}
+
+function detail(id)
+{
+    save_method = 'update';
+    $('#form')[0].reset(); // reset form on modals
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+ 
+    //Ajax Load data from ajax
+    $.ajax({
+        url : "<?php echo site_url('admin/training_plan/ajax_edit/')?>" + id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+ 
+            $('[name="id"]').val(data.kelas_id);
+			$('[name="kelas"]').val(data.nama_kelas);
+			$('[name="jenis_pelatihan"]').val(data.jenis_pelatihan);
+			$('[name="name_of_training"]').val(data.name_of_training);
+			$('[name="ta_brevet"]').val(data.ta_brevet);
+			$('[name="ta_pelatihan"]').val(data.ta_pelatihan);
+			$('[name="mitra_pelatihan"]').val(data.mitra_pelatihan);
+			$('[name="nama_mitra"]').val(data.nama_mitra);
+			$('[name="name_of_training"]').val(data.name_of_training);
+			$('[name="name_of_training"]').val(data.name_of_training);
+            $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
+			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+ 
+function reload_table()
+{
+    //Ajax Load data from ajax
+    $.ajax({
+        url : "<?php echo site_url('admin/training_plan/ajax_get')?>",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+			var isi = '';
+			for(var i=0; i<data.length; i++){
+				isi += '<tr>'+
+							'<td>'+ data[i].training_plan_id +'</td>'+
+							'<td>Kelas</td>'+
+							'<td>Pelatihan</td>'+
+							'<td>Training</td>'+
+							'<td></td>'+
+							'<td>25</td>'+
+							'<td></td>'+
+							'<td></td>'+
+							'<td><i class="fa fa-check"></i></td>'+
+							'<td></td>'+
+							'<td></td>'+
+							'<td><i class="fa fa-check"></i></td>'+
+							'<td></td>'+
+							'<td></td>'+
+							'<td></td>'+
+							'<td></td>'+
+							'<td><i class="fa fa-check"></i></td>'+
+							'<td><i class="fa fa-check"></i></td>'+
+							'<td><i class="fa fa-check"></i></td>'+
+							'<td>25</td>'+
+						'</tr>';
+			}
+			$('#tabel_trainingplan').html(isi);
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error get data from ajax');
+        }
+    });
+}
+ 
+function save()
+{
+    $('#btnSave').text('saving...'); //change button text
+    $('#btnSave').attr('disabled',true); //set button disable 
+    var url;
+ 
+    if(save_method == 'add') {
+        url = "<?php echo site_url('admin/training_plan/ajax_add')?>";
+    } else {
+        url = "<?php echo site_url('admin/training_plan/ajax_update')?>";
+	}
+ 
+    // ajax adding data to database
+    $.ajax({
+        url : url,
+        type: "POST",
+        data: $('#form').serialize(),
+        dataType: "JSON",
+        success: function(data)
+        {
+ 
+            if(data.status) //if success close modal and reload ajax table
+            {
+                $('#modal_form').modal('hide');
+                reload_table();
+                document.getElementById('pesan').innerHTML = data.pesan;
+            }
+            else
+            {
+                for (var i = 0; i < data.inputerror.length; i++) 
+                {
+                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                }
+            }
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+        }
+    });
+}
+ 
+function delete_data(id)
+{
+    if(confirm('Are you sure delete this data?'))
+    {
+        // ajax delete data to database
+        $.ajax({
+            url : "<?php echo site_url('admin/training_plan/ajax_delete')?>/"+id,
+            type: "POST",
+            dataType: "JSON",
+            success: function(data)
+            {
+                //if success reload ajax table
+                $('#modal_form').modal('hide');
+                reload_table();
+                document.getElementById('pesan').innerHTML = data.pesan;
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error deleting data');
+            }
+        });
+ 
+    }
 }
 
 </script>
@@ -124,10 +281,10 @@ function add_plan()
 		                            <label class="control-label col-md-3"><b>Kelas</b></label>
 		                            <div class="col-md-9">
 		                                <select name="kelas" class="form-control">
-		                                	<option value="">-Pilih Kelas-</option>
-		                                	<option value="A">A</option>
-		                                	<option value="B">B</option>
-		                                	<option value="C">C</option>
+											<option value="">-Pilih Kelas-</option>
+											<?php foreach ($kelas as $k) : ?>
+		                                		<option value="<?= $k['kelas_id'] ?>"><?= $k['nama_kelas'] ?></option>
+											<?php endforeach; ?>
 		                                </select>
 		                                <span class="help-block"></span>
 		                            </div>
@@ -137,9 +294,9 @@ function add_plan()
 		                            <div class="col-md-9">
 		                                <select name="jenis_pelatihan" class="form-control">
 		                                	<option value="">-Pilih Jenis Pelatihan-</option>
-		                                	<option value="A">A</option>
-		                                	<option value="B">B</option>
-		                                	<option value="C">C</option>
+											<?php foreach ($pelatihan as $p) : ?>
+		                                		<option value="<?= $p['pelatihan_id'] ?>"><?= $p['jenis_pelatihan'] ?></option>
+											<?php endforeach; ?>
 		                                </select>
 		                                <span class="help-block"></span>
 		                            </div>
@@ -149,9 +306,9 @@ function add_plan()
 		                            <div class="col-md-9">
 		                                <select name="name_of_training" class="form-control">
 		                                	<option value="">-Pilih-</option>
-		                                	<option value="A">A</option>
-		                                	<option value="B">B</option>
-		                                	<option value="C">C</option>
+											<?php foreach ($training as $t) : ?>
+		                                		<option value="<?= $t['not_id'] ?>"><?= $t['name_of_training'] ?></option>
+											<?php endforeach; ?>
 		                                </select>
 		                                <span class="help-block"></span>
 		                            </div>
@@ -316,5 +473,11 @@ function add_plan()
 	        autoclose: true,
 	        todayHighlight: true
 	    });
+
+		$('#ftgl_awal').change(function() {
+			var tglAkhir = $('#ftgl_awal').datepicker('getDate', '+4d'); 
+			tglAkhir.setDate(tglAkhir.getDate()+4); 
+			$('#ftgl_akhir').datepicker('setDate', tglAkhir);
+		});
 	});
 </script>
