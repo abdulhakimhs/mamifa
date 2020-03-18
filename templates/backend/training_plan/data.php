@@ -99,6 +99,7 @@ $(document).ready(function() {
 function add_plan()
 {
     save_method = 'add';
+	$('#pesan-modal').empty();
     $('#form')[0].reset();
     $('.form-group').removeClass('has-error');
     $('.help-block').empty();
@@ -109,6 +110,7 @@ function add_plan()
 function detail(id)
 {
     save_method = 'update';
+	$('#pesan-modal').empty();
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
@@ -152,9 +154,14 @@ function reload_table()
         success: function(data)
         {
 			var isi = '';
+			var no = 1;
+			var total = 0;
 			for(var i=0; i<data.length; i++){
+				total += (data[i].ta_bop == null ? 0 : parseInt(data[i].ta_bop));
+				total += (data[i].ta_pelatihan == null ? 0 : parseInt(data[i].ta_pelatihan));
+				total += (data[i].mitra_pelatihan == null ? 0 : parseInt(data[i].mitra_pelatihan));
 				isi += '<tr>'+
-							'<td>'+ data[i].training_plan_id +'</td>'+
+							'<td>'+ no +'</td>'+
 							'<td>'+ data[i].nama_kelas +'</td>'+
 							'<td>'+ data[i].jenis_pelatihan +'</td>'+
 							'<td>'+ data[i].name_of_training +'</td>'+
@@ -173,8 +180,10 @@ function reload_table()
 							'<td>'+ (data[i].rabu == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>'+ (data[i].kamis == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>'+ (data[i].jumat == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
-							'<td>25</td>'+
+							'<td>'+ total +'</td>'+
 						'</tr>';
+				no++;
+				total = 0;
 			}
 			$('#tabel_trainingplan').html(isi);
  
@@ -209,9 +218,8 @@ function save()
  
             if(data.status) //if success close modal and reload ajax table
             {
-                $('#modal_form').modal('hide');
+                document.getElementById('pesan-modal').innerHTML = data.pesan;
                 reload_table();
-                document.getElementById('pesan').innerHTML = data.pesan;
             }
             else
             {
@@ -275,12 +283,13 @@ function delete_data(id)
                 <form action="#" id="form" class="form-horizontal">
                     <input type="hidden" value="" name="id"/> 
                     <div class="form-body">
+						<div id="pesan-modal" style="margin: 10px 5px;"></div>
                     	<div class="row">
                     		<div class="col-lg-3">
                     			<div class="form-group">
 		                            <label class="control-label col-md-3"><b>Kelas</b></label>
 		                            <div class="col-md-9">
-		                                <select name="kelas" class="form-control">
+		                                <select name="kelas" class="form-control" required>
 											<option value="">-Pilih Kelas-</option>
 											<?php foreach ($kelas as $k) : ?>
 		                                		<option value="<?= $k['kelas_id'] ?>"><?= $k['nama_kelas'] ?></option>
@@ -292,7 +301,7 @@ function delete_data(id)
 		                        <div class="form-group">
 		                            <label class="control-label col-md-3"><b>Jenis Pelatihan</b></label>
 		                            <div class="col-md-9">
-		                                <select name="jenis_pelatihan" class="form-control">
+		                                <select name="jenis_pelatihan" class="form-control" required>
 		                                	<option value="">-Pilih Jenis Pelatihan-</option>
 											<?php foreach ($pelatihan as $p) : ?>
 		                                		<option value="<?= $p['pelatihan_id'] ?>"><?= $p['jenis_pelatihan'] ?></option>
@@ -304,7 +313,7 @@ function delete_data(id)
 		                        <div class="form-group">
 		                            <label class="control-label col-md-3"><b>Name of Training</b></label>
 		                            <div class="col-md-9">
-		                                <select name="name_of_training" class="form-control">
+		                                <select name="name_of_training" class="form-control" required>
 		                                	<option value="">-Pilih-</option>
 											<?php foreach ($training as $t) : ?>
 		                                		<option value="<?= $t['not_id'] ?>"><?= $t['name_of_training'] ?></option>
@@ -321,7 +330,7 @@ function delete_data(id)
 		                        <div class="form-group">
 		                            <label class="control-label col-md-3"><b>Brevet, Praktek, Online</b></label>
 		                            <div class="col-md-9">
-		                                <input type="number" name="ta_brevet" class="form-control">
+		                                <input type="number" name="ta_bop" class="form-control">
 		                                <span class="help-block"></span>
 		                            </div>
 		                        </div>
@@ -356,37 +365,37 @@ function delete_data(id)
 
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="staff_teknisi" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> Staff / Teknisi</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="team_leader" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> Team Leader</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="officer" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> Off-1 / Off-2</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="site_manager" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> Site Manager</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="mgr" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> MGR</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="mitra" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> Mitra</span>
 										</label>
 									</div>
@@ -424,31 +433,31 @@ function delete_data(id)
 
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="senin" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> SENIN</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="selasa" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> SELASA</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="rabu" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> RABU</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="kamis" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> KAMIS</span>
 										</label>
 									</div>
 									<div class="checkbox">
 										<label class="block">
-											<input name="form-field-checkbox" type="checkbox" class="ace input-lg" />
+											<input name="jumat" type="checkbox" class="ace input-lg" value="1" />
 											<span class="lbl bigger-120"> JUM'AT</span>
 										</label>
 									</div>
