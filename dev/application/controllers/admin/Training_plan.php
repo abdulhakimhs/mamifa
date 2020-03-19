@@ -110,6 +110,40 @@ class Training_plan extends MY_Controller {
 		);
 	}
 
+	public function ajax_update()
+	{
+		$this->_validate();
+		$data = [
+			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
+			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
+			'kelas_id'  		=> $this->input->post('kelas'),
+			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
+			'not_id'  			=> $this->input->post('name_of_training'),
+			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),
+			'ta_pelatihan'  	=> $this->input->post('ta_pelatihan') == '' ? null : $this->input->post('ta_pelatihan'),
+			'mitra_pelatihan'  	=> $this->input->post('mitra_pelatihan') == '' ? null : $this->input->post('mitra_pelatihan'),
+			'nama_mitra'  		=> $this->input->post('nama_mitra') == '' ? null : $this->input->post('nama_mitra'),
+			'staff_teknisi'  	=> $this->input->post('staff_teknisi') == null ? 0 : 1,
+			'team_leader'  		=> $this->input->post('team_leader') == null ? 0 : 1,
+			'officer'  			=> $this->input->post('officer') == null ? 0 : 1,
+			'site_manager'  	=> $this->input->post('site_manager') == null ? 0 : 1,
+			'mgr'  				=> $this->input->post('mgr') == null ? 0 : 1,
+			'mitra'  			=> $this->input->post('mitra') == null ? 0 : 1,
+			'senin'  			=> $this->input->post('senin') == null ? 0 : 1,
+			'selasa'  			=> $this->input->post('selasa') == null ? 0 : 1,
+			'rabu'  			=> $this->input->post('rabu') == null ? 0 : 1,
+			'kamis'  			=> $this->input->post('kamis') == null ? 0 : 1,
+			'jumat'  			=> $this->input->post('jumat') == null ? 0 : 1
+		];
+		$this->m_trainingplan->update(array('training_plan_id' => $this->input->post('id')), $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully updated!</div>'
+			)
+		);
+	}
+
 	private function _validate()
 	{
 		$data = array();

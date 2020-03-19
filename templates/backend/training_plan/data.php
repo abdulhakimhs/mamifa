@@ -103,6 +103,7 @@ function add_plan()
 	$('#pesan-modal').empty();
     $('#form')[0].reset();
     $('.form-group').removeClass('has-error');
+    $('.input-group').removeClass('has-error');
     $('.help-block').empty();
     $('#modal_form').modal('show');
     $('.modal-title').text('Add Plan');
@@ -114,6 +115,7 @@ function detail(id)
 	$('#pesan-modal').empty();
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
+    $('.input-group').removeClass('has-error'); // clear error class date
     $('.help-block').empty(); // clear error string
  
     //Ajax Load data from ajax
@@ -238,8 +240,13 @@ function save()
             {
                 for (var i = 0; i < data.inputerror.length; i++) 
                 {
-                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+					if(data.inputerror[i] == 'ftgl_awal' || data.inputerror[i] == 'ftgl_akhir') {
+						$('[name="'+data.inputerror[i]+'"]').parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                    	// $('[name="'+data.inputerror[i]+'"]').prev().text(data.error_string[i]); //select span help-block class set text error string
+					} else {
+						$('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                    	$('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+					}
                 }
             }
             $('#btnSave').text('save'); //change button text
@@ -421,9 +428,10 @@ function delete_data(id)
 		                                <div class="col-xs-8 col-sm-11">
 		                                    <div class="input-group">
 		                                        <input class="form-control date-picker" name="ftgl_awal" id="ftgl_awal" type="text" data-date-format="yyyy-mm-dd" />
-		                                        <span class="input-group-addon">
+												<span class="input-group-addon">
 		                                            <i class="fa fa-calendar bigger-110"></i>
 		                                        </span>
+		                                		<!-- <span class="help-block"></span> -->
 		                                    </div>
 		                                </div>
 		                            </div>
@@ -433,10 +441,11 @@ function delete_data(id)
 		                            <div class="row">
 		                                <div class="col-xs-8 col-sm-11">
 		                                    <div class="input-group">
-		                                        <input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" />
+												<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" />
 		                                        <span class="input-group-addon">
 		                                            <i class="fa fa-calendar bigger-110"></i>
 		                                        </span>
+												<!-- <span class="help-block"></span> -->
 		                                    </div>
 		                                </div>
 		                            </div>
