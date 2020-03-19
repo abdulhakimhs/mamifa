@@ -52,6 +52,7 @@
 							<th colspan="6">PARTICIPANTS</th>
 							<th colspan="5">BULAN TAHUN</th>
 							<th rowspan="3">TOTAL PESERTA</th>
+							<th rowspan="3"><i class="fa fa-gear"></i></th>
 						</tr>
 						<tr>
 							<th colspan="2">TELKOM AKSES</th>
@@ -123,16 +124,27 @@ function detail(id)
         success: function(data)
         {
  
-            $('[name="id"]').val(data.kelas_id);
-			$('[name="kelas"]').val(data.nama_kelas);
-			$('[name="jenis_pelatihan"]').val(data.jenis_pelatihan);
-			$('[name="name_of_training"]').val(data.name_of_training);
-			$('[name="ta_brevet"]').val(data.ta_brevet);
+            $('[name="id"]').val(data.training_plan_id);
+			$('[name="ftgl_awal"]').val(data.tgl_awal);
+			$('[name="ftgl_akhir"]').val(data.tgl_akhir);
+			$('[name="kelas"]').val(data.kelas_id);
+			$('[name="jenis_pelatihan"]').val(data.pelatihan_id);
+			$('[name="name_of_training"]').val(data.not_id);
+			$('[name="ta_bop"]').val(data.ta_bop);
 			$('[name="ta_pelatihan"]').val(data.ta_pelatihan);
 			$('[name="mitra_pelatihan"]').val(data.mitra_pelatihan);
 			$('[name="nama_mitra"]').val(data.nama_mitra);
-			$('[name="name_of_training"]').val(data.name_of_training);
-			$('[name="name_of_training"]').val(data.name_of_training);
+			data.staff_teknisi == 0 ? '' : $('[name="staff_teknisi"]').prop('checked', true);
+			data.team_leader == 0 ? '' : $('[name="team_leader"]').prop('checked', true);
+			data.officer == 0 ? '' : $('[name="officer"]').prop('checked', true);
+			data.site_manager == 0 ? '' : $('[name="site_manager"]').prop('checked', true);
+			data.mgr == 0 ? '' : $('[name="mgr"]').prop('checked', true);
+			data.mitra == 0 ? '' : $('[name="mitra"]').prop('checked', true);
+			data.senin == 0 ? '' : $('[name="senin"]').prop('checked', true);
+			data.selasa == 0 ? '' : $('[name="selasa"]').prop('checked', true);
+			data.rabu == 0 ? '' : $('[name="rabu"]').prop('checked', true);
+			data.kamis == 0 ? '' : $('[name="kamis"]').prop('checked', true);
+			data.jumat == 0 ? '' : $('[name="jumat"]').prop('checked', true);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
  
@@ -181,6 +193,7 @@ function reload_table()
 							'<td>'+ (data[i].kamis == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>'+ (data[i].jumat == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>'+ total +'</td>'+
+							'<td><a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('+ "'" + data[i].training_plan_id + "'" +')"><i class="fa fa-edit"></i></a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data(' + "'" + data[i].training_plan_id + "'" + ')"><i class="fa fa-trash"></i></a></td>'+
 						'</tr>';
 				no++;
 				total = 0;

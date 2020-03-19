@@ -93,6 +93,23 @@ class Training_plan extends MY_Controller {
 		);
 	}
 
+	public function ajax_edit($id)
+	{
+		$data = $this->m_trainingplan->get_by_id($id);
+		echo json_encode($data);
+	}
+
+	public function ajax_delete($id)
+	{
+		$this->m_trainingplan->delete_by_id($id);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully removed!</div>'
+			)
+		);
+	}
+
 	private function _validate()
 	{
 		$data = array();
