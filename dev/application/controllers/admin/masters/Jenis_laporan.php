@@ -18,7 +18,7 @@ class Jenis_laporan extends MY_Controller {
 		]);
 	}
 
-	function get_ajax() {
+	public function get_ajax() {
 		$list = $this->m_jenislaporan->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
