@@ -54,6 +54,7 @@ class Naker extends MY_Controller {
 
 	public function ajax_add()
 	{
+		$this->_validate();
 		$data = [
 			'nik'  				=> $this->input->post('nik'),
 			'nama'  			=> $this->input->post('nama'),
@@ -63,6 +64,12 @@ class Naker extends MY_Controller {
 			'rayon'  			=> $this->input->post('rayon'),
 			'level'  			=> $this->input->post('level')
 		];
+
+		if(!empty($_FILES['photo']['name']))
+        {
+            $upload = $this->_do_upload();
+            $data['photo'] = $upload;
+        }
 
 		$this->db->insert('tb_naker', $data);
 		echo json_encode(
@@ -92,9 +99,8 @@ class Naker extends MY_Controller {
 
 	public function ajax_update()
 	{
+		$this->_validate();
 		$data = [
-			'nik'  				=> $this->input->post('nik'),
-			'nama'  			=> $this->input->post('nama'),
 			'position_name'  	=> $this->input->post('position_name'),
 			'position_title'  	=> $this->input->post('position_title'),
 			'sektor'  			=> $this->input->post('sektor'),
@@ -109,4 +115,65 @@ class Naker extends MY_Controller {
 			)
 		);
 	}
+
+	private function _do_upload()
+    {
+        $config['upload_path']          = 'assets/backend/images/bpjs/';
+        $config['allowed_types']        = 'gif|jpg|jpeg|png';
+        $config['max_size']             = 5000; //set max size allowed in Kilobyte
+        $config['max_width']            = 1000; // set max width image allowed
+        $config['max_height']           = 1000; // set max height allowed
+        $config['file_name']            = $this->input->post('nik'); //just milisecond timestamp fot unique name
+ 
+        $this->load->library('upload', $config);
+ 
+        if(!$this->upload->do_upload('photo')) //upload and validate
+        {
+            $data['inputerror'][] = 'photo';
+            $data['error_string'][] = 'Upload error: '.$this->upload->display_errors('',''); //show ajax error
+            $data['status'] = FALSE;
+            echo json_encode($data);
+            exit();
+        }
+        return $this->upload->data('file_name');
+	}
+	
+	private function _validate()
+    {
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+		$data['status'] = TRUE;
+		
+		$nik = $this->m_naker->get_nik($this->input->post('nik'));
+
+		if($this->input->post('method') == 'add') {
+			if($nik > 0)
+			{
+				$data['inputerror'][] = 'nik';
+				$data['error_string'][] = 'NIK already exists';
+				$data['status'] = FALSE;
+			}			
+		}
+ 
+		if($this->input->post('nik') == '')
+        {
+            $data['inputerror'][] = 'nik';
+            $data['error_string'][] = 'NIK is required';
+            $data['status'] = FALSE;
+        }
+		
+		if($this->input->post('nama') == '')
+        {
+            $data['inputerror'][] = 'nama';
+            $data['error_string'][] = 'Nama is required';
+            $data['status'] = FALSE;
+		}
+ 
+        if($data['status'] === FALSE)
+        {
+            echo json_encode($data);
+            exit();
+        }
+    }
 }

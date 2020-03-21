@@ -78,6 +78,13 @@ class M_Naker extends CI_Model
         return $query->row();
     }
 
+    public function get_nik($nik)
+    {
+        $this->db->from($this->table);
+        $this->db->where('nik', $nik);
+        return $this->db->count_all_results();
+    }
+
     public function update($where, $data)
     {
         $this->db->update($this->table, $data, $where);

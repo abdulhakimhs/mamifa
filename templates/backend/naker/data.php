@@ -82,10 +82,13 @@ function add_data()
 {
     save_method = 'add';
     $('#form')[0].reset(); // reset form on modals
-    // $('.form-group').removeClass('has-error'); // clear error class
-    // $('.help-block').empty(); // clear error string
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
+    $('[name="method"]').val(save_method); // set input hiiden method
+    $('[name="nik"]').attr('readonly',false); // remove nik readonly
+    $('[name="nama"]').attr('readonly',false); // remove nama readonly
 
     $('#photo-preview').hide(); // hide photo preview modal
     $('#label-photo').text('Upload BPJS'); // label photo upload
@@ -95,8 +98,11 @@ function detail(id)
 {
     save_method = 'update';
     $('#form')[0].reset(); // reset form on modals
-    // $('.form-group').removeClass('has-error'); // clear error class
-    // $('.help-block').empty(); // clear error string
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+    $('[name="method"]').val(save_method); // set input hiiden method
+    $('[name="nik"]').attr('readonly',true); // set nik readonly
+    $('[name="nama"]').attr('readonly',true); // set nama readonly
  
     //Ajax Load data from ajax
     $.ajax({
@@ -105,7 +111,7 @@ function detail(id)
         dataType: "JSON",
         success: function(data)
         {
-            $('[name="id"]').val(data.jenis_lap_id);
+            $('[name="id"]').val(data.naker_id);
 			$('[name="nik"]').val(data.nik);
 			$('[name="nama"]').val(data.nama);
 			$('[name="position_name"]').val(data.position_name);
@@ -121,9 +127,8 @@ function detail(id)
             if(data.bpjs)
             {
                 $('#label-photo').text('Change BPJS'); // label photo upload
-                $('#photo-preview div').html('<img src="'+base_url+'assets/backend/images/'+data.bpjs+'" class="img-responsive">'); // show photo
+                $('#photo-preview div').html('<img src="'+base_url+'assets/backend/images/bpjs/'+data.bpjs+'" class="img-responsive">'); // show photo
                 $('#photo-preview div').append('<input type="checkbox" name="remove_photo" value="'+data.bpjs+'"/> Remove photo when saving'); // remove photo
- 
             }
             else
             {
@@ -161,7 +166,7 @@ function save()
     $.ajax({
         url : url,
         type: "POST",
-        data: formData,
+        data: $('#form').serialize(),
         dataType: "JSON",
         success: function(data)
         {
@@ -231,7 +236,8 @@ function delete_data(id)
             </div>
             <div class="modal-body form">
                 <form action="#" id="form" class="form-horizontal">
-                    <input type="hidden" value="" name="id"/> 
+                    <input type="hidden" value="" name="id"/>
+                    <input type="hidden" value="" name="method"/>
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">NIK</label>
