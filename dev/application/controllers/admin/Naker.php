@@ -68,7 +68,7 @@ class Naker extends MY_Controller {
 		if(!empty($_FILES['photo']['name']))
         {
             $upload = $this->_do_upload();
-            $data['photo'] = $upload;
+            $data['bpjs'] = $upload;
         }
 
 		$this->db->insert('tb_naker', $data);
@@ -88,6 +88,11 @@ class Naker extends MY_Controller {
 
 	public function ajax_delete($id)
 	{
+		//delete file bpjs
+		$naker = $this->m_naker->get_by_id($id);
+        if(file_exists('./assets/backend/images/bpjs/'.$naker->bpjs) && $naker->bpjs)
+            unlink('./assets/backend/images/bpjs/'.$naker->bpjs);
+
 		$this->m_naker->delete_by_id($id);
 		echo json_encode(
 			array(
@@ -107,6 +112,26 @@ class Naker extends MY_Controller {
 			'rayon'  			=> $this->input->post('rayon'),
 			'level'  			=> $this->input->post('level')
 		];
+
+		if($this->input->post('remove_photo')) // if remove photo checked
+        {
+            if(file_exists('./assets/backend/images/bpjs/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
+                unlink('./assets/backend/images/bpjs/'.$this->input->post('remove_photo'));
+            $data['bpjs'] = null;
+        }
+ 
+        if(!empty($_FILES['photo']['name']))
+        {
+			//delete file bpjs
+			$naker = $this->m_naker->get_by_id($this->input->post('id'));
+			if(file_exists('./assets/backend/images/bpjs/'.$naker->bpjs) && $naker->bpjs)
+				unlink('./assets/backend/images/bpjs/'.$naker->bpjs);
+
+            $upload = $this->_do_upload();
+ 
+            $data['bpjs'] = $upload;
+        }
+
 		$this->m_naker->update(array('naker_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(
@@ -118,14 +143,15 @@ class Naker extends MY_Controller {
 
 	private function _do_upload()
     {
-        $config['upload_path']          = 'assets/backend/images/bpjs/';
+        $config['upload_path']          = './assets/backend/images/bpjs/';
         $config['allowed_types']        = 'gif|jpg|jpeg|png';
         $config['max_size']             = 5000; //set max size allowed in Kilobyte
         $config['max_width']            = 1000; // set max width image allowed
         $config['max_height']           = 1000; // set max height allowed
         $config['file_name']            = $this->input->post('nik'); //just milisecond timestamp fot unique name
  
-        $this->load->library('upload', $config);
+		// $this->load->library('upload', $config);
+		$this->upload->initialize($config);
  
         if(!$this->upload->do_upload('photo')) //upload and validate
         {
