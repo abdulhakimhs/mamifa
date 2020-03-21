@@ -51,6 +51,7 @@
  
 var table;
 var save_method;
+var base_url = '<?php echo base_url();?>';
  
 $(document).ready(function() {
  
@@ -85,6 +86,9 @@ function add_data()
     // $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
+
+    $('#photo-preview').hide(); // hide photo preview modal
+    $('#label-photo').text('Upload BPJS'); // label photo upload
 }
 
 function detail(id)
@@ -101,7 +105,6 @@ function detail(id)
         dataType: "JSON",
         success: function(data)
         {
- 
             $('[name="id"]').val(data.jenis_lap_id);
 			$('[name="nik"]').val(data.nik);
 			$('[name="nama"]').val(data.nama);
@@ -112,6 +115,21 @@ function detail(id)
 			$('[name="level"]').val(data.level);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
+
+            $('#photo-preview').show();
+
+            if(data.bpjs)
+            {
+                $('#label-photo').text('Change BPJS'); // label photo upload
+                $('#photo-preview div').html('<img src="'+base_url+'assets/backend/images/'+data.bpjs+'" class="img-responsive">'); // show photo
+                $('#photo-preview div').append('<input type="checkbox" name="remove_photo" value="'+data.bpjs+'"/> Remove photo when saving'); // remove photo
+ 
+            }
+            else
+            {
+                $('#label-photo').text('Upload BPJS'); // label photo upload
+                $('#photo-preview div').text('(No photo)');
+            }
  
         },
         error: function (jqXHR, textStatus, errorThrown)
@@ -139,10 +157,11 @@ function save()
 	}
  
     // ajax adding data to database
+    var formData = new FormData($('#form')[0]);
     $.ajax({
         url : url,
         type: "POST",
-        data: $('#form').serialize(),
+        data: formData,
         dataType: "JSON",
         success: function(data)
         {
@@ -272,13 +291,17 @@ function delete_data(id)
                                 <span class="help-block"></span>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="photo-preview">
                             <label class="control-label col-md-3">BPJS</label>
                             <div class="col-md-9">
-                                <a href="#">
-                                <span class="fa fa-cloud-download fa-3x" aria-hidden="true"></span>
-                                <p>BPJS</p>
-                                </a>
+                                (No photo)
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3" id="label-photo">Upload BPJS </label>
+                            <div class="col-md-9">
+                                <input name="photo" type="file">
                                 <span class="help-block"></span>
                             </div>
                         </div>
