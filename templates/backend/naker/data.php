@@ -81,8 +81,8 @@ function add_data()
 {
     save_method = 'add';
     $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
+    // $('.form-group').removeClass('has-error'); // clear error class
+    // $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
 }
@@ -91,19 +91,25 @@ function detail(id)
 {
     save_method = 'update';
     $('#form')[0].reset(); // reset form on modals
-    $('.form-group').removeClass('has-error'); // clear error class
-    $('.help-block').empty(); // clear error string
+    // $('.form-group').removeClass('has-error'); // clear error class
+    // $('.help-block').empty(); // clear error string
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "<?php echo site_url('admin/masters/jenis_laporan/ajax_edit/')?>" + id,
+        url : "<?php echo site_url('admin/naker/ajax_edit/')?>" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
  
             $('[name="id"]').val(data.jenis_lap_id);
-			$('[name="jenis_laporan"]').val(data.jenis_laporan);
+			$('[name="nik"]').val(data.nik);
+			$('[name="nama"]').val(data.nama);
+			$('[name="position_name"]').val(data.position_name);
+			$('[name="position_title"]').val(data.position_title);
+			$('[name="sektor"]').val(data.sektor);
+			$('[name="rayon"]').val(data.rayon);
+			$('[name="level"]').val(data.level);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
  
@@ -127,9 +133,9 @@ function save()
     var url;
  
     if(save_method == 'add') {
-        url = "<?php echo site_url('admin/masters/jenis_laporan/ajax_add')?>";
+        url = "<?php echo site_url('admin/naker/ajax_add')?>";
     } else {
-        url = "<?php echo site_url('admin/masters/jenis_laporan/ajax_update')?>";
+        url = "<?php echo site_url('admin/naker/ajax_update')?>";
 	}
  
     // ajax adding data to database
@@ -176,7 +182,7 @@ function delete_data(id)
     {
         // ajax delete data to database
         $.ajax({
-            url : "<?php echo site_url('admin/masters/jenis_laporan/ajax_delete')?>/"+id,
+            url : "<?php echo site_url('admin/naker/ajax_delete')?>/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -211,42 +217,42 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3">NIK</label>
                             <div class="col-md-9">
-                                <input name="nik" class="form-control" type="text">
+                                <input name="nik" class="form-control" type="text" placeholder="Nomor Induk Karyawan">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Nama</label>
                             <div class="col-md-9">
-                                <input name="nama" class="form-control" type="text">
+                                <input name="nama" class="form-control" type="text" placeholder="Nama Karyawan">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Position Name</label>
                             <div class="col-md-9">
-                                <input name="position_name" class="form-control" type="text">
+                                <input name="position_name" class="form-control" type="text" placeholder="Nama Posisi Karyawan">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Position Title</label>
                             <div class="col-md-9">
-                                <input name="position_title" class="form-control" type="text">
+                                <input name="position_title" class="form-control" type="text" placeholder="Title Posisi Karyawan">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Sektor</label>
                             <div class="col-md-9">
-                                <input name="sektor" class="form-control" type="text">
+                                <input name="sektor" class="form-control" type="text" placeholder="Nama Sektor">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Rayon</label>
                             <div class="col-md-9">
-                                <input name="rayon" class="form-control" type="text">
+                                <input name="rayon" class="form-control" type="text" placeholder="Nama Rayon">
                                 <span class="help-block"></span>
                             </div>
                         </div>

@@ -51,4 +51,62 @@ class Naker extends MY_Controller {
 	
 		echo json_encode($output);
 	}
+
+	public function ajax_add()
+	{
+		$data = [
+			'nik'  				=> $this->input->post('nik'),
+			'nama'  			=> $this->input->post('nama'),
+			'position_name'  	=> $this->input->post('position_name'),
+			'position_title'  	=> $this->input->post('position_title'),
+			'sektor'  			=> $this->input->post('sektor'),
+			'rayon'  			=> $this->input->post('rayon'),
+			'level'  			=> $this->input->post('level')
+		];
+
+		$this->db->insert('tb_naker', $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully added!</div>'
+			)
+		);
+	}
+
+	public function ajax_edit($id)
+	{
+		$data = $this->m_naker->get_by_id($id);
+		echo json_encode($data);
+	}
+
+	public function ajax_delete($id)
+	{
+		$this->m_naker->delete_by_id($id);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully removed!</div>'
+			)
+		);
+	}
+
+	public function ajax_update()
+	{
+		$data = [
+			'nik'  				=> $this->input->post('nik'),
+			'nama'  			=> $this->input->post('nama'),
+			'position_name'  	=> $this->input->post('position_name'),
+			'position_title'  	=> $this->input->post('position_title'),
+			'sektor'  			=> $this->input->post('sektor'),
+			'rayon'  			=> $this->input->post('rayon'),
+			'level'  			=> $this->input->post('level')
+		];
+		$this->m_naker->update(array('naker_id' => $this->input->post('id')), $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully updated!</div>'
+			)
+		);
+	}
 }
