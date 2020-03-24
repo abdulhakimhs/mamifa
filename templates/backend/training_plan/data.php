@@ -41,49 +41,51 @@
 			<div class="widget-main">
 				<button class="btn btn-square btn-danger btn-sm" onclick="add_plan()"><i class="fa fa-plus"></i> Tambah Data</button>
 				<div id="pesan" style="margin: 10px 5px;"></div>
-				<table class="table table-bordered" cellspacing="0" width="100%">
-					<thead>
-						<tr>
-							<th rowspan="3" valign="center">NO</th>
-							<th rowspan="3">KELAS</th>
-							<th rowspan="3">JENIS PELATIHAN</th>
-							<th rowspan="3">NAME OF TRAINING</th>
-							<th colspan="4">TGL</th>
-							<th colspan="6">PARTICIPANTS</th>
-							<th colspan="5">BULAN TAHUN</th>
-							<th rowspan="3">TOTAL PESERTA</th>
-							<th rowspan="3"><i class="fa fa-gear"></i></th>
-						</tr>
-						<tr>
-							<th colspan="2">TELKOM AKSES</th>
-							<th colspan="2">MITRA</th>
-							<th rowspan="2">STAFF/TEKNISI</th>
-							<th rowspan="2">TEAM LEADER</th>
-							<th rowspan="2">Off-1/ Off-2</th>
-							<th rowspan="2">SITE MGR</th>
-							<th rowspan="2">MGR</th>
-							<th rowspan="2">MITRA</th>
-							<th>SENIN</th>
-							<th>SELASA</th>
-							<th>RABU</th>
-							<th>KAMIS</th>
-							<th>JUMAT</th>
-						</tr>
-						<tr>
-							<th>BREVET PRAKTEK DAN ONLINE</th>
-							<th>PELATIHAN</th>
-							<th>PELATIHAN</th>
-							<th>NAMA MITRA</th>
-							<th>27</th>
-							<th>28</th>
-							<th>29</th>
-							<th>30</th>
-							<th>31</th>
-						</tr>
-					</thead>
-					<tbody id="tabel_trainingplan">
-					</tbody>
-				</table>
+				<div class="table-responsive">
+					<table class="table table-bordered" cellspacing="0" width="100%">
+						<thead>
+							<tr>
+								<th rowspan="3" valign="center">NO</th>
+								<th rowspan="3">KELAS</th>
+								<th rowspan="3">JENIS PELATIHAN</th>
+								<th rowspan="3">NAME OF TRAINING</th>
+								<th colspan="4">TGL</th>
+								<th colspan="6">PARTICIPANTS</th>
+								<th colspan="5">BULAN TAHUN</th>
+								<th rowspan="3">TOTAL PESERTA</th>
+								<th rowspan="3"><i class="fa fa-gear"></i></th>
+							</tr>
+							<tr>
+								<th colspan="2">TELKOM AKSES</th>
+								<th colspan="2">MITRA</th>
+								<th rowspan="2">STAFF/TEKNISI</th>
+								<th rowspan="2">TEAM LEADER</th>
+								<th rowspan="2">Off-1/ Off-2</th>
+								<th rowspan="2">SITE MGR</th>
+								<th rowspan="2">MGR</th>
+								<th rowspan="2">MITRA</th>
+								<th>SENIN</th>
+								<th>SELASA</th>
+								<th>RABU</th>
+								<th>KAMIS</th>
+								<th>JUMAT</th>
+							</tr>
+							<tr>
+								<th>BREVET PRAKTEK DAN ONLINE</th>
+								<th>PELATIHAN</th>
+								<th>PELATIHAN</th>
+								<th>NAMA MITRA</th>
+								<th>27</th>
+								<th>28</th>
+								<th>29</th>
+								<th>30</th>
+								<th>31</th>
+							</tr>
+						</thead>
+						<tbody id="tabel_trainingplan">
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

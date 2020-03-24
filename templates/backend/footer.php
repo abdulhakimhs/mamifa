@@ -40,7 +40,7 @@
         <script src=""></script>
         <script src="<?= base_url() ?>assets/backend/js/dataTables.select.min.js"></script>
         <script src="<?= base_url() ?>assets/backend/js/bootstrap-datepicker.min.js"></script>
-        <script src="<?= base_url() ?>assets/js/jquery-ui.custom.min.js"></script>
+        <script src="<?= base_url() ?>assets/backend/js/jquery-ui.custom.min.js"></script>
         <!-- page specific plugin scripts -->
 
         <!-- ace scripts -->

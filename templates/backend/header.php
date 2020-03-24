@@ -27,12 +27,17 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.css">
 
     <script src="<?= base_url() ?>assets/backend/js/jquery-2.1.4.min.js"></script>
     <script src="<?= base_url() ?>assets/backend/js/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="<?= base_url() ?>assets/backend/js/utils.js"></script>
+
 
     <!--[if lte IE 9]>
       <link rel="stylesheet" href="<?= base_url() ?>assets/backend/css/ace-ie.min.css" />
@@ -84,10 +89,10 @@
 
             <li class="light-blue dropdown-modal user-min">
               <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                <img class="nav-user-photo" src="<?= base_url() ?>assets/backend/images/avatars/user.jpg" alt="Jason's Photo" /> <?php echo $this->session->userdata('nama') ?>
+                <img class="nav-user-photo" src="<?= base_url() ?>assets/backend/images/avatars/user.jpg" alt="Jason's Photo" /> Administrator
                 <span class="user-info">
                   <small>Welcome,</small>
-                  <?php echo $this->session->userdata('nama') ?>
+                  Administrator
                 </span>
 
                 <i class="ace-icon fa fa-caret-down"></i>

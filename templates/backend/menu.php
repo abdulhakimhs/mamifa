@@ -114,11 +114,31 @@
           </li>
 
           <li class="hover">
-            <a href="<?= site_url('admin/target'); ?>">
+            <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-bullseye"></i>
-              <span class="menu-text"> Target </span>
+              <span class="menu-text">
+                Target
+              </span>
+              <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>
+
+            <ul class="submenu">
+              <li class="hover">
+                <a href="<?= site_url('admin/target/upload'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Upload
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/target'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Data
+                </a>
+                <b class="arrow"></b>
+              </li>
+            </ul>
           </li>
 
           <li class="hover">
