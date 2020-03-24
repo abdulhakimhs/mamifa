@@ -166,7 +166,9 @@ function save()
     $.ajax({
         url : url,
         type: "POST",
-        data: $('#form').serialize(),
+        data: formData,
+        contentType: false,
+        processData: false,
         dataType: "JSON",
         success: function(data)
         {
