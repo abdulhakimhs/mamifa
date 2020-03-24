@@ -127,14 +127,21 @@
               <li class="hover">
                 <a href="<?= site_url('admin/target/upload'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
-                  Upload
+                  Upload Data
                 </a>
                 <b class="arrow"></b>
               </li>
               <li class="hover">
                 <a href="<?= site_url('admin/target'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
-                  Data
+                  Target Pelatihan
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/penilaian'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Penilaian
                 </a>
                 <b class="arrow"></b>
               </li>
