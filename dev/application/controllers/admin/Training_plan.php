@@ -11,14 +11,14 @@ class Training_plan extends MY_Controller {
 
 	public function index()
 	{
-		$this->load->model('masters/m_kelas');
+		$this->load->model('masters/m_mitra');
 		$this->load->model('masters/m_pelatihan');
 		$this->load->model('masters/m_training');
 
 		$data['title'] 			= 'ADMIN MAMI FA';
 		$data['subtitle'] 		= 'Training Plan';
 
-		$data['kelas'] 		= $this->m_kelas->ambil()->result_array();
+		$data['mitra'] 		= $this->m_mitra->ambil()->result_array();
 		$data['pelatihan'] 	= $this->m_pelatihan->ambil()->result_array();
 		$data['training'] 	= $this->m_training->ambil()->result_array();
 
@@ -37,34 +37,10 @@ class Training_plan extends MY_Controller {
 	{
 		$this->_validate();
 
-		if ($this->input->post('ta_bop') == ''){
-			$ta_bop = null;
-		} else {
-			$ta_bop = $this->input->post('ta_bop');
-		}
-
-		if ($this->input->post('ta_pelatihan') == ''){
-			$ta_pelatihan = null;
-		} else {
-			$ta_pelatihan = $this->input->post('ta_pelatihan');
-		}
-
-		if ($this->input->post('mitra_pelatihan') == ''){
-			$mitra_pelatihan = null;
-		} else {
-			$mitra_pelatihan = $this->input->post('mitra_pelatihan');
-		}
-
-		if ($this->input->post('nama_mitra') == ''){
-			$nama_mitra = null;
-		} else {
-			$nama_mitra = $this->input->post('nama_mitra');
-		}
-
 		$data = [
 			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
 			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
-			'kelas_id'  		=> $this->input->post('kelas'),
+			'mitra_id'  		=> $this->input->post('mitra'),
 			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
 			'not_id'  			=> $this->input->post('name_of_training'),
 			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),
@@ -116,7 +92,7 @@ class Training_plan extends MY_Controller {
 		$data = [
 			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
 			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
-			'kelas_id'  		=> $this->input->post('kelas'),
+			'mitra_id'  		=> $this->input->post('mitra'),
 			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
 			'not_id'  			=> $this->input->post('name_of_training'),
 			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),
@@ -151,10 +127,10 @@ class Training_plan extends MY_Controller {
 		$data['inputerror'] = array();
 		$data['status'] = TRUE;
 
-		if($this->input->post('kelas') == '')
+		if($this->input->post('mitra') == '')
 		{
-			$data['inputerror'][] = 'kelas';
-			$data['error_string'][] = 'Kelas is required';
+			$data['inputerror'][] = 'mitra';
+			$data['error_string'][] = 'Mitra is required';
 			$data['status'] = FALSE;
 		}
 

@@ -46,7 +46,7 @@
 						<thead>
 							<tr>
 								<th rowspan="3" valign="center">NO</th>
-								<th rowspan="3">KELAS</th>
+								<th rowspan="3">MITRA MASTER</th>
 								<th rowspan="3">JENIS PELATIHAN</th>
 								<th rowspan="3">NAME OF TRAINING</th>
 								<th colspan="4">TGL</th>
@@ -131,7 +131,7 @@ function detail(id)
             $('[name="id"]').val(data.training_plan_id);
 			$('[name="ftgl_awal"]').val(data.tgl_awal);
 			$('[name="ftgl_akhir"]').val(data.tgl_akhir);
-			$('[name="kelas"]').val(data.kelas_id);
+			$('[name="mitra"]').val(data.mitra_id);
 			$('[name="jenis_pelatihan"]').val(data.pelatihan_id);
 			$('[name="name_of_training"]').val(data.not_id);
 			$('[name="ta_bop"]').val(data.ta_bop);
@@ -178,7 +178,7 @@ function reload_table()
 				total += (data[i].mitra_pelatihan == null ? 0 : parseInt(data[i].mitra_pelatihan));
 				isi += '<tr>'+
 							'<td>'+ no +'</td>'+
-							'<td>'+ data[i].nama_kelas +'</td>'+
+							'<td>'+ data[i].nama_mitra +'</td>'+
 							'<td>'+ data[i].jenis_pelatihan +'</td>'+
 							'<td>'+ data[i].name_of_training +'</td>'+
 							'<td>'+ (data[i].ta_bop == null ? '' : data[i].ta_bop) +'</td>'+
