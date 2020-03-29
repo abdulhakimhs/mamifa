@@ -16,7 +16,15 @@ class Monila extends MY_Controller {
 		$this->form_validation->set_rules('nama_lengkap', 'Nama Lengkap', 'required');
 		$this->form_validation->set_rules('nik', 'NIK', 'required');
 		$this->form_validation->set_rules('sto', 'STO', 'required');
-		$this->form_validation->set_rules('odp_koordinat', 'Koordinat / Nama ODP', 'required');
+
+		if($this->input->post('koordinat') == null) {
+			$this->form_validation->set_rules('odp', 'Nama ODP', 'required',
+				[
+					'required' => 'Koordinat atau ODP salah satunya harus terisi.'
+				]
+			);
+		}
+
 		$this->form_validation->set_rules('saran', 'Saran Perbaikan', 'required');
 
 		if($this->form_validation->run() == false) {
@@ -32,9 +40,9 @@ class Monila extends MY_Controller {
 			$file = $_FILES['file_evident']['name'];
 
             if ($file) {
-                $config['allowed_types'] = 'gif|jpg|jpeg|png';
-                $config['max_size']     = '2048';
-                $config['upload_path'] = './assets/backend/images/file_evident/';
+                $config['allowed_types'] 	= 'gif|jpg|jpeg|png';
+                $config['max_size']     	= '2048';
+                $config['upload_path'] 		= './assets/backend/images/file_evident/';
 
                 $this->upload->initialize($config);
 
@@ -50,7 +58,8 @@ class Monila extends MY_Controller {
 				'nama_lengkap' 		=> $this->input->post('nama_lengkap'),
 				'nik' 				=> $this->input->post('nik'),
 				'lokasi_temuan' 	=> $this->input->post('sto'),
-				'odp_koordinat'		=> $this->input->post('odp_koordinat'),
+				'koordinat' 		=> $this->input->post('koordinat'),
+				'odp'				=> $this->input->post('odp'),
 				'file_evident' 		=> $nama_file,
 				'saran_perbaikan'	=> $this->input->post('saran')
 			];
