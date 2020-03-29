@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Data Kelas</h5>
+			<h5 class="widget-title">Data Mitra</h5>
 			<div class="widget-toolbar">
 
 				<a href="#" data-action="fullscreen" class="orange2">
@@ -29,8 +29,7 @@
 	                <thead>
 		                <tr>
                             <th width="10">NO</th>
-                            <th>Nama Kelas</th>
-                            <th>Status</th>
+                            <th>Nama Mitra</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
 		            </thead>
@@ -57,7 +56,7 @@ $(document).ready(function() {
 
 		// Load data for the table's content from an Ajax source
 		"ajax": {
-			"url": "<?php echo site_url('admin/masters/kelas/get_ajax') ?>",
+			"url": "<?php echo site_url('admin/masters/mitra/get_ajax') ?>",
 			"type": "POST"
 		},
 
@@ -91,14 +90,14 @@ function detail(id)
  
     //Ajax Load data from ajax
     $.ajax({
-        url : "<?php echo site_url('admin/masters/kelas/ajax_edit/')?>" + id,
+        url : "<?php echo site_url('admin/masters/mitra/ajax_edit/')?>" + id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
  
-            $('[name="id"]').val(data.kelas_id);
-			$('[name="nama_kelas"]').val(data.nama_kelas);
+            $('[name="id"]').val(data.mitra_id);
+			$('[name="nama_mitra"]').val(data.nama_mitra);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
  
@@ -122,9 +121,9 @@ function save()
     var url;
  
     if(save_method == 'add') {
-        url = "<?php echo site_url('admin/masters/kelas/ajax_add')?>";
+        url = "<?php echo site_url('admin/masters/mitra/ajax_add')?>";
     } else {
-        url = "<?php echo site_url('admin/masters/kelas/ajax_update')?>";
+        url = "<?php echo site_url('admin/masters/mitra/ajax_update')?>";
 	}
  
     // ajax adding data to database
@@ -171,7 +170,7 @@ function delete_data(id)
     {
         // ajax delete data to database
         $.ajax({
-            url : "<?php echo site_url('admin/masters/kelas/ajax_delete')?>/"+id,
+            url : "<?php echo site_url('admin/masters/mitra/ajax_delete')?>/"+id,
             type: "POST",
             dataType: "JSON",
             success: function(data)
@@ -204,19 +203,9 @@ function delete_data(id)
                     <input type="hidden" value="" name="id"/> 
                     <div class="form-body">
                         <div class="form-group">
-                            <label class="control-label col-md-3">Kelas</label>
+                            <label class="control-label col-md-3">Mitra</label>
                             <div class="col-md-9">
-                                <input name="nama_kelas" class="form-control" placeholder="Nama Kelas" type="text">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <label class="control-label col-md-3">Status</label>
-                            <div class="col-md-9">
-                                <select name="status" class="form-control">
-                                    <option value="1">Aktif</option>
-                                    <option value="0">Tidak Aktif</option>
-                                </select>
+                                <input name="nama_mitra" class="form-control" placeholder="Nama Mitra" type="text">
                                 <span class="help-block"></span>
                             </div>
                         </div>

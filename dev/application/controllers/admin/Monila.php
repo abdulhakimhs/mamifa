@@ -30,7 +30,7 @@ class Monila extends MY_Controller {
           $row[] = $monila->nama_lengkap;
           $row[] = $monila->jenis_laporan;
           $row[] = $monila->lokasi_temuan;
-          $row[] = $monila->odp_koordinat;
+          $row[] = ($monila->koordinat == '' ? '-' : $monila->koordinat) .' / '.($monila->odp == '' ? '-' : $monila->odp);
           if($monila->status == 0) {
             $row[] = '<td><span class="badge badge-warning">Belum Diterima</span></td>';
           } else {

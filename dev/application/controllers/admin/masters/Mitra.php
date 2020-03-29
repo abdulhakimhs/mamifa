@@ -1,40 +1,35 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Kelas extends MY_Controller {
+class Mitra extends MY_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('masters/m_kelas');
+		$this->load->model('masters/m_mitra');
 	}
 
 	public function index()
 	{
 		$data['title'] 			= 'Master Data';
-		$data['subtitle'] 		= 'Kelas';
+		$data['subtitle'] 		= 'Mitra';
 		$this->load->view('backend/template',[
-			'content' => $this->load->view('backend/masters/kelas/data',$data,true)
+			'content' => $this->load->view('backend/masters/mitra/data',$data,true)
 		]);
 	}
 
 	function get_ajax() {
-		$list = $this->m_kelas->get_datatables();
+		$list = $this->m_mitra->get_datatables();
 		$data = array();
 		$no = $_POST['start'];
-		foreach ($list as $kelas) {
+		foreach ($list as $mitra) {
 		  $no++;
 		  $row = array();
 		  $row[] = $no;
-		  $row[] = $kelas->nama_kelas;
-		  if($kelas->status == 1) {
-			$row[] = '<span class="label label-success">Aktif</span>';
-		  } else {
-			$row[] = '<span class="label label-danger">Tidak Aktif</span>';
-		  }
-		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$kelas->kelas_id."'".')">
+		  $row[] = $mitra->nama_mitra;
+		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$mitra->mitra_id."'".')">
 				<i class="fa fa-edit"></i>
-			  </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$kelas->kelas_id."'".')">
+			  </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$mitra->mitra_id."'".')">
 		  <i class="fa fa-trash"></i>
 		  </a>';
 	
@@ -43,8 +38,8 @@ class Kelas extends MY_Controller {
 	
 		$output = array(
 					"draw" => @$_POST['draw'],
-					"recordsTotal" => $this->m_kelas->count_all(),
-					"recordsFiltered" => $this->m_kelas->count_filtered(),
+					"recordsTotal" => $this->m_mitra->count_all(),
+					"recordsFiltered" => $this->m_mitra->count_filtered(),
 					"data" => $data,
 				);
 		echo json_encode($output);
@@ -54,11 +49,10 @@ class Kelas extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'nama_kelas'  	=> $this->input->post('nama_kelas'),
-			'status'  		=> $this->input->post('status')
+			'nama_mitra'  	=> $this->input->post('nama_mitra')
 		];
 
-		$this->db->insert('tb_kelas', $data);
+		$this->db->insert('tb_mitra', $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -69,13 +63,13 @@ class Kelas extends MY_Controller {
 
 	public function ajax_edit($id)
 	{
-		$data = $this->m_kelas->get_by_id($id);
+		$data = $this->m_mitra->get_by_id($id);
 		echo json_encode($data);
 	}
 
 	public function ajax_delete($id)
 	{
-		$this->m_kelas->delete_by_id($id);
+		$this->m_mitra->delete_by_id($id);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -88,10 +82,9 @@ class Kelas extends MY_Controller {
 	{
 		$this->_validate();
 		$data = array(
-				'nama_kelas'  	=> $this->input->post('nama_kelas'),
-				'status'  		=> $this->input->post('status')
+				'nama_mitra'  	=> $this->input->post('nama_mitra')
 			);
-		$this->m_kelas->update(array('kelas_id' => $this->input->post('id')), $data);
+		$this->m_mitra->update(array('mitra_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -107,10 +100,10 @@ class Kelas extends MY_Controller {
 		$data['inputerror'] = array();
 		$data['status'] = TRUE;
 
-		if($this->input->post('nama_kelas') == '')
+		if($this->input->post('nama_mitra') == '')
 		{
-			$data['inputerror'][] = 'nama_kelas';
-			$data['error_string'][] = 'Nama Kelas is required';
+			$data['inputerror'][] = 'nama_mitra';
+			$data['error_string'][] = 'Nama Mitra is required';
 			$data['status'] = FALSE;
 		}
 

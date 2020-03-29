@@ -4,12 +4,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_monila extends CI_Model
 {
     var $table = 'tb_monila';
-    var $column_order = array(null, 'nik','nama_lengkap','jenis_laporan','lokasi_temuan','odp_koordinat', 'status');
-    var $column_search = array('nik','nama_lengkap','jenis_laporan','lokasi_temuan','odp_koordinat', 'status');
+    var $column_order = array(null, 'nik','nama_lengkap','jenis_laporan','lokasi_temuan','koordinat', 'odp', 'status');
+    var $column_search = array('nik','nama_lengkap','jenis_laporan','lokasi_temuan','koordinat', 'odp', 'status');
     var $order = array('monila_id' => 'desc');
  
     private function _get_datatables_query() {
-        $this->db->select('jp.jenis_laporan, m.monila_id, m.nik, m.nama_lengkap, m.lokasi_temuan, m.odp_koordinat, m.status');
+        $this->db->select('jp.jenis_laporan, m.monila_id, m.nik, m.nama_lengkap, m.lokasi_temuan, m.koordinat, m.odp, m.status');
         $this->db->from('tb_monila as m');
         $this->db->join('tb_jenis_laporan as jp', 'jp.jenis_lap_id = m.jenis_lap_id');
 

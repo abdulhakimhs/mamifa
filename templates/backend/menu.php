@@ -88,9 +88,9 @@
                 <b class="arrow"></b>
               </li>
               <li class="hover">
-                <a href="<?= site_url('admin/masters/kelas'); ?>">
+                <a href="<?= site_url('admin/masters/mitra'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
-                  Kelas
+                  Mitra
                 </a>
                 <b class="arrow"></b>
               </li>

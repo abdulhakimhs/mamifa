@@ -1,16 +1,16 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_kelas extends CI_Model
+class M_mitra extends CI_Model
 {
-    var $table = 'tb_kelas';
-    var $column_order = array(null, 'nama_kelas');
-    var $column_search = array('nama_kelas');
-    var $order = array('kelas_id' => 'desc');
+    var $table = 'tb_mitra';
+    var $column_order = array(null, 'nama_mitra');
+    var $column_search = array('nama_mitra');
+    var $order = array('mitra_id' => 'desc');
  
     private function _get_datatables_query() {
         $this->db->select('*');
-        $this->db->from('tb_kelas');
+        $this->db->from('tb_mitra');
 
         //Filter
         /*
@@ -58,14 +58,14 @@ class M_kelas extends CI_Model
     }
 
     function count_all() {
-        $this->db->from('tb_kelas');
+        $this->db->from('tb_mitra');
         return $this->db->count_all_results();
     }
 
     public function ambil()
     {
         $this->db->select('*');
-        $this->db->from('tb_kelas');
+        $this->db->from('tb_mitra');
         $this->db->where('status', 1);
         $data = $this->db->get('');
         return $data;
@@ -74,7 +74,7 @@ class M_kelas extends CI_Model
     public function get_by_id($id)
     {
         $this->db->from($this->table);
-        $this->db->where('kelas_id',$id);
+        $this->db->where('mitra_id',$id);
         $query = $this->db->get();
         return $query->row();
     }
@@ -87,7 +87,7 @@ class M_kelas extends CI_Model
  
     public function delete_by_id($id)
     {
-        $this->db->where('kelas_id', $id);
+        $this->db->where('mitra_id', $id);
         $this->db->delete($this->table);
     }
 }
