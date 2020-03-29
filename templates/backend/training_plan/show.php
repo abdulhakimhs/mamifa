@@ -86,9 +86,6 @@
 		<div class="widget-header">
 			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan <?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?></h5>
 			<div class="widget-toolbar">
-				<a href="javascript:void(0)" onclick="add_plan()">
-					<i class="ace-icon fa fa-plus"></i>
-				</a>
 				<a href="#" data-action="fullscreen" class="orange2">
 					<i class="ace-icon fa fa-expand"></i>
 				</a>
@@ -105,6 +102,7 @@
 		</div>
 		<div class="widget-body">
 			<div class="widget-main">
+				<a href="#" class="btn btn-xs btn-success"><i class="fa fa-file-excel-o"></i> Download Excel</a>
 				<div id="pesan" style="margin: 10px 5px;"></div>
 				<div class="table-responsive">
 					<table class="table table-bordered" cellspacing="0" width="100%">
@@ -163,18 +161,6 @@ var save_method;
 $(document).ready(function() {
 	reload_table();
 });
-	
-function add_plan()
-{
-    save_method = 'add';
-	$('#pesan-modal').empty();
-    $('#form')[0].reset();
-    $('.form-group').removeClass('has-error');
-    $('.input-group').removeClass('has-error');
-    $('.help-block').empty();
-    $('#modal_form').modal('show');
-    $('.modal-title').text('Add Plan');
-}
 
 function detail(id)
 {
