@@ -84,7 +84,14 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan <?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?></h5>
+			<h5 class="widget-title">
+				Training Plan Fiber Academy Pekalongan
+				<?php if(date('m',strtotime($this->input->post('ftgl_awal'))) == date('m',strtotime($this->input->post('ftgl_awal') . "+4 days"))) { ?>
+					<?= date('d',strtotime($this->input->post('ftgl_awal'))) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+				<?php } else { ?>
+					<?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+				<?php } ?>
+			</h5>
 			<div class="widget-toolbar">
 				<a href="#" data-action="fullscreen" class="orange2">
 					<i class="ace-icon fa fa-expand"></i>
@@ -112,9 +119,21 @@
 								<th rowspan="3">NAMA PENGAJAR</th>
 								<th rowspan="3">JENIS PELATIHAN</th>
 								<th rowspan="3">NAME OF TRAINING</th>
-								<th colspan="4">TGL</th>
+								<th colspan="4">
+									<?php if(date('m',strtotime($this->input->post('ftgl_awal'))) == date('m',strtotime($this->input->post('ftgl_awal') . "+4 days"))) { ?>
+										<?= date('d',strtotime($this->input->post('ftgl_awal'))) ?> - <?= custommediumdate_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+									<?php } else { ?>
+										<?= custommediumdate_indo($this->input->post('ftgl_awal')) ?> - <?= custommediumdate_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+									<?php } ?>
+								</th>
 								<th colspan="6">PARTICIPANTS</th>
-								<th colspan="5">BULAN TAHUN</th>
+								<th colspan="5">
+									<?php if(date('m',strtotime($this->input->post('ftgl_awal'))) == date('m',strtotime($this->input->post('ftgl_awal') . "+4 days"))) { ?>
+										<?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+									<?php } else { ?>
+										<?= bln_indo($this->input->post('ftgl_awal')) ?> - <?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+									<?php } ?>
+								</th>
 								<th rowspan="3">TOTAL PESERTA</th>
 								<th rowspan="3"><i class="fa fa-gear"></i></th>
 							</tr>
@@ -138,11 +157,11 @@
 								<th>BREVET PRAKTEK DAN ONLINE</th>
 								<th>PELATIHAN</th>
 								<th>NAMA MITRA</th>
-								<th>27</th>
-								<th>28</th>
-								<th>29</th>
-								<th>30</th>
-								<th>31</th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal'))) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+1 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+2 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+3 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+4 days")) ?></th>
 							</tr>
 						</thead>
 						<tbody id="tabel_trainingplan">

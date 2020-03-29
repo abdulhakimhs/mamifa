@@ -35,6 +35,18 @@ if ( ! function_exists('tgl_indo'))
         return $tanggal.' '.$bulan.' '.$tahun;
     }
 }
+
+if ( ! function_exists('bln_indo'))
+{
+    function bln_indo($tgl)
+    {
+        $ubah = gmdate($tgl, time()+60*60*8);
+        $pecah = explode("-",$ubah);
+        $bulan = bulan($pecah[1]);
+        $tahun = $pecah[0];
+        return $bulan.' '.$tahun;
+    }
+}
   
 if ( ! function_exists('bulan'))
 {
@@ -153,6 +165,19 @@ if ( ! function_exists('mediumdate_indo'))
         $bulan = medium_bulan($pecah[1]);
         $tahun = $pecah[0];
         return $tanggal.'-'.$bulan.'-'.$tahun;
+    }
+}
+
+if ( ! function_exists('custommediumdate_indo'))
+{
+    function custommediumdate_indo($tgl)
+    {
+        $ubah = gmdate($tgl, time()+60*60*8);
+        $pecah = explode("-",$ubah);
+        $tanggal = $pecah[2];
+        $bulan = medium_bulan($pecah[1]);
+        $tahun = $pecah[0];
+        return $tanggal.' '.$bulan.' '.$tahun;
     }
 }
   

@@ -103,6 +103,9 @@
 		                            <div class="col-md-9">
 		                                <select name="nama_mitra" class="form-control" required>
 											<option value="">-Pilih Mitra-</option>
+											<?php foreach ($mitra as $t) : ?>
+		                                		<option value="<?= $t['mitra_id'] ?>"><?= $t['nama_mitra'] ?></option>
+											<?php endforeach; ?>
 		                                </select>
 		                                <span class="help-block"></span>
 		                            </div>
@@ -237,21 +240,29 @@ $(document).ready(function() {
 		tglAkhir.setDate(tglAkhir.getDate()+4); 
 		$('#ftgl_akhir').datepicker('setDate', tglAkhir);
 	});
-});
 
-var save_method;
+	$("input").change(function(){
+		if ($(this).attr('name') == 'nama_pengajar') {
+			$(this).parent().parent().removeClass('has-error');
+			$(this).parent().find('.help-block').empty();
+        } else {
+			$(this).parent().removeClass('has-error');
+        }
+	});
+
+	$("select").change(function(){
+		$(this).parent().parent().removeClass('has-error');
+		$(this).parent().find('.help-block').empty();
+	});
+});
 	
 function save()
 {
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
     var url;
- 
-    if(save_method == 'add') {
-        url = "<?php echo site_url('admin/training_plan/ajax_add')?>";
-    } else {
-        url = "<?php echo site_url('admin/training_plan/ajax_update')?>";
-	}
+
+	url = "<?php echo site_url('admin/training_plan/ajax_add')?>";
  
     // ajax adding data to database
     $.ajax({
@@ -265,7 +276,7 @@ function save()
             if(data.status) //if success close modal and reload ajax table
             {
                 document.getElementById('pesan-modal').innerHTML = data.pesan;
-                reload_table();
+				setTimeout(function(){ $('#pesan-modal').empty(); }, 3000);
             }
             else
             {
@@ -282,7 +293,6 @@ function save()
             }
             $('#btnSave').text('save'); //change button text
             $('#btnSave').attr('disabled',false); //set button enable 
- 
  
         },
         error: function (jqXHR, textStatus, errorThrown)

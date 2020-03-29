@@ -11,16 +11,8 @@ class Training_plan extends MY_Controller {
 
 	public function index()
 	{
-		$this->load->model('masters/m_mitra');
-		$this->load->model('masters/m_pelatihan');
-		$this->load->model('masters/m_training');
-
 		$data['title'] 			= 'ADMIN MAMI FA';
 		$data['subtitle'] 		= 'Training Plan';
-
-		$data['mitra'] 		= $this->m_mitra->ambil()->result_array();
-		$data['pelatihan'] 	= $this->m_pelatihan->ambil()->result_array();
-		$data['training'] 	= $this->m_training->ambil()->result_array();
 
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/training_plan/search',$data,true)
@@ -29,8 +21,17 @@ class Training_plan extends MY_Controller {
 
 	public function add()
 	{
+		$this->load->model('masters/m_mitra');
+		$this->load->model('masters/m_pelatihan');
+		$this->load->model('masters/m_training');
+
 		$data['title'] 			= 'ADMIN MAMI FA';
 		$data['subtitle'] 		= 'Add Training Plan';
+
+		$data['mitra'] 		= $this->m_mitra->ambil()->result_array();
+		$data['pelatihan'] 	= $this->m_pelatihan->ambil()->result_array();
+		$data['training'] 	= $this->m_training->ambil()->result_array();
+
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/training_plan/add',$data,true)
 		]);
@@ -60,13 +61,13 @@ class Training_plan extends MY_Controller {
 		$data = [
 			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
 			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
-			'mitra_id'  		=> $this->input->post('mitra'),
+			'nama_pengajar'		=> $this->input->post('nama_pengajar'),
 			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
 			'not_id'  			=> $this->input->post('name_of_training'),
 			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),
 			'ta_pelatihan'  	=> $this->input->post('ta_pelatihan') == '' ? null : $this->input->post('ta_pelatihan'),
 			'mitra_pelatihan'  	=> $this->input->post('mitra_pelatihan') == '' ? null : $this->input->post('mitra_pelatihan'),
-			'nama_mitra'  		=> $this->input->post('nama_mitra') == '' ? null : $this->input->post('nama_mitra'),
+			'mitra_id'  		=> $this->input->post('nama_mitra') == '' ? null : $this->input->post('nama_mitra'),
 			'staff_teknisi'  	=> $this->input->post('staff_teknisi') == null ? 0 : 1,
 			'team_leader'  		=> $this->input->post('team_leader') == null ? 0 : 1,
 			'officer'  			=> $this->input->post('officer') == null ? 0 : 1,
@@ -109,16 +110,17 @@ class Training_plan extends MY_Controller {
 	public function ajax_update()
 	{
 		$this->_validate();
+		
 		$data = [
 			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
 			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
-			'mitra_id'  		=> $this->input->post('mitra'),
+			'nama_pengajar'		=> $this->input->post('nama_pengajar'),
 			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
 			'not_id'  			=> $this->input->post('name_of_training'),
 			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),
 			'ta_pelatihan'  	=> $this->input->post('ta_pelatihan') == '' ? null : $this->input->post('ta_pelatihan'),
 			'mitra_pelatihan'  	=> $this->input->post('mitra_pelatihan') == '' ? null : $this->input->post('mitra_pelatihan'),
-			'nama_mitra'  		=> $this->input->post('nama_mitra') == '' ? null : $this->input->post('nama_mitra'),
+			'mitra_id'  		=> $this->input->post('nama_mitra') == '' ? null : $this->input->post('nama_mitra'),
 			'staff_teknisi'  	=> $this->input->post('staff_teknisi') == null ? 0 : 1,
 			'team_leader'  		=> $this->input->post('team_leader') == null ? 0 : 1,
 			'officer'  			=> $this->input->post('officer') == null ? 0 : 1,
@@ -131,6 +133,7 @@ class Training_plan extends MY_Controller {
 			'kamis'  			=> $this->input->post('kamis') == null ? 0 : 1,
 			'jumat'  			=> $this->input->post('jumat') == null ? 0 : 1
 		];
+
 		$this->m_trainingplan->update(array('training_plan_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(
@@ -147,10 +150,10 @@ class Training_plan extends MY_Controller {
 		$data['inputerror'] = array();
 		$data['status'] = TRUE;
 
-		if($this->input->post('mitra') == '')
+		if($this->input->post('nama_pengajar') == '')
 		{
-			$data['inputerror'][] = 'mitra';
-			$data['error_string'][] = 'Mitra is required';
+			$data['inputerror'][] = 'nama_pengajar';
+			$data['error_string'][] = 'Nama Pengajar is required';
 			$data['status'] = FALSE;
 		}
 
