@@ -144,10 +144,8 @@ class Naker extends MY_Controller {
 	private function _do_upload()
     {
         $config['upload_path']          = './assets/backend/images/bpjs/';
-        $config['allowed_types']        = 'gif|jpg|jpeg|png';
+        $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 5000; //set max size allowed in Kilobyte
-        $config['max_width']            = 1000; // set max width image allowed
-        $config['max_height']           = 1000; // set max height allowed
         $config['file_name']            = $this->input->post('nik'); //just milisecond timestamp fot unique name
  
 		// $this->load->library('upload', $config);

@@ -51,10 +51,17 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-2 col-form-label"><b>Koordinat / Nama ODP</b></label>
+    <label class="col-sm-2 col-form-label"><b>Koordinat</b></label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" name="odp_koordinat" id="odp_koordinat">
-      <?= form_error('odp_koordinat', '<div class="error">', '</div>'); ?>
+      <input type="text" class="form-control" name="koordinat" id="koordinat">
+      <?= form_error('koordinat', '<div class="error">', '</div>'); ?>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label"><b>ODP</b></label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="odp" id="odp">
+      <?= form_error('odp', '<div class="error">', '</div>'); ?>
     </div>
   </div>
   <div class="form-group row">

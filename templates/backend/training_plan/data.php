@@ -308,18 +308,6 @@ function delete_data(id)
 						<div id="pesan-modal" style="margin: 10px 5px;"></div>
                     	<div class="row">
                     		<div class="col-lg-3">
-                    			<div class="form-group">
-		                            <label class="control-label col-md-3"><b>Kelas</b></label>
-		                            <div class="col-md-9">
-		                                <select name="kelas" class="form-control" required>
-											<option value="">-Pilih Kelas-</option>
-											<?php foreach ($kelas as $k) : ?>
-		                                		<option value="<?= $k['kelas_id'] ?>"><?= $k['nama_kelas'] ?></option>
-											<?php endforeach; ?>
-		                                </select>
-		                                <span class="help-block"></span>
-		                            </div>
-		                        </div>
 		                        <div class="form-group">
 		                            <label class="control-label col-md-3"><b>Jenis Pelatihan</b></label>
 		                            <div class="col-md-9">
@@ -344,22 +332,29 @@ function delete_data(id)
 		                                <span class="help-block"></span>
 		                            </div>
 		                        </div>
+		                        <div class="form-group">
+		                            <label class="control-label col-md-3"><b>Nama Pengajar</b></label>
+		                            <div class="col-md-9">
+		                                <input type="text" name="nama_pengajar" class="form-control">
+		                                <span class="help-block"></span>
+		                            </div>
+		                        </div>
                     		</div>
                     		<div class="col-lg-3">
                     			<div class="form-group">
 		                            <label class="control-label col-md-3" style="border-bottom: 1px solid #eee; font-size: 20px;"><b>TA</b></label>
 		                        </div>
 		                        <div class="form-group">
-		                            <label class="control-label col-md-3"><b>Brevet, Praktek, Online</b></label>
+		                            <label class="control-label col-md-3"><b>Pelatihan</b></label>
 		                            <div class="col-md-9">
-		                                <input type="number" name="ta_bop" class="form-control">
+		                                <input type="number" name="ta_pelatihan" class="form-control">
 		                                <span class="help-block"></span>
 		                            </div>
 		                        </div>
 		                        <div class="form-group">
-		                            <label class="control-label col-md-3"><b>Pelatihan</b></label>
+		                            <label class="control-label col-md-3"><b>Brevet, Praktek, Online</b></label>
 		                            <div class="col-md-9">
-		                                <input type="number" name="ta_pelatihan" class="form-control">
+		                                <input type="number" name="ta_bop" class="form-control">
 		                                <span class="help-block"></span>
 		                            </div>
 		                        </div>
@@ -376,7 +371,9 @@ function delete_data(id)
 		                        <div class="form-group">
 		                            <label class="control-label col-md-3"><b>Nama Mitra</b></label>
 		                            <div class="col-md-9">
-		                                <input type="text" name="nama_mitra" class="form-control">
+		                                <select name="nama_mitra" class="form-control" required>
+											<option value="">-Pilih Mitra-</option>
+		                                </select>
 		                                <span class="help-block"></span>
 		                            </div>
 		                        </div>
