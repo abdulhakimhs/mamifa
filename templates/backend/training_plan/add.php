@@ -9,7 +9,7 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan</h5>
+			<h5 class="widget-title">Add Training Plan Fiber Academy Pekalongan</h5>
 			<div class="widget-toolbar">
 
 				<a href="#" data-action="fullscreen" class="orange2">
@@ -32,44 +32,7 @@
 		<div class="widget-body">
 			<div class="widget-main">
 				<div id="pesan" style="margin: 10px 5px;"></div>
-				
-			</div>
-		</div>
-	</div>
-</div>
-
-<script type="text/javascript">
-
-var save_method;
-
-$(document).ready(function() {
-	add_plan();
-});
-	
-function add_plan()
-{
-    save_method = 'add';
-	$('#pesan-modal').empty();
-    $('#form')[0].reset();
-    $('.form-group').removeClass('has-error');
-    $('.input-group').removeClass('has-error');
-    $('.help-block').empty();
-    $('#modal_form').modal('show');
-    $('.modal-title').text('Add Plan');
-}
-
-</script>
-
-<!-- Bootstrap modal -->
-<div class="modal fade" id="modal_form" role="dialog">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Plan Form</h3>
-            </div>
-            <div class="modal-body form">
-                <form action="#" id="form" class="form-horizontal">
+				<form action="#" id="form" class="form-horizontal" autocomplete="off">
                     <input type="hidden" value="" name="id"/> 
                     <div class="form-body">
 						<div id="pesan-modal" style="margin: 10px 5px;"></div>
@@ -254,27 +217,82 @@ function add_plan()
                     	</div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
                 <button type="button" id="btnSave" onclick="save()" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!-- End Bootstrap modal -->
+			</div>
+		</div>
+	</div>
+</div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('.date-picker').datepicker({
-	        autoclose: true,
-	        todayHighlight: true
-	    });
 
-		$('#ftgl_awal').change(function() {
-			var tglAkhir = $('#ftgl_awal').datepicker('getDate', '+4d'); 
-			tglAkhir.setDate(tglAkhir.getDate()+4); 
-			$('#ftgl_akhir').datepicker('setDate', tglAkhir);
-		});
+$(document).ready(function() {
+	$('.date-picker').datepicker({
+        autoclose: true,
+        todayHighlight: true
+    });
+
+	$('#ftgl_awal').change(function() {
+		var tglAkhir = $('#ftgl_awal').datepicker('getDate', '+4d'); 
+		tglAkhir.setDate(tglAkhir.getDate()+4); 
+		$('#ftgl_akhir').datepicker('setDate', tglAkhir);
 	});
+});
+
+var save_method;
+	
+function save()
+{
+    $('#btnSave').text('saving...'); //change button text
+    $('#btnSave').attr('disabled',true); //set button disable 
+    var url;
+ 
+    if(save_method == 'add') {
+        url = "<?php echo site_url('admin/training_plan/ajax_add')?>";
+    } else {
+        url = "<?php echo site_url('admin/training_plan/ajax_update')?>";
+	}
+ 
+    // ajax adding data to database
+    $.ajax({
+        url : url,
+        type: "POST",
+        data: $('#form').serialize(),
+        dataType: "JSON",
+        success: function(data)
+        {
+ 
+            if(data.status) //if success close modal and reload ajax table
+            {
+                document.getElementById('pesan-modal').innerHTML = data.pesan;
+                reload_table();
+            }
+            else
+            {
+                for (var i = 0; i < data.inputerror.length; i++) 
+                {
+					if(data.inputerror[i] == 'ftgl_awal' || data.inputerror[i] == 'ftgl_akhir') {
+						$('[name="'+data.inputerror[i]+'"]').parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                    	// $('[name="'+data.inputerror[i]+'"]').prev().text(data.error_string[i]); //select span help-block class set text error string
+					} else {
+						$('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                    	$('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+					}
+                }
+            }
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+        }
+    });
+}
+
 </script>
