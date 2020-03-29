@@ -64,7 +64,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" readonly />
+											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" disabled />
 	                                        <span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>
@@ -84,7 +84,7 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan <?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo($this->input->post('ftgl_akhir')) ?></h5>
+			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan <?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?></h5>
 			<div class="widget-toolbar">
 				<a href="javascript:void(0)" onclick="add_plan()">
 					<i class="ace-icon fa fa-plus"></i>
