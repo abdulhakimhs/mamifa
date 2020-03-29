@@ -64,7 +64,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
+											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" readonly />
 	                                        <span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>

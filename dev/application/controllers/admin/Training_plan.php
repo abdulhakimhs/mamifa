@@ -36,9 +36,20 @@ class Training_plan extends MY_Controller {
 		]);
 	}
 
-	public function ajax_get()
+	public function search_plan()
 	{
-		$data = $this->m_trainingplan->ambil()->result();
+		$data['title'] 			= 'ADMIN MAMI FA';
+		$data['subtitle'] 		= 'Show Training Plan';
+
+		$this->load->view('backend/template',[
+			'content' => $this->load->view('backend/training_plan/show',$data,true)
+		]);
+	}
+
+	public function ajax_get($tglawal)
+	{
+		$data = $this->m_trainingplan->ambil($tglawal)->result();
+
 		echo json_encode($data);
 	}
 

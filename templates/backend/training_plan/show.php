@@ -64,7 +64,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
+											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" readonly />
 	                                        <span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>
@@ -84,7 +84,7 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan 2 Februari 2020 - 6 Februari 2020</h5>
+			<h5 class="widget-title">Training Plan Fiber Academy Pekalongan <?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo($this->input->post('ftgl_akhir')) ?></h5>
 			<div class="widget-toolbar">
 				<a href="javascript:void(0)" onclick="add_plan()">
 					<i class="ace-icon fa fa-plus"></i>
@@ -111,7 +111,7 @@
 						<thead>
 							<tr>
 								<th rowspan="3" valign="center">NO</th>
-								<th rowspan="3">MITRA MASTER</th>
+								<th rowspan="3">NAMA PENGAJAR</th>
 								<th rowspan="3">JENIS PELATIHAN</th>
 								<th rowspan="3">NAME OF TRAINING</th>
 								<th colspan="4">TGL</th>
@@ -229,7 +229,7 @@ function reload_table()
 {
     //Ajax Load data from ajax
     $.ajax({
-        url : "<?php echo site_url('admin/training_plan/ajax_get')?>",
+        url : "<?php echo site_url('admin/training_plan/ajax_get/'.$this->input->post('ftgl_awal'))?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -243,7 +243,7 @@ function reload_table()
 				total += (data[i].mitra_pelatihan == null ? 0 : parseInt(data[i].mitra_pelatihan));
 				isi += '<tr>'+
 							'<td>'+ no +'</td>'+
-							'<td>'+ data[i].nama_mitra +'</td>'+
+							'<td>'+ data[i].nama_pengajar +'</td>'+
 							'<td>'+ data[i].jenis_pelatihan +'</td>'+
 							'<td>'+ data[i].name_of_training +'</td>'+
 							'<td>'+ (data[i].ta_pelatihan == null ? '' : data[i].ta_pelatihan) +'</td>'+
