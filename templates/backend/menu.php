@@ -106,11 +106,31 @@
           </li>
 
           <li class="hover">
-            <a href="<?= site_url('admin/training_plan'); ?>">
+            <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-calendar"></i>
-              <span class="menu-text"> Training Plan </span>
+              <span class="menu-text">
+                Training Plan
+              </span>
+              <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>
+
+            <ul class="submenu">
+              <li class="hover">
+                <a href="<?= site_url('admin/training_plan/add'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Add Plan
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/training_plan'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Show Plan
+                </a>
+                <b class="arrow"></b>
+              </li>
+            </ul>
           </li>
 
           <li class="hover">

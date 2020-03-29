@@ -23,7 +23,16 @@ class Training_plan extends MY_Controller {
 		$data['training'] 	= $this->m_training->ambil()->result_array();
 
 		$this->load->view('backend/template',[
-			'content' => $this->load->view('backend/training_plan/data',$data,true)
+			'content' => $this->load->view('backend/training_plan/search',$data,true)
+		]);
+	}
+
+	public function add()
+	{
+		$data['title'] 			= 'ADMIN MAMI FA';
+		$data['subtitle'] 		= 'Add Training Plan';
+		$this->load->view('backend/template',[
+			'content' => $this->load->view('backend/training_plan/add',$data,true)
 		]);
 	}
 

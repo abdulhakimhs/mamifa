@@ -104,7 +104,8 @@ function detail(id)
 			$('[name="nama_lengkap"]').val(data.nama_lengkap);
             $('[name="jenis_lap_id"]').val(data.jenis_laporan);
             $('[name="lokasi_temuan"]').val(data.lokasi_temuan);
-			$('[name="odp_koordinat"]').val(data.odp_koordinat);
+			$('[name="odp"]').val(data.odp);
+            $('[name="koordinat"]').val(data.koordinat);
 			$('[name="saran_perbaikan"]').val(data.saran_perbaikan);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Follow Up'); // Set title to Bootstrap modal title
@@ -257,10 +258,17 @@ function delete_data(id)
 								<div class="form-group">
 									<label class="control-label col-md-3">ODP</label>
 									<div class="col-md-9">
-										<input name="odp_koordinat" class="form-control" type="text" readonly>
+										<input name="odp" class="form-control" type="text" readonly>
 										<span class="help-block"></span>
 									</div>
 								</div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Koordinat</label>
+                                    <div class="col-md-9">
+                                        <input name="koordinat" class="form-control" type="text" readonly>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
 								<div class="form-group">
 									<label class="control-label col-md-3">Saran Perbaikan</label>
 									<div class="col-md-9">
