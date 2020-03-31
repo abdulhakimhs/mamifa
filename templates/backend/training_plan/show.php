@@ -602,6 +602,12 @@ function delete_data(id)
 			todayHighlight: true
 		});
 
+		$('#ftgl_awal_search').change(function() {
+			var tglAkhir = $('#ftgl_awal_search').datepicker('getDate', '+4d'); 
+			tglAkhir.setDate(tglAkhir.getDate()+4); 
+			$('#ftgl_akhir_search').datepicker('setDate', tglAkhir);
+		});
+
 		$('#ftgl_awal').change(function() {
 			var tglAkhir = $('#ftgl_awal').datepicker('getDate', '+4d'); 
 			tglAkhir.setDate(tglAkhir.getDate()+4); 
