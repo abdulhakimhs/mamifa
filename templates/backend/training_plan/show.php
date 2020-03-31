@@ -60,7 +60,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-	                                        <input class="form-control date-picker" name="ftgl_awal" id="ftgl_awal" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
+	                                        <input class="form-control date-picker" name="ftgl_awal_search" id="ftgl_awal_search" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
 											<span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>
@@ -76,7 +76,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" disabled />
+											<input class="form-control date-picker" name="ftgl_akhir_search" id="ftgl_akhir_search" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" disabled />
 	                                        <span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>
@@ -98,10 +98,10 @@
 		<div class="widget-header">
 			<h5 class="widget-title">
 				Training Plan Fiber Academy Pekalongan
-				<?php if(date('m',strtotime($this->input->post('ftgl_awal'))) == date('m',strtotime($this->input->post('ftgl_awal') . "+4 days"))) { ?>
-					<?= date('d',strtotime($this->input->post('ftgl_awal'))) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+				<?php if(date('m',strtotime($this->input->post('ftgl_awal_search'))) == date('m',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) { ?>
+					<?= date('d',strtotime($this->input->post('ftgl_awal_search'))) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) ?>
 				<?php } else { ?>
-					<?= date_indo($this->input->post('ftgl_awal')) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+					<?= date_indo($this->input->post('ftgl_awal_search')) ?> - <?= date_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) ?>
 				<?php } ?>
 			</h5>
 			<div class="widget-toolbar">
@@ -131,18 +131,18 @@
 								<th rowspan="3">JENIS PELATIHAN</th>
 								<th rowspan="3">NAME OF TRAINING</th>
 								<th colspan="4">
-									<?php if(date('m',strtotime($this->input->post('ftgl_awal'))) == date('m',strtotime($this->input->post('ftgl_awal') . "+4 days"))) { ?>
-										<?= date('d',strtotime($this->input->post('ftgl_awal'))) ?> - <?= custommediumdate_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+									<?php if(date('m',strtotime($this->input->post('ftgl_awal_search'))) == date('m',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) { ?>
+										<?= date('d',strtotime($this->input->post('ftgl_awal_search'))) ?> - <?= custommediumdate_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) ?>
 									<?php } else { ?>
-										<?= custommediumdate_indo($this->input->post('ftgl_awal')) ?> - <?= custommediumdate_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+										<?= custommediumdate_indo($this->input->post('ftgl_awal_search')) ?> - <?= custommediumdate_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) ?>
 									<?php } ?>
 								</th>
 								<th colspan="6">PARTICIPANTS</th>
 								<th colspan="5">
-									<?php if(date('m',strtotime($this->input->post('ftgl_awal'))) == date('m',strtotime($this->input->post('ftgl_awal') . "+4 days"))) { ?>
-										<?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+									<?php if(date('m',strtotime($this->input->post('ftgl_awal_search'))) == date('m',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) { ?>
+										<?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) ?>
 									<?php } else { ?>
-										<?= bln_indo($this->input->post('ftgl_awal')) ?> - <?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
+										<?= bln_indo($this->input->post('ftgl_awal_search')) ?> - <?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal_search') . "+4 days"))) ?>
 									<?php } ?>
 								</th>
 								<th rowspan="3">NAMA PENGAJAR</th>
@@ -169,11 +169,11 @@
 								<th>BREVET PRAKTEK DAN ONLINE</th>
 								<th>PELATIHAN</th>
 								<th>NAMA MITRA</th>
-								<th><?= date('d',strtotime($this->input->post('ftgl_awal'))) ?></th>
-								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+1 days")) ?></th>
-								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+2 days")) ?></th>
-								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+3 days")) ?></th>
-								<th><?= date('d',strtotime($this->input->post('ftgl_awal') . "+4 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal_search'))) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal_search') . "+1 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal_search') . "+2 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal_search') . "+3 days")) ?></th>
+								<th><?= date('d',strtotime($this->input->post('ftgl_awal_search') . "+4 days")) ?></th>
 							</tr>
 						</thead>
 						<tbody id="tabel_trainingplan">
@@ -247,7 +247,7 @@ function reload_table()
 {
     //Ajax Load data from ajax
     $.ajax({
-        url : "<?php echo site_url('admin/training_plan/ajax_get/'.$this->input->post('ftgl_awal'))?>",
+        url : "<?php echo site_url('admin/training_plan/ajax_get/'.$this->input->post('ftgl_awal_search'))?>",
         type: "GET",
         dataType: "JSON",
         success: function(data)
@@ -332,6 +332,7 @@ function save()
             {
                 document.getElementById('pesan-modal').innerHTML = data.pesan;
                 reload_table();
+				setTimeout(function(){ $('#pesan-modal').empty(); }, 3000);
             }
             else
             {
@@ -597,14 +598,28 @@ function delete_data(id)
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.date-picker').datepicker({
-	        autoclose: true,
-	        todayHighlight: true
-	    });
+			autoclose: true,
+			todayHighlight: true
+		});
 
 		$('#ftgl_awal').change(function() {
 			var tglAkhir = $('#ftgl_awal').datepicker('getDate', '+4d'); 
 			tglAkhir.setDate(tglAkhir.getDate()+4); 
 			$('#ftgl_akhir').datepicker('setDate', tglAkhir);
+		});
+
+		$("input").change(function(){
+			if ($(this).attr('name') == 'nama_pengajar') {
+				$(this).parent().parent().removeClass('has-error');
+				$(this).parent().find('.help-block').empty();
+			} else {
+				$(this).parent().removeClass('has-error');
+			}
+		});
+
+		$("select").change(function(){
+			$(this).parent().parent().removeClass('has-error');
+			$(this).parent().find('.help-block').empty();
 		});
 	});
 </script>

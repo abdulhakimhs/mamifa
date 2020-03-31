@@ -48,7 +48,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-	                                        <input class="form-control date-picker" name="ftgl_awal" id="ftgl_awal" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
+	                                        <input class="form-control date-picker" name="ftgl_awal_search" id="ftgl_awal_search" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
 											<span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>
@@ -64,7 +64,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-											<input class="form-control date-picker" name="ftgl_akhir" id="ftgl_akhir" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" disabled />
+											<input class="form-control date-picker" name="ftgl_akhir_search" id="ftgl_akhir_search" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" disabled />
 	                                        <span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>
@@ -89,10 +89,10 @@
 	        todayHighlight: true
 	    });
 
-		$('#ftgl_awal').change(function() {
-			var tglAkhir = $('#ftgl_awal').datepicker('getDate', '+4d'); 
+		$('#ftgl_awal_search').change(function() {
+			var tglAkhir = $('#ftgl_awal_search').datepicker('getDate', '+4d'); 
 			tglAkhir.setDate(tglAkhir.getDate()+4); 
-			$('#ftgl_akhir').datepicker('setDate', tglAkhir);
+			$('#ftgl_akhir_search').datepicker('setDate', tglAkhir);
 		});
 	});
 </script>
