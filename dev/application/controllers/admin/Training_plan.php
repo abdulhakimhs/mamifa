@@ -7,6 +7,9 @@ class Training_plan extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('m_trainingplan');
+		$this->load->model('masters/m_mitra');
+		$this->load->model('masters/m_pelatihan');
+		$this->load->model('masters/m_training');
 	}
 
 	public function index()
@@ -21,17 +24,11 @@ class Training_plan extends MY_Controller {
 
 	public function add()
 	{
-		$this->load->model('masters/m_mitra');
-		$this->load->model('masters/m_pelatihan');
-		$this->load->model('masters/m_training');
-
 		$data['title'] 			= 'ADMIN MAMI FA';
 		$data['subtitle'] 		= 'Add Training Plan';
-
-		$data['mitra'] 		= $this->m_mitra->ambil()->result_array();
-		$data['pelatihan'] 	= $this->m_pelatihan->ambil()->result_array();
-		$data['training'] 	= $this->m_training->ambil()->result_array();
-
+		$data['mitra'] 			= $this->m_mitra->ambil()->result_array();
+		$data['pelatihan'] 		= $this->m_pelatihan->ambil()->result_array();
+		$data['training'] 		= $this->m_training->ambil()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/training_plan/add',$data,true)
 		]);
@@ -41,7 +38,9 @@ class Training_plan extends MY_Controller {
 	{
 		$data['title'] 			= 'ADMIN MAMI FA';
 		$data['subtitle'] 		= 'Show Training Plan';
-
+		$data['mitra'] 			= $this->m_mitra->ambil()->result_array();
+		$data['pelatihan'] 		= $this->m_pelatihan->ambil()->result_array();
+		$data['training'] 		= $this->m_training->ambil()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/training_plan/show',$data,true)
 		]);
@@ -61,7 +60,7 @@ class Training_plan extends MY_Controller {
 		$data = [
 			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
 			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
-			'nama_pengajar'		=> $this->input->post('nama_pengajar'),
+			'nama_pengajar'		=> strtoupper($this->input->post('nama_pengajar')),
 			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
 			'not_id'  			=> $this->input->post('name_of_training'),
 			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),

@@ -7,6 +7,18 @@
 		text-align: center;
 		vertical-align: middle !important;
 	}
+	.red {
+	  background-color: #f44336 !important;
+	  color: white !important;
+	}
+	.green {
+	  background-color: #8bc34a !important;
+	  color: white !important;
+	}
+	.yellow {
+	  background-color: #ffeb3b !important;
+	  color: black !important;
+	}
 	@media (min-width: 768px) {
       .modal-xl {
         width: 90%;
@@ -112,11 +124,10 @@
 				<a href="#" class="btn btn-xs btn-success"><i class="fa fa-file-excel-o"></i> Download Excel</a>
 				<div id="pesan" style="margin: 10px 5px;"></div>
 				<div class="table-responsive">
-					<table class="table table-bordered" cellspacing="0" width="100%">
+					<table class="table table-bordered" cellspacing="0" width="100%" id="table">
 						<thead>
 							<tr>
 								<th rowspan="3" valign="center">NO</th>
-								<th rowspan="3">NAMA PENGAJAR</th>
 								<th rowspan="3">JENIS PELATIHAN</th>
 								<th rowspan="3">NAME OF TRAINING</th>
 								<th colspan="4">
@@ -134,6 +145,7 @@
 										<?= bln_indo($this->input->post('ftgl_awal')) ?> - <?= bln_indo(date('Y-m-d',strtotime($this->input->post('ftgl_awal') . "+4 days"))) ?>
 									<?php } ?>
 								</th>
+								<th rowspan="3">NAMA PENGAJAR</th>
 								<th rowspan="3">TOTAL PESERTA</th>
 								<th rowspan="3"><i class="fa fa-gear"></i></th>
 							</tr>
@@ -207,7 +219,8 @@ function detail(id)
 			$('[name="ta_bop"]').val(data.ta_bop);
 			$('[name="ta_pelatihan"]').val(data.ta_pelatihan);
 			$('[name="mitra_pelatihan"]').val(data.mitra_pelatihan);
-			$('[name="nama_mitra"]').val(data.nama_mitra);
+			$('[name="nama_mitra"]').val(data.mitra_id);
+			$('[name="nama_pengajar"]').val(data.nama_pengajar);
 			data.staff_teknisi == 0 ? '' : $('[name="staff_teknisi"]').prop('checked', true);
 			data.team_leader == 0 ? '' : $('[name="team_leader"]').prop('checked', true);
 			data.officer == 0 ? '' : $('[name="officer"]').prop('checked', true);
@@ -242,13 +255,13 @@ function reload_table()
 			var isi = '';
 			var no = 1;
 			var total = 0;
+			var table = document.getElementById("tabel_trainingplan");
 			for(var i=0; i<data.length; i++){
 				total += (data[i].ta_bop == null ? 0 : parseInt(data[i].ta_bop));
 				total += (data[i].ta_pelatihan == null ? 0 : parseInt(data[i].ta_pelatihan));
 				total += (data[i].mitra_pelatihan == null ? 0 : parseInt(data[i].mitra_pelatihan));
-				isi += '<tr>'+
+				isi += '<tr id="'+i+'">'+
 							'<td>'+ no +'</td>'+
-							'<td>'+ data[i].nama_pengajar +'</td>'+
 							'<td>'+ data[i].jenis_pelatihan +'</td>'+
 							'<td>'+ data[i].name_of_training +'</td>'+
 							'<td>'+ (data[i].ta_pelatihan == null ? '' : data[i].ta_pelatihan) +'</td>'+
@@ -266,6 +279,7 @@ function reload_table()
 							'<td>'+ (data[i].rabu == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>'+ (data[i].kamis == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
 							'<td>'+ (data[i].jumat == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ data[i].nama_pengajar +'</td>'+
 							'<td>'+ total +'</td>'+
 							'<td><a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('+ "'" + data[i].training_plan_id + "'" +')"><i class="fa fa-edit"></i></a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data(' + "'" + data[i].training_plan_id + "'" + ')"><i class="fa fa-trash"></i></a></td>'+
 						'</tr>';
@@ -273,7 +287,18 @@ function reload_table()
 				total = 0;
 			}
 			$('#tabel_trainingplan').html(isi);
- 
+			for(var i=0; i<data.length; i++){
+				var peserta = table.rows[i].cells[19].innerHTML;
+				if (peserta < 15) {
+					$(table.rows[i]).addClass("red");
+				}
+				else if (peserta >= 15 && peserta <=20) {
+					$(table.rows[i]).addClass("green");
+				}
+				else{
+					$(table.rows[i]).addClass("yellow");
+				}
+			}
         },
         error: function (jqXHR, textStatus, errorThrown)
         {
@@ -313,11 +338,10 @@ function save()
                 for (var i = 0; i < data.inputerror.length; i++) 
                 {
 					if(data.inputerror[i] == 'ftgl_awal' || data.inputerror[i] == 'ftgl_akhir') {
-						$('[name="'+data.inputerror[i]+'"]').parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    	// $('[name="'+data.inputerror[i]+'"]').prev().text(data.error_string[i]); //select span help-block class set text error string
+						$('[name="'+data.inputerror[i]+'"]').parent().addClass('has-error');
 					} else {
-						$('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    	$('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+						$('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error');
+                    	$('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]);
 					}
                 }
             }
@@ -443,6 +467,9 @@ function delete_data(id)
 		                            <div class="col-md-9">
 		                                <select name="nama_mitra" class="form-control" required>
 											<option value="">-Pilih Mitra-</option>
+											<?php foreach ($mitra as $t) : ?>
+		                                		<option value="<?= $t['mitra_id'] ?>"><?= $t['nama_mitra'] ?></option>
+											<?php endforeach; ?>
 		                                </select>
 		                                <span class="help-block"></span>
 		                            </div>

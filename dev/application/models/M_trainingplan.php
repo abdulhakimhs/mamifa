@@ -20,7 +20,7 @@ class M_trainingplan extends CI_Model
     public function get_by_id($id)
     {
         $this->db->from('tb_training_plan');
-        $this->db->join('tb_mitra', 'tb_mitra.mitra_id = tb_training_plan.mitra_id');
+        $this->db->join('tb_mitra', 'tb_mitra.mitra_id = tb_training_plan.mitra_id','left');
         $this->db->join('tb_pelatihan', 'tb_pelatihan.pelatihan_id = tb_training_plan.pelatihan_id');
         $this->db->join('tb_name_of_training', 'tb_name_of_training.not_id = tb_training_plan.not_id');
         $this->db->where('training_plan_id',$id);
