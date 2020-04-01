@@ -230,7 +230,7 @@ class Training_plan extends MY_Controller {
           )
         );
         
-        $style_row = array(
+        $style_row_normal = array(
           'alignment' => array(
             'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
           ),
@@ -241,6 +241,19 @@ class Training_plan extends MY_Controller {
             'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
           )
 		);
+
+		$style_row_tengah = array(
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+			),
+			'borders' => array(
+			  'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			  'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			  'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			  'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+			)
+		  );
 		
 		//Set Judul
 		$excel->setActiveSheetIndex(0)->setCellValue('A1', "TRAINING PLAN $title_date");
@@ -264,6 +277,7 @@ class Training_plan extends MY_Controller {
 		$excel->getActiveSheet()->mergeCells('S2:S4'); // NAMA PENGAJAR
 		$excel->getActiveSheet()->mergeCells('T2:T4'); // TOTAL PESERTA
 		
+		//Set Heading
         $excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
         $excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
         $excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
@@ -296,27 +310,28 @@ class Training_plan extends MY_Controller {
         $excel->setActiveSheetIndex(0)->setCellValue('Q4', date('d',strtotime($ftgl_awal_search . "+3 days")));
         $excel->setActiveSheetIndex(0)->setCellValue('R4', date('d',strtotime($ftgl_awal_search . "+4 days")));
         $excel->setActiveSheetIndex(0)->setCellValue('S2', "NAMA PENGAJAR");
-        $excel->setActiveSheetIndex(0)->setCellValue('T2', "TOTAL PESERTA");
-
-        $excel->getActiveSheet()->getStyle('A1')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('A2')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('B2')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('C2')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('D2')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('D3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('F3')->applyFromArray($style_col);
+		$excel->setActiveSheetIndex(0)->setCellValue('T2', "TOTAL PESERTA");
+		
+		//Set Style Heading
+        $excel->getActiveSheet()->getStyle('A1:T1')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('A2:A4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('B2:B4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('C2:C4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('D2:G2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('D3:E3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('F3:G3')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('D4')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('E4')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('F4')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('G4')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('H2')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('H3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('I3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('J3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('K3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('L3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('M3')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('N2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('H2:M2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('H3:H4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('I3:I4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('J3:J4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('K3:K4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('L3:L4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('M3:M4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('N2:R2')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('N3')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('O3')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('P3')->applyFromArray($style_col);
@@ -327,75 +342,84 @@ class Training_plan extends MY_Controller {
         $excel->getActiveSheet()->getStyle('P4')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('Q4')->applyFromArray($style_col);
         $excel->getActiveSheet()->getStyle('R4')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('S2')->applyFromArray($style_col);
-        $excel->getActiveSheet()->getStyle('T2')->applyFromArray($style_col);
-        
-        // $pasien = $this->m_datapasien->filter($jekel, $umur_awal, $umur_akhir, $prov, $kota_kab, $kec, $kel)->result();
-        // $no = 1;
-        // $numrow = 4;
-        // foreach($pasien as $data){
-        //   $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nik);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nama);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->jekel == 0 ? 'Laki-Laki' : 'Perempuan');
-        //   $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->tempat_lahir .', '. date_indo($data->tanggal_lahir));
-        //   $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->agama);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->pendidikan);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->pekerjaan);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->status_perkawinan == 0 ? 'Belum Menikah' : 'Menikah');
-        //   $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->nama_prov);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->nama_kota_kab);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, $data->nama_kec);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->nama_kel);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $data->alamat);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $data->kewarganegaraan);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $data->hp);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $data->email == '' ? '-' : $data->email);
-        //   $excel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $data->terakhir_login != null ? date_indo($data->terakhir_login) : '');
-        //   $excel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, $data->aktif == 0 ? 'Tidak Aktif' : 'Aktif');
+        $excel->getActiveSheet()->getStyle('S2:S4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('T2:T4')->applyFromArray($style_col);
+		
+		//Set Isi Tabel
+        $pasien = $this->m_trainingplan->ambil($ftgl_awal_search)->result();
+        $no = 1;
+        $numrow = 5;
+        foreach($pasien as $data){
+		  $total = 0;
+		  $total += ($data->ta_pelatihan == null ? 0 : $data->ta_pelatihan);
+		  $total += ($data->ta_bop == null ? 0 : $data->ta_bop);
+		  $total += ($data->mitra_pelatihan == null ? 0 : $data->mitra_pelatihan);
+
+          $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
+          $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->jenis_pelatihan);
+          $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->name_of_training);
+          $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->ta_pelatihan == null ? '' : $data->ta_pelatihan);
+          $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->ta_bop == null ? '' : $data->ta_bop);
+          $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->mitra_pelatihan == null ? '' : $data->mitra_pelatihan);
+          $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->nama_mitra == null ? '' : $data->nama_mitra);
+          $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->staff_teknisi == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->team_leader == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->officer == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->site_manager == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, $data->mgr == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->mitra == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $data->senin == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $data->selasa == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $data->rabu == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $data->kamis == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $data->jumat == 0 ? '' : '✓');
+          $excel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, $data->nama_pengajar);
+          $excel->setActiveSheetIndex(0)->setCellValue('T'.$numrow, $total);
           
-        //   $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('J'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('K'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('L'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('M'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('N'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('O'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('P'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('Q'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('R'.$numrow)->applyFromArray($style_row);
-        //   $excel->getActiveSheet()->getStyle('S'.$numrow)->applyFromArray($style_row);
+          $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row_normal);
+          $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row_normal);
+          $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row_normal);
+          $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('J'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('K'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('L'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('M'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('N'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('O'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('P'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('Q'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('R'.$numrow)->applyFromArray($style_row_tengah);
+          $excel->getActiveSheet()->getStyle('S'.$numrow)->applyFromArray($style_row_normal);
+          $excel->getActiveSheet()->getStyle('T'.$numrow)->applyFromArray($style_row_tengah);
           
-        //   $no++;
-        //   $numrow++;
-        // }
-        
+          $no++;
+          $numrow++;
+        }
+		
+		//Set Lebar Tabel
         $excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
         $excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
-        $excel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
         $excel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
         $excel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
-        $excel->getActiveSheet()->getColumnDimension('F')->setWidth(20);
-        $excel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
-        $excel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
-        $excel->getActiveSheet()->getColumnDimension('I')->setWidth(25);
-        $excel->getActiveSheet()->getColumnDimension('J')->setWidth(30);
-        $excel->getActiveSheet()->getColumnDimension('K')->setWidth(30);
-        $excel->getActiveSheet()->getColumnDimension('L')->setWidth(30);
-        $excel->getActiveSheet()->getColumnDimension('M')->setWidth(40);
-        $excel->getActiveSheet()->getColumnDimension('N')->setWidth(30);
-        $excel->getActiveSheet()->getColumnDimension('O')->setWidth(25);
-        $excel->getActiveSheet()->getColumnDimension('P')->setWidth(15);
-        $excel->getActiveSheet()->getColumnDimension('Q')->setWidth(25);
-        $excel->getActiveSheet()->getColumnDimension('R')->setWidth(25);
+        $excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        $excel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('H')->setWidth(17);
+        $excel->getActiveSheet()->getColumnDimension('I')->setWidth(17);
+        $excel->getActiveSheet()->getColumnDimension('J')->setWidth(17);
+        $excel->getActiveSheet()->getColumnDimension('K')->setWidth(17);
+        $excel->getActiveSheet()->getColumnDimension('L')->setWidth(17);
+        $excel->getActiveSheet()->getColumnDimension('M')->setWidth(17);
+        $excel->getActiveSheet()->getColumnDimension('N')->setWidth(10);
+        $excel->getActiveSheet()->getColumnDimension('O')->setWidth(10);
+        $excel->getActiveSheet()->getColumnDimension('P')->setWidth(10);
+        $excel->getActiveSheet()->getColumnDimension('Q')->setWidth(10);
+        $excel->getActiveSheet()->getColumnDimension('R')->setWidth(10);
         $excel->getActiveSheet()->getColumnDimension('S')->setWidth(20);
         $excel->getActiveSheet()->getColumnDimension('T')->setWidth(20);
         
