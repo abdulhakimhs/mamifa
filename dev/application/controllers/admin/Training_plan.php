@@ -190,4 +190,227 @@ class Training_plan extends MY_Controller {
 			exit();
 		}
 	}
+
+	public function cetak($ftgl_awal_search)
+    {
+		if(date('m',strtotime($ftgl_awal_search)) == date('m',strtotime($ftgl_awal_search . "+4 days"))) {
+			$title_date = date('d',strtotime($ftgl_awal_search)) ." - ". date_indo(date('Y-m-d',strtotime($ftgl_awal_search . "+4 days")));
+		} else {
+			$title_date = date_indo($ftgl_awal_search) ." - ". date_indo(date('Y-m-d',strtotime($ftgl_awal_search . "+4 days")));
+		}
+
+		if(date('m',strtotime($ftgl_awal_search)) == date('m',strtotime($ftgl_awal_search . "+4 days"))) {
+			$bln_thn = bln_indo(date('Y-m-d',strtotime($ftgl_awal_search . "+4 days")));
+		} else {
+			$bln_thn = bln_indo($ftgl_awal_search) ." - ". bln_indo(date('Y-m-d',strtotime($ftgl_awal_search . "+4 days")));
+		}
+
+        include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+
+        $excel = new PHPExcel();
+        
+        $excel->getProperties()->setCreator('FIBER ACADEMY PEKALONGAN')
+                     ->setLastModifiedBy('FIBER ACADEMY PEKALONGAN')
+                     ->setTitle("Training Plan")
+                     ->setSubject("Admin")
+                     ->setDescription("Laporan Training Plan")
+                     ->setKeywords("Training Plan");
+        
+        $style_col = array(
+          'font' => array('bold' => true),
+          'alignment' => array(
+            'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+        );
+        
+        $style_row = array(
+          'alignment' => array(
+            'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+          ),
+          'borders' => array(
+            'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+            'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+          )
+		);
+		
+		//Set Judul
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "TRAINING PLAN $title_date");
+
+		//Set Merge
+        $excel->getActiveSheet()->mergeCells('A1:T1'); // Judul
+        $excel->getActiveSheet()->mergeCells('A2:A4'); // NO
+        $excel->getActiveSheet()->mergeCells('B2:B4'); // JENIS PELATIHAN
+        $excel->getActiveSheet()->mergeCells('C2:C4'); // NAME OF TRAINING
+		$excel->getActiveSheet()->mergeCells('D2:G2'); // TANGGAL
+		$excel->getActiveSheet()->mergeCells('D3:E3'); // TELKOM AKSES
+		$excel->getActiveSheet()->mergeCells('F3:G3'); // MITRA
+		$excel->getActiveSheet()->mergeCells('H2:M2'); // PARTICIPANTS
+		$excel->getActiveSheet()->mergeCells('H3:H4'); // STAFF / TEKNISI
+		$excel->getActiveSheet()->mergeCells('I3:I4'); // TEAM LEADER
+		$excel->getActiveSheet()->mergeCells('J3:J4'); // OFF-1 / OFF-2
+		$excel->getActiveSheet()->mergeCells('K3:K4'); // SITE MGR
+		$excel->getActiveSheet()->mergeCells('L3:L4'); // MGR
+		$excel->getActiveSheet()->mergeCells('M3:M4'); // MITRA
+		$excel->getActiveSheet()->mergeCells('N2:R2'); // BULAN TAHUN
+		$excel->getActiveSheet()->mergeCells('S2:S4'); // NAMA PENGAJAR
+		$excel->getActiveSheet()->mergeCells('T2:T4'); // TOTAL PESERTA
+		
+        $excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(TRUE);
+        $excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(15);
+        $excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $excel->setActiveSheetIndex(0)->setCellValue('A2', "NO");
+        $excel->setActiveSheetIndex(0)->setCellValue('B2', "JENIS PELATIHAN");
+        $excel->setActiveSheetIndex(0)->setCellValue('C2', "NAME OF TRAINING");
+        $excel->setActiveSheetIndex(0)->setCellValue('D2', $title_date);
+        $excel->setActiveSheetIndex(0)->setCellValue('D3', "TELKOM AKSES");
+        $excel->setActiveSheetIndex(0)->setCellValue('F3', "MITRA");
+        $excel->setActiveSheetIndex(0)->setCellValue('D4', "PELATIHAN");
+        $excel->setActiveSheetIndex(0)->setCellValue('E4', "BREVET PRAKTEK DAN ONLINE");
+        $excel->setActiveSheetIndex(0)->setCellValue('F4', "PELATIHAN");
+        $excel->setActiveSheetIndex(0)->setCellValue('G4', "NAMA MITRA");
+        $excel->setActiveSheetIndex(0)->setCellValue('H2', "PARTICIPANTS");
+        $excel->setActiveSheetIndex(0)->setCellValue('H3', "STAFF / TEKNISI");
+        $excel->setActiveSheetIndex(0)->setCellValue('I3', "TEAM LEADER");
+        $excel->setActiveSheetIndex(0)->setCellValue('J3', "OFF-1 / OFF-2");
+        $excel->setActiveSheetIndex(0)->setCellValue('K3', "SITE MGR");
+        $excel->setActiveSheetIndex(0)->setCellValue('L3', "MGR");
+        $excel->setActiveSheetIndex(0)->setCellValue('M3', "MITRA");
+        $excel->setActiveSheetIndex(0)->setCellValue('N2', $bln_thn);
+        $excel->setActiveSheetIndex(0)->setCellValue('N3', "SENIN");
+        $excel->setActiveSheetIndex(0)->setCellValue('O3', "SELASA");
+        $excel->setActiveSheetIndex(0)->setCellValue('P3', "RABU");
+        $excel->setActiveSheetIndex(0)->setCellValue('Q3', "KAMIS");
+        $excel->setActiveSheetIndex(0)->setCellValue('R3', "JUM'AT");
+        $excel->setActiveSheetIndex(0)->setCellValue('N4', date('d',strtotime($ftgl_awal_search)));
+        $excel->setActiveSheetIndex(0)->setCellValue('O4', date('d',strtotime($ftgl_awal_search . "+1 days")));
+        $excel->setActiveSheetIndex(0)->setCellValue('P4', date('d',strtotime($ftgl_awal_search . "+2 days")));
+        $excel->setActiveSheetIndex(0)->setCellValue('Q4', date('d',strtotime($ftgl_awal_search . "+3 days")));
+        $excel->setActiveSheetIndex(0)->setCellValue('R4', date('d',strtotime($ftgl_awal_search . "+4 days")));
+        $excel->setActiveSheetIndex(0)->setCellValue('S2', "NAMA PENGAJAR");
+        $excel->setActiveSheetIndex(0)->setCellValue('T2', "TOTAL PESERTA");
+
+        $excel->getActiveSheet()->getStyle('A1')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('A2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('B2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('C2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('D2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('D3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('F3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('D4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('E4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('F4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('G4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('H2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('H3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('I3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('J3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('K3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('L3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('M3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('N2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('N3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('O3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('P3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('Q3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('R3')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('N4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('O4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('P4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('Q4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('R4')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('S2')->applyFromArray($style_col);
+        $excel->getActiveSheet()->getStyle('T2')->applyFromArray($style_col);
+        
+        // $pasien = $this->m_datapasien->filter($jekel, $umur_awal, $umur_akhir, $prov, $kota_kab, $kec, $kel)->result();
+        // $no = 1;
+        // $numrow = 4;
+        // foreach($pasien as $data){
+        //   $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nik);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nama);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->jekel == 0 ? 'Laki-Laki' : 'Perempuan');
+        //   $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->tempat_lahir .', '. date_indo($data->tanggal_lahir));
+        //   $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->agama);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->pendidikan);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->pekerjaan);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->status_perkawinan == 0 ? 'Belum Menikah' : 'Menikah');
+        //   $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->nama_prov);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->nama_kota_kab);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, $data->nama_kec);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->nama_kel);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $data->alamat);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $data->kewarganegaraan);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $data->hp);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $data->email == '' ? '-' : $data->email);
+        //   $excel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $data->terakhir_login != null ? date_indo($data->terakhir_login) : '');
+        //   $excel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, $data->aktif == 0 ? 'Tidak Aktif' : 'Aktif');
+          
+        //   $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('J'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('K'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('L'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('M'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('N'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('O'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('P'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('Q'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('R'.$numrow)->applyFromArray($style_row);
+        //   $excel->getActiveSheet()->getStyle('S'.$numrow)->applyFromArray($style_row);
+          
+        //   $no++;
+        //   $numrow++;
+        // }
+        
+        $excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+        $excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
+        $excel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+        $excel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+        $excel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+        $excel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
+        $excel->getActiveSheet()->getColumnDimension('I')->setWidth(25);
+        $excel->getActiveSheet()->getColumnDimension('J')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('K')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('L')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('M')->setWidth(40);
+        $excel->getActiveSheet()->getColumnDimension('N')->setWidth(30);
+        $excel->getActiveSheet()->getColumnDimension('O')->setWidth(25);
+        $excel->getActiveSheet()->getColumnDimension('P')->setWidth(15);
+        $excel->getActiveSheet()->getColumnDimension('Q')->setWidth(25);
+        $excel->getActiveSheet()->getColumnDimension('R')->setWidth(25);
+        $excel->getActiveSheet()->getColumnDimension('S')->setWidth(20);
+        $excel->getActiveSheet()->getColumnDimension('T')->setWidth(20);
+        
+        $excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+        
+        $excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+        
+        $excel->getActiveSheet(0)->setTitle("Laporan Training Plan");
+        $excel->setActiveSheetIndex(0);
+        
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Training Plan '.date('d-m-Y').'.xlsx"');
+        header('Cache-Control: max-age=0');
+        $write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+        ob_end_clean();
+        $write->save('php://output');
+    }
 }

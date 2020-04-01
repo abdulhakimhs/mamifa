@@ -121,7 +121,7 @@
 		</div>
 		<div class="widget-body">
 			<div class="widget-main">
-				<a href="#" class="btn btn-xs btn-success"><i class="fa fa-file-excel-o"></i> Download Excel</a>
+				<a href="<?= site_url('admin/training_plan/cetak/'. $this->input->post('ftgl_awal_search')) ?>" class="btn btn-xs btn-success"><i class="fa fa-file-excel-o"></i> Download Excel</a>
 				<div id="pesan" style="margin: 10px 5px;"></div>
 				<div class="table-responsive">
 					<table class="table table-bordered" cellspacing="0" width="100%" id="table">
