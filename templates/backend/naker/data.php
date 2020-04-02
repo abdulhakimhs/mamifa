@@ -178,6 +178,7 @@ function save()
                 $('#modal_form').modal('hide');
                 reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
+                setTimeout(function(){ $('#pesan').empty(); }, 3000);
             }
             else
             {
@@ -217,6 +218,7 @@ function delete_data(id)
                 $('#modal_form').modal('hide');
                 reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
+                setTimeout(function(){ $('#pesan').empty(); }, 3000);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {

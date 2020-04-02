@@ -130,12 +130,6 @@ function save()
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
     var url;
- 
-    // if(save_method == 'add') {
-    //     url = "<?php echo site_url('admin/monila/ajax_add')?>";
-    // } else {
-    //     url = "<?php echo site_url('admin/monila/ajax_update')?>";
-	// }
 	
 	url = "<?php echo site_url('admin/monila/ajax_update')?>";
  
@@ -153,6 +147,7 @@ function save()
                 $('#modal_form').modal('hide');
                 reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
+                setTimeout(function(){ $('#pesan').empty(); }, 3000);
             }
             else
             {
@@ -192,6 +187,7 @@ function delete_data(id)
                 $('#modal_form').modal('hide');
                 reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
+                setTimeout(function(){ $('#pesan').empty(); }, 3000);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
