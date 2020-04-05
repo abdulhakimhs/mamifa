@@ -23,7 +23,8 @@
 		</div>
 		<div class="widget-body">
 			<div class="widget-main">
-			<button class="btn btn-danger" onclick="add_data()"><i class="fa fa-plus"></i> Tambah Data</button>
+			<button class="btn btn-danger btn-sm" onclick="add_data()"><i class="fa fa-plus"></i> Tambah Data</button>
+            <a href="<?= site_url('admin/naker/upload') ?>" class="btn btn-info btn-sm"><i class="fa fa-upload"></i> Upload Naker</a>
 				<div id="pesan" style="margin: 10px 5px;"></div>
 	            <table id="table" class="table table-bordered table-hover table-sm text-nowrap" cellspacing="0" width="100%">
 	                <thead>

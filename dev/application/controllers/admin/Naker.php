@@ -141,6 +141,25 @@ class Naker extends MY_Controller {
 		);
 	}
 
+	public function upload()
+	{
+		$data = array();
+	    if(isset($_POST['upload'])){
+	      /* 
+	      	1) jika nama naker sudah ada pada database, maka update data naker tsb dengan data di excel yg di upload. 
+	      	   namun jika nama naker belum ada di database, maka insert data naker tsb .
+		  	2) jenis file xlsx.
+		  	3) hanya upload data saja, foto BPJS bisa di NULL kan terlebih dahulu.
+		  	4) upload foto BPJS akan dilakukan manual oleh admin nanti.  
+	      */
+	    }
+	    $data['title'] 		 = 'Naker';
+		$data['subtitle'] 	 = 'Upload Naker';
+	    $this->load->view('backend/template',[
+			'content' => $this->load->view('backend/naker/upload',$data,true)
+		]);
+	}
+
 	private function _do_upload()
     {
         $config['upload_path']          = './assets/backend/images/bpjs/';

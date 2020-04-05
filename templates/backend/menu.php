@@ -49,55 +49,6 @@
           </li>
 
           <li class="hover">
-            <a href="#" class="dropdown-toggle">
-              <i class="menu-icon fa fa-edit"></i>
-              <span class="menu-text">
-                Master Data
-              </span>
-              <b class="arrow fa fa-angle-down"></b>
-            </a>
-            <b class="arrow"></b>
-
-            <ul class="submenu">
-              <li class="hover">
-                <a href="<?= site_url('admin/masters/pelatihan'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Pelatihan
-                </a>
-                <b class="arrow"></b>
-              </li>
-              <li class="hover">
-                <a href="<?= site_url('admin/masters/training'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Name of Training
-                </a>
-                <b class="arrow"></b>
-              </li>
-              <li class="hover">
-                <a href="<?= site_url('admin/masters/operation'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Operation
-                </a>
-                <b class="arrow"></b>
-              </li>
-              <li class="hover">
-                <a href="<?= site_url('admin/masters/jenis_laporan'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Jenis Laporan
-                </a>
-                <b class="arrow"></b>
-              </li>
-              <li class="hover">
-                <a href="<?= site_url('admin/masters/mitra'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Mitra
-                </a>
-                <b class="arrow"></b>
-              </li>
-            </ul>
-          </li>
-
-          <li class="hover">
             <a href="<?= site_url('admin/naker'); ?>">
               <i class="menu-icon fa fa-users"></i>
               <span class="menu-text"> Naker </span>
@@ -198,6 +149,55 @@
               <span class="menu-text"> Training Request </span>
             </a>
             <b class="arrow"></b>
+          </li>
+
+          <li class="hover">
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon fa fa-edit"></i>
+              <span class="menu-text">
+                Master Data
+              </span>
+              <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+              <li class="hover">
+                <a href="<?= site_url('admin/masters/pelatihan'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Pelatihan
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/masters/training'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Name of Training
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/masters/operation'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Operation
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/masters/jenis_laporan'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Jenis Laporan
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li class="hover">
+                <a href="<?= site_url('admin/masters/mitra'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Mitra
+                </a>
+                <b class="arrow"></b>
+              </li>
+            </ul>
           </li>
 
         </ul><!-- /.nav-list -->
