@@ -162,7 +162,6 @@ class Naker extends MY_Controller {
 			$config['allowed_types'] 	= 'xlsx';
 			$config['max_size']  		= '10000';
 			$config['overwrite'] 		= true;
-			$config['encrypt_name'] 	= true;
 	
 			$this->upload->initialize($config); // Load konfigurasi uploadnya
 	
@@ -181,7 +180,8 @@ class Naker extends MY_Controller {
 				$loadexcel          = $excelreader->load('assets/backend/excel/naker/'.$data_upload['file_name']); // Load file yang telah diupload ke folder excel
 				$sheet              = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
 	
-				$data = array();
+				$data_insert = array();
+				$data_update = array();
 	
 				$numrow = 1;
 				foreach($sheet as $row){
@@ -189,22 +189,41 @@ class Naker extends MY_Controller {
 					// Artinya karena baris pertama adalah nama-nama kolom
 					// Jadi dilewat saja, tidak usah diimport
 					if($numrow > 1){
-						// Kita push (add) array data ke variabel data
-						array_push($data, array(
-							'position_name'		=>$row['A'],
-							'position_title'	=>$row['B'],
-							'nik'				=>$row['C'],
-							'nama'				=>$row['D'],
-							'sektor'			=>$row['E'],
-							'rayon'				=>$row['F'],
-							'level'				=>$row['K']
-						));
+						if($this->m_naker->get_by_nama($row['D'])->num_rows() > 0) {
+							// Kita push (add) array data ke variabel data_update
+							array_push($data_update, array(
+								'position_name'		=>$row['A'],
+								'position_title'	=>$row['B'],
+								'nik'				=>$row['C'],
+								'nama'				=>$row['D'],
+								'sektor'			=>$row['E'],
+								'rayon'				=>$row['F'],
+								'level'				=>$row['K']
+							));
+						} else {
+							// Kita push (add) array data ke variabel data_insert
+							array_push($data_insert, array(
+								'position_name'		=>$row['A'],
+								'position_title'	=>$row['B'],
+								'nik'				=>$row['C'],
+								'nama'				=>$row['D'],
+								'sektor'			=>$row['E'],
+								'rayon'				=>$row['F'],
+								'level'				=>$row['K']
+							));
+						}
 					}
 					
 					$numrow++; // Tambah 1 setiap kali looping
 				}
 
-				$this->db->insert_batch('tb_naker', $data);
+				if(!empty($data_insert)) {
+					$this->db->insert_batch('tb_naker', $data_insert);
+				}
+
+				if(!empty($data_update)) {
+					$this->db->update_batch('tb_naker', $data_update, 'nama');
+				}
 
 				//delete file from server
 				unlink(realpath('assets/backend/excel/naker/'.$data_upload['file_name']));
