@@ -24,21 +24,26 @@
 		<div class="widget-body">
 			<div class="widget-main">
 				<div id="pesan" style="margin: 10px 5px;"></div>
-                <form action="#" method="POST">
+                <form action="<?= site_url('admin/target/upload') ?>" method="POST" enctype="multipart/form-data">
                     <div class="row">
+						<?= $this->session->flashdata('notif') ?>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Target Tahun</b></label>
-                                <select name="tahun" id="tahun" class="form-control">
+                                <select name="tahun" id="tahun" class="form-control" required>
                                     <option value="">-Pilih Tahun-</option>
-                                    <option value="2002">2020</option>
+                                    <option value="<?= date('Y') ?>"><?= date('Y') ?></option>
+                                    <option value="<?= date('Y', strtotime('+1 years')) ?>"><?= date('Y', strtotime('+1 years')) ?></option>
+                                    <option value="<?= date('Y', strtotime('+2 years')) ?>"><?= date('Y', strtotime('+2 years')) ?></option>
+                                    <option value="<?= date('Y', strtotime('+3 years')) ?>"><?= date('Y', strtotime('+3 years')) ?></option>
+                                    <option value="<?= date('Y', strtotime('+4 years')) ?>"><?= date('Y', strtotime('+4 years')) ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Target Bulan</b></label>
-                                <select name="bulan" id="tahun" class="form-control">
+                                <select name="bulan" id="bulan" class="form-control" required>
                                     <option value="">-Pilih Bulan-</option>
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
@@ -46,25 +51,30 @@
                                     <option value="04">April</option>
                                     <option value="05">Mei</option>
                                     <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Jenis Pelatihan</b></label>
-                                <select name="jenis_pelatihan" id="tahun" class="form-control">
+                                <select name="jenis_pelatihan" id="jenis_pelatihan" class="form-control" required>
                                     <option value="">-Pilih Pelatihan-</option>
-                                    <option value="01">INDIHOME NON TEKNIS</option>
-                                    <option value="02">MULTISKILL</option>
-                                    <option value="03">TS INDIHOME</option>
-                                    <option value="04">SURVEY DESIGN FTTH</option>
+                                    <?php foreach ($pelatihan as $p) : ?>
+                                        <option value="<?= $p['pelatihan_id'] ?>"><?= $p['jenis_pelatihan'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Target Untuk</b></label>
-                                <select name="target_for" id="tahun" class="form-control">
+                                <select name="target_for" id="target_for" class="form-control" required>
                                     <option value="">-Pilih Target Untuk-</option>
                                     <option value="TA">TA</option>
                                     <option value="MITRA">MITRA</option>
@@ -75,11 +85,11 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <input type="file" name="userfile" id="fileupload">
+                                <input type="file" name="userfile" id="fileupload" required>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" name="upload" class="btn btn-sm btn-danger"><i class="fa fa-upload"></i> Upload</button>
+                    <button type="submit" name="upload" value="upload" class="btn btn-sm btn-danger"><i class="fa fa-upload"></i> Upload</button>
                     <a href="<?= base_url() ?>assets/backend/files/format_target_ta.xlsx">Format Target TA</a> |
                     <a href="<?= base_url() ?>assets/backend/files/format_target_mitra.xlsx">Format Target MITRA</a>
                 </form>

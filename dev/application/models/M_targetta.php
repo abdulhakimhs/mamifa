@@ -1,16 +1,17 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_operation extends CI_Model
+class M_targetta extends CI_Model
 {
-    var $table = 'tb_operation';
-    var $column_order = array(null, 'operation_name');
-    var $column_search = array('operation_name');
-    var $order = array('operation_id' => 'desc');
+    var $table = 'tb_target_ta';
+    var $column_order = array(null, 'nik','nama','sektor','level','position_name', 'subunit', 'status');
+    var $column_search = array('nik','nama','sektor','level','position_name', 'subunit', 'status');
+    var $order = array('target_id' => 'desc');
  
     private function _get_datatables_query() {
         $this->db->select('*');
-        $this->db->from('tb_operation');
+        $this->db->from($this->table);
+        // $this->db->join('tb_jenis_laporan as jp', 'jp.jenis_lap_id = m.jenis_lap_id');
 
         //Filter
         /*
@@ -58,33 +59,17 @@ class M_operation extends CI_Model
     }
 
     function count_all() {
-        $this->db->from('tb_operation');
+        $this->db->from($this->table);
         return $this->db->count_all_results();
-    }
-
-    public function ambil()
-    {
-        $this->db->select('*');
-        $this->db->from('tb_operation');
-        $data = $this->db->get('');
-        return $data;
     }
 
     public function get_by_id($id)
     {
         $this->db->from($this->table);
-        $this->db->where('operation_id',$id);
+        // $this->db->join('tb_jenis_laporan', 'tb_jenis_laporan.jenis_lap_id = tb_monila.jenis_lap_id');
+        $this->db->where('target_id',$id);
         $query = $this->db->get();
         return $query->row();
-    }
-
-    public function get_by_name($name)
-    {
-        $this->db->select('operation_id');
-        $this->db->from($this->table);
-        $this->db->where('operation_name', $name);
-        $query = $this->db->get();
-        return $query->row_array();
     }
 
     public function update($where, $data)
@@ -95,7 +80,7 @@ class M_operation extends CI_Model
  
     public function delete_by_id($id)
     {
-        $this->db->where('operation_id', $id);
+        $this->db->where('target_id', $id);
         $this->db->delete($this->table);
     }
 }

@@ -158,7 +158,7 @@ class Naker extends MY_Controller {
 		  	// Load plugin PHPExcel nya
 			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
 
-			$config['upload_path'] 		= './assets/backend/excel/naker/';
+			$config['upload_path'] 		= './assets/backend/excel/';
 			$config['allowed_types'] 	= 'xlsx';
 			$config['max_size']  		= '10000';
 			$config['overwrite'] 		= true;
@@ -177,7 +177,7 @@ class Naker extends MY_Controller {
 				$data_upload = $this->upload->data();
 	
 				$excelreader     	= new PHPExcel_Reader_Excel2007();
-				$loadexcel          = $excelreader->load('assets/backend/excel/naker/'.$data_upload['file_name']); // Load file yang telah diupload ke folder excel
+				$loadexcel          = $excelreader->load('assets/backend/excel/'.$data_upload['file_name']); // Load file yang telah diupload ke folder excel
 				$sheet              = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
 	
 				$data_insert = array();
@@ -226,7 +226,7 @@ class Naker extends MY_Controller {
 				}
 
 				//delete file from server
-				unlink(realpath('assets/backend/excel/naker/'.$data_upload['file_name']));
+				unlink(realpath('assets/backend/excel/'.$data_upload['file_name']));
 	
 				//upload success
 				$this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');

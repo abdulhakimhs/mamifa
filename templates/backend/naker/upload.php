@@ -25,8 +25,8 @@
 			<div class="widget-main">
 				<form action="<?php echo site_url('admin/naker/upload') ?>" method="POST" enctype="multipart/form-data">
 					<div class="row">
+						<?= $this->session->flashdata('notif') ?>
 						<div class="col-lg-6">
-							<?= $this->session->flashdata('notif') ?>
 							<div class="form-group">
 								<div class="col-xs-12">
 									<input type="file" name="file" id="id-input-file-2" required />
