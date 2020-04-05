@@ -96,4 +96,5 @@ class M_Naker extends CI_Model
         $this->db->where('naker_id', $id);
         $this->db->delete($this->table);
     }
+
 }

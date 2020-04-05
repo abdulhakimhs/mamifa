@@ -26,13 +26,14 @@
 				<form action="<?php echo site_url('admin/naker/upload') ?>" method="POST" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-lg-6">
+							<?= $this->session->flashdata('notif') ?>
 							<div class="form-group">
 								<div class="col-xs-12">
 									<input type="file" name="file" id="id-input-file-2" required />
 								</div>
 							</div>
 							<br><br>
-					        <button type="submit" name="upload" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i> Import Data</button>
+					        <button type="submit" name="upload" value="Upload" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i> Import Data</button>
 						</div>
 					</div>
 				</form>

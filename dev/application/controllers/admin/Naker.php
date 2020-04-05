@@ -140,19 +140,84 @@ class Naker extends MY_Controller {
 			)
 		);
 	}
-
+	
 	public function upload()
 	{
 		$data = array();
 	    if(isset($_POST['upload'])){
-	      /* 
-	      	1) jika nama naker sudah ada pada database, maka update data naker tsb dengan data di excel yg di upload. 
-	      	   namun jika nama naker belum ada di database, maka insert data naker tsb .
-		  	2) jenis file xlsx.
-		  	3) hanya upload data saja, foto BPJS bisa di NULL kan terlebih dahulu.
-		  	4) upload foto BPJS akan dilakukan manual oleh admin nanti.  
-	      */
-	    }
+			/* 
+				1) jika nama naker sudah ada pada database, maka update data naker tsb dengan data di excel yg di upload. 
+				namun jika nama naker belum ada di database, maka insert data naker tsb .
+				2) jenis file xlsx.
+				3) hanya upload data saja, foto BPJS bisa di NULL kan terlebih dahulu.
+				4) upload foto BPJS akan dilakukan manual oleh admin nanti.  
+			*/
+
+			$this->load->library('upload'); // Load librari upload
+
+		  	// Load plugin PHPExcel nya
+			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+
+			$config['upload_path'] 		= './assets/backend/excel/naker/';
+			$config['allowed_types'] 	= 'xlsx';
+			$config['max_size']  		= '10000';
+			$config['overwrite'] 		= true;
+			$config['encrypt_name'] 	= true;
+	
+			$this->upload->initialize($config); // Load konfigurasi uploadnya
+	
+			if (!$this->upload->do_upload('file')) {
+	
+				//upload gagal
+				$this->session->set_flashdata('notif', '<div class="alert alert-danger"><b>PROSES IMPORT GAGAL!</b> '.$this->upload->display_errors().'</div>');
+				//redirect halaman
+				redirect('admin/naker/upload');
+	
+			} else {
+	
+				$data_upload = $this->upload->data();
+	
+				$excelreader     	= new PHPExcel_Reader_Excel2007();
+				$loadexcel          = $excelreader->load('assets/backend/excel/naker/'.$data_upload['file_name']); // Load file yang telah diupload ke folder excel
+				$sheet              = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+	
+				$data = array();
+	
+				$numrow = 1;
+				foreach($sheet as $row){
+					// Cek $numrow apakah lebih dari 1
+					// Artinya karena baris pertama adalah nama-nama kolom
+					// Jadi dilewat saja, tidak usah diimport
+					if($numrow > 1){
+						// Kita push (add) array data ke variabel data
+						array_push($data, array(
+							'position_name'		=>$row['A'],
+							'position_title'	=>$row['B'],
+							'nik'				=>$row['C'],
+							'nama'				=>$row['D'],
+							'sektor'			=>$row['E'],
+							'rayon'				=>$row['F'],
+							'level'				=>$row['K']
+						));
+					}
+					
+					$numrow++; // Tambah 1 setiap kali looping
+				}
+
+				$this->db->insert_batch('tb_naker', $data);
+
+				//delete file from server
+				unlink(realpath('assets/backend/excel/naker/'.$data_upload['file_name']));
+	
+				//upload success
+				$this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
+
+				//redirect halaman
+				redirect('admin/naker/upload');
+	
+			}
+		}
+		
 	    $data['title'] 		 = 'Naker';
 		$data['subtitle'] 	 = 'Upload Naker';
 	    $this->load->view('backend/template',[
