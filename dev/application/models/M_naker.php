@@ -89,8 +89,7 @@ class M_Naker extends CI_Model
     {
         $this->db->from($this->table);
         $this->db->where('nama',$nama);
-        $query = $this->db->get();
-        return $query;
+        return $this->db->count_all_results();
     }
 
     public function update($where, $data)

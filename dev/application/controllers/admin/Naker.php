@@ -189,7 +189,7 @@ class Naker extends MY_Controller {
 					// Artinya karena baris pertama adalah nama-nama kolom
 					// Jadi dilewat saja, tidak usah diimport
 					if($numrow > 1){
-						if($this->m_naker->get_by_nama($row['D'])->num_rows() > 0) {
+						if($this->m_naker->get_by_nama($row['D']) > 0) {
 							// Kita push (add) array data ke variabel data_update
 							array_push($data_update, array(
 								'position_name'		=>$row['A'],
@@ -272,13 +272,13 @@ class Naker extends MY_Controller {
         $data['inputerror'] = array();
 		$data['status'] = TRUE;
 		
-		$nik = $this->m_naker->get_nik($this->input->post('nik'));
+		$nama = $this->m_naker->get_by_nama($this->input->post('nama'));
 
 		if($this->input->post('method') == 'add') {
-			if($nik > 0)
+			if($nama > 0)
 			{
-				$data['inputerror'][] = 'nik';
-				$data['error_string'][] = 'NIK already exists';
+				$data['inputerror'][] = 'nama';
+				$data['error_string'][] = 'Nama already exists';
 				$data['status'] = FALSE;
 			}			
 		}
