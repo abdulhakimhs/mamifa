@@ -110,12 +110,28 @@
                 <b class="arrow"></b>
               </li>
               <li class="hover">
-                <a href="<?= site_url('admin/penilaian'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
+                <a href="#">
                   Penilaian
+                  <b class="arrow fa fa-angle-right"></b>
                 </a>
                 <b class="arrow"></b>
-              </li>
+                <ul class="submenu">
+                  <li class="hover">
+                    <a href="<?= site_url('admin/penilaian/ta'); ?>">
+                      TA
+                    </a>
+
+                    <b class="arrow"></b>
+                  </li>
+
+                  <li class="hover">
+                    <a href="<?= site_url('admin/penilaian/mitra'); ?>">
+                      Mitra
+                    </a>
+
+                    <b class="arrow"></b>
+                  </li>
+                </ul>
             </ul>
           </li>
 

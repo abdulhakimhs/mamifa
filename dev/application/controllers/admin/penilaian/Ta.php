@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Penilaian extends MY_Controller {
+class Ta extends MY_Controller {
 
 	public function __construct()
 	{
@@ -11,9 +11,13 @@ class Penilaian extends MY_Controller {
 	public function index()
 	{
 		$data['title'] 			= 'Target';
-		$data['subtitle'] 		= 'Penilaian';
+		$data['subtitle'] 		= 'Penilaian TA';
 		$this->load->view('backend/template',[
-			'content' => $this->load->view('backend/penilaian/data',$data,true)
+			'content' => $this->load->view('backend/penilaian/ta/data',$data,true)
 		]);
 	}
+
 }
+
+/* End of file Ta.php */
+/* Location: ./application/controllers/admin/penilaian/Ta.php */

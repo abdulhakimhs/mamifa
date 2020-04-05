@@ -38,7 +38,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Target Bulan</b></label>
-                                <select name="tahun" id="tahun" class="form-control">
+                                <select name="bulan" id="tahun" class="form-control">
                                     <option value="">-Pilih Bulan-</option>
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
@@ -52,12 +52,22 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Jenis Pelatihan</b></label>
-                                <select name="tahun" id="tahun" class="form-control">
+                                <select name="jenis_pelatihan" id="tahun" class="form-control">
                                     <option value="">-Pilih Pelatihan-</option>
                                     <option value="01">INDIHOME NON TEKNIS</option>
                                     <option value="02">MULTISKILL</option>
                                     <option value="03">TS INDIHOME</option>
                                     <option value="04">SURVEY DESIGN FTTH</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="form-control-label"><b>Pilih Target Untuk</b></label>
+                                <select name="target_for" id="tahun" class="form-control">
+                                    <option value="">-Pilih Target Untuk-</option>
+                                    <option value="TA">TA</option>
+                                    <option value="MITRA">MITRA</option>
                                 </select>
                             </div>
                         </div>
@@ -70,6 +80,8 @@
                         </div>
                     </div>
                     <button type="submit" name="upload" class="btn btn-sm btn-danger"><i class="fa fa-upload"></i> Upload</button>
+                    <a href="<?= base_url() ?>assets/backend/files/format_target_ta.xlsx">Format Target TA</a> |
+                    <a href="<?= base_url() ?>assets/backend/files/format_target_mitra.xlsx">Format Target MITRA</a>
                 </form>
 			</div>
 		</div>

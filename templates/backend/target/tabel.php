@@ -49,9 +49,14 @@
         <canvas id="canvas"></canvas>
     </div>
 </div>
+<br><br><br>
+<div class="row" style="border-top: 2px solid grey;">
+    <div class="col-lg-12" style="height: 350px">
+        <canvas id="canvas_mitra"></canvas>
+    </div>
+</div>
 
 <script>
-    var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     var color = Chart.helpers.color;
     var barChartData = {
         labels: ['INDIHOME NON TEKNIS', 'MULTISKILL', 'CX BEHAVIOR', 'TS INDIHOME', 'SURVEY DESIGN FTTH', 'COM SKILL WASPANG', 'LEADERSHIP', 'LOGIC IP', 'PT-2 ODP SOLID', 'PENYAMBUNGAN DC'],
@@ -124,7 +129,45 @@
                 3
             ]
         }]
+    };
 
+    var barChartDataM = {
+        labels: ['INDIHOME NON TEKNIS', 'MULTISKILL', 'CX BEHAVIOR', 'TS INDIHOME', 'SURVEY DESIGN FTTH', 'COM SKILL WASPANG', 'LEADERSHIP', 'LOGIC IP', 'PT-2 ODP SOLID', 'PENYAMBUNGAN DC'],
+        datasets: [{
+            label: 'STAFF',
+            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: [
+                10,
+                10,
+                11,
+                12,
+                8,
+                5,
+                9,
+                8,
+                6,
+                10
+            ]
+        }, {
+            label: 'TL',
+            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.blue,
+            borderWidth: 1,
+            data: [
+                5,
+                4,
+                7,
+                3,
+                2,
+                1,
+                6,
+                2,
+                3,
+                5
+            ]
+        }]
     };
 
     window.onload = function() {
@@ -140,7 +183,24 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA Pekalongan Januari 2020'
+                    text: 'Pelatihan FA (TA) Pekalongan Januari 2020'
+                }
+            }
+        });
+
+        var ctxm = document.getElementById('canvas_mitra').getContext('2d');
+        window.myBar = new Chart(ctxm, {
+            type: 'bar',
+            data: barChartDataM,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Pelatihan FA (MITRA) Pekalongan Januari 2020'
                 }
             }
         });
