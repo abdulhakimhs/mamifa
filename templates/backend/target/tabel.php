@@ -10,16 +10,20 @@
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label"><b>Pilih Target Tahun</b></label>
-            <select name="tahun" id="tahun" class="form-control">
+            <select name="tahun" id="tahun" class="form-control" required>
                 <option value="">-Pilih Tahun-</option>
-                <option value="2002">2020</option>
+                <option value="<?= date('Y') ?>"><?= date('Y') ?></option>
+                <option value="<?= date('Y', strtotime('+1 years')) ?>"><?= date('Y', strtotime('+1 years')) ?></option>
+                <option value="<?= date('Y', strtotime('+2 years')) ?>"><?= date('Y', strtotime('+2 years')) ?></option>
+                <option value="<?= date('Y', strtotime('+3 years')) ?>"><?= date('Y', strtotime('+3 years')) ?></option>
+                <option value="<?= date('Y', strtotime('+4 years')) ?>"><?= date('Y', strtotime('+4 years')) ?></option>
             </select>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label"><b>Pilih Target Bulan</b></label>
-            <select name="tahun" id="tahun" class="form-control">
+            <select name="bulan" id="bulan" class="form-control" required>
                 <option value="">-Pilih Bulan-</option>
                 <option value="01">Januari</option>
                 <option value="02">Februari</option>
@@ -27,18 +31,12 @@
                 <option value="04">April</option>
                 <option value="05">Mei</option>
                 <option value="06">Juni</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="form-group">
-            <label class="form-control-label"><b>Pilih Jenis Pelatihan</b></label>
-            <select name="tahun" id="tahun" class="form-control">
-                <option value="">-Pilih Pelatihan-</option>
-                <option value="01">INDIHOME NON TEKNIS</option>
-                <option value="02">MULTISKILL</option>
-                <option value="03">TS INDIHOME</option>
-                <option value="04">SURVEY DESIGN FTTH</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
             </select>
         </div>
     </div>
@@ -57,125 +55,174 @@
 </div>
 
 <script>
+    let label_ta = [];
+    let staff_ta = [];
+    let tl_ta = [];
+    let sm_ta = [];
+    let m_ta = [];
+
+    let label_mitra = [];
+    let staff_mitra = [];
+    let tl_mitra = [];
+
+    $(document).ready(function(){
+        //Ajax Load data from ajax
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_ta')?>",
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.length; i++) {
+                    label_ta.push(data[i].jenis_pelatihan);
+                    staff_ta.push(data[i].staff);
+                    tl_ta.push(data[i].tl);
+                    sm_ta.push(data[i].sm);
+                    m_ta.push(data[i].m);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_mitra')?>",
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.length; i++) {
+                    label_mitra.push(data[i].jenis_pelatihan);
+                    staff_mitra.push(data[i].staff);
+                    tl_mitra.push(data[i].tl);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    });
+
+    $("#tahun").change(function(){
+        let bulan = $("#bulan").val();
+        let tahun = $("#tahun").val();
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.length; i++) {
+                    label_ta.pop();
+                    staff_ta.pop();
+                    tl_ta.pop();
+                    sm_ta.pop();
+                    m_ta.pop();
+                }
+
+                punya_ta.data = barChartData;
+                punya_ta.update();
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_mitra/')?>"+ bulan +"/"+ tahun,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.length; i++) {
+                    label_mitra.pop();
+                    staff_mitra.pop();
+                    tl_mitra.pop();
+                }
+
+                punya_mitra.data = barChartDataM;
+                punya_mitra.update();
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    });
+
     var color = Chart.helpers.color;
     var barChartData = {
-        labels: ['INDIHOME NON TEKNIS', 'MULTISKILL', 'CX BEHAVIOR', 'TS INDIHOME', 'SURVEY DESIGN FTTH', 'COM SKILL WASPANG', 'LEADERSHIP', 'LOGIC IP', 'PT-2 ODP SOLID', 'PENYAMBUNGAN DC'],
+        labels: label_ta,
         datasets: [{
             label: 'STAFF',
             backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
-            data: [
-                10,
-                10,
-                11,
-                12,
-                8,
-                5,
-                9,
-                8,
-                6,
-                10
-            ]
+            data: staff_ta
         }, {
             label: 'TL',
             backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
             borderColor: window.chartColors.blue,
             borderWidth: 1,
-            data: [
-                5,
-                4,
-                7,
-                3,
-                2,
-                1,
-                6,
-                2,
-                3,
-                5
-            ]
+            data: tl_ta
         }, {
             label: 'SM',
             backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
             borderColor: window.chartColors.yellow,
             borderWidth: 1,
-            data: [
-                2,
-                3,
-                2,
-                1,
-                2,
-                3,
-                4,
-                2,
-                3,
-                4
-            ]
+            data: sm_ta
         }, {
             label: 'MANAGER',
             backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
             borderColor: window.chartColors.green,
             borderWidth: 1,
-            data: [
-                3,
-                2,
-                1,
-                2,
-                3,
-                2,
-                2,
-                4,
-                2,
-                3
-            ]
+            data: m_ta
         }]
     };
 
     var barChartDataM = {
-        labels: ['INDIHOME NON TEKNIS', 'MULTISKILL', 'CX BEHAVIOR', 'TS INDIHOME', 'SURVEY DESIGN FTTH', 'COM SKILL WASPANG', 'LEADERSHIP', 'LOGIC IP', 'PT-2 ODP SOLID', 'PENYAMBUNGAN DC'],
+        labels: label_mitra,
         datasets: [{
             label: 'STAFF',
             backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
-            data: [
-                10,
-                10,
-                11,
-                12,
-                8,
-                5,
-                9,
-                8,
-                6,
-                10
-            ]
+            data: staff_mitra
         }, {
             label: 'TL',
             backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
             borderColor: window.chartColors.blue,
             borderWidth: 1,
-            data: [
-                5,
-                4,
-                7,
-                3,
-                2,
-                1,
-                6,
-                2,
-                3,
-                5
-            ]
+            data: tl_mitra
         }]
     };
 
     window.onload = function() {
         var ctx = document.getElementById('canvas').getContext('2d');
-        window.myBar = new Chart(ctx, {
+        punya_ta = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
             options: {
+                scales: {
+                    yAxes:[{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }],
+                },
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: {
@@ -189,10 +236,17 @@
         });
 
         var ctxm = document.getElementById('canvas_mitra').getContext('2d');
-        window.myBar = new Chart(ctxm, {
+        punya_mitra = new Chart(ctxm, {
             type: 'bar',
             data: barChartDataM,
             options: {
+                scales: {
+                    yAxes:[{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }],
+                },
                 responsive: true,
                 maintainAspectRatio: false,
                 legend: {

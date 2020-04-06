@@ -16,6 +16,7 @@ class Target extends MY_Controller {
 	{
 		$data['title'] 			= 'Target';
 		$data['subtitle'] 		= 'Data';
+		$data['pelatihan']		= $this->m_pelatihan->ambil()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/target/tabel',$data,true)
 		]);
@@ -88,12 +89,13 @@ class Target extends MY_Controller {
 							array_push($data_mitra, array(
 								'nik'				=>$row['A'],
 								'nama'				=>$row['B'],
-								'jenis_kelamin'		=>($row['C'] == 'LAKI-LAKI' ? 'L' : 'P'),
+								'jenis_kelamin'		=>$row['C'],
 								'nama_mitra'		=>$row['D'],
 								'jenis_mitra'		=>$row['E'],
 								'pelatihan_id'		=>$this->input->post('jenis_pelatihan'),
 								'jenis_teknisi'		=>$row['F'],
-								'lokasi_pelatihan'	=>$row['G'],
+								'level'				=>$row['G'],
+								'lokasi_pelatihan'	=>$row['H'],
 								'bulan'				=>$this->input->post('bulan'),
 								'tahun'				=>$this->input->post('tahun'),
 							));
@@ -128,13 +130,21 @@ class Target extends MY_Controller {
 		]);
 	}
 
-	public function tes($name)
+	public function grafik_ta($bulan = null, $tahun = null)
 	{
-		$data = $this->m_operation->get_by_name($name);
-		if(empty($data)){
-			echo "kosong";
-		} else {
-			echo "ada data";
-		}
+		$data = $this->m_targetta->getgrafik($bulan, $tahun)->result();
+		echo json_encode($data);
+	}
+
+	public function grafik_mitra($bulan = null, $tahun = null)
+	{
+		$data = $this->m_targetmitra->getgrafik($bulan, $tahun)->result();
+		echo json_encode($data);
+	}
+
+	public function tes($bulan, $tahun)
+	{
+		$data = $this->m_targetmitra->getgrafik($bulan, $tahun)->result();
+		echo json_encode($data);
 	}
 }

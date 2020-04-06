@@ -83,4 +83,25 @@ class M_targetta extends CI_Model
         $this->db->where('target_id', $id);
         $this->db->delete($this->table);
     }
+
+    public function getgrafik($bulan, $tahun)
+    {
+        $this->db->select("p.jenis_pelatihan,
+              SUM(CASE WHEN (level!='Team Leader' OR level!='Site Manager' OR level!='Manager') THEN 1 ELSE 0 END) AS staff,
+              SUM(CASE WHEN (level='Team Leader') THEN 1 ELSE 0 END) AS tl,
+              SUM(CASE WHEN (level='Site Manager') THEN 1 ELSE 0 END) AS sm,
+              SUM(CASE WHEN (level='Manager') THEN 1 ELSE 0 END) AS m"
+            );
+        $this->db->from('tb_target_ta as t');
+        $this->db->join('tb_pelatihan as p', 't.pelatihan_id = p.pelatihan_id');
+        if(!empty($bulan)){
+            $this->db->where('bulan', $bulan);
+        }
+        if(!empty($tahun)){
+            $this->db->where('tahun', $tahun);
+        }
+        $this->db->group_by('t.pelatihan_id');
+        $result = $this->db->get();
+        return $result;
+    }
 }
