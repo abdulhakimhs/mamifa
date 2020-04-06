@@ -55,8 +55,8 @@ class Training extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'name_of_training'  => $this->input->post('name_of_training'),
-			'status'            => $this->input->post('status')
+			'name_of_training'  => strtoupper($this->input->post('name_of_training')),
+			'status'            => strtoupper($this->input->post('status'))
 		];
 
 		$this->db->insert('tb_name_of_training', $data);
@@ -89,9 +89,9 @@ class Training extends MY_Controller {
 	{
 		$this->_validate();
 		$data = array(
-				'name_of_training' 	=> $this->input->post('name_of_training'),
-				'status' 			=> $this->input->post('status'),
-			);
+			'name_of_training'  => strtoupper($this->input->post('name_of_training')),
+			'status'            => strtoupper($this->input->post('status'))
+		);
 		$this->m_training->update(array('not_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(

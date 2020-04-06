@@ -113,7 +113,7 @@ class Training_plan extends MY_Controller {
 		$data = [
 			'tgl_awal'  		=> $this->input->post('ftgl_awal'),
 			'tgl_akhir'  		=> $this->input->post('ftgl_akhir'),
-			'nama_pengajar'		=> $this->input->post('nama_pengajar'),
+			'nama_pengajar'		=> strtoupper($this->input->post('nama_pengajar')),
 			'pelatihan_id'  	=> $this->input->post('jenis_pelatihan'),
 			'not_id'  			=> $this->input->post('name_of_training'),
 			'ta_bop'  			=> $this->input->post('ta_bop') == '' ? null : $this->input->post('ta_bop'),

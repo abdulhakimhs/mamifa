@@ -73,11 +73,11 @@ class Target extends MY_Controller {
 								// Kita push (add) array data ke variabel data_ta
 								array_push($data_ta, array(
 									'nik'				=>$row['A'],
-									'nama'				=>$row['B'],
-									'sektor'			=>$row['C'],
-									'level'				=>$row['D'],
-									'position_name'		=>$row['E'],
-									'subunit'			=>$row['F'],
+									'nama'				=>strtoupper($row['B']),
+									'sektor'			=>strtoupper($row['C']),
+									'level'				=>strtoupper($row['D']),
+									'position_name'		=>strtoupper($row['E']),
+									'subunit'			=>strtoupper($row['F']),
 									'bulan'				=>$this->input->post('bulan'),
 									'tahun'				=>$this->input->post('tahun'),
 									'pelatihan_id'		=>$this->input->post('jenis_pelatihan'),
@@ -88,14 +88,14 @@ class Target extends MY_Controller {
 							// Kita push (add) array data ke variabel data_mitra
 							array_push($data_mitra, array(
 								'nik'				=>$row['A'],
-								'nama'				=>$row['B'],
-								'jenis_kelamin'		=>$row['C'],
-								'nama_mitra'		=>$row['D'],
-								'jenis_mitra'		=>$row['E'],
+								'nama'				=>strtoupper($row['B']),
+								'jenis_kelamin'		=>strtoupper($row['C']),
+								'nama_mitra'		=>strtoupper($row['D']),
+								'jenis_mitra'		=>strtoupper($row['E']),
 								'pelatihan_id'		=>$this->input->post('jenis_pelatihan'),
-								'jenis_teknisi'		=>$row['F'],
-								'level'				=>$row['G'],
-								'lokasi_pelatihan'	=>$row['H'],
+								'jenis_teknisi'		=>strtoupper($row['F']),
+								'level'				=>strtoupper($row['G']),
+								'lokasi_pelatihan'	=>strtoupper($row['H']),
 								'bulan'				=>$this->input->post('bulan'),
 								'tahun'				=>$this->input->post('tahun'),
 							));

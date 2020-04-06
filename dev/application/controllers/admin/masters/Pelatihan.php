@@ -55,8 +55,8 @@ class Pelatihan extends MY_Controller {
   {
       $this->_validate();
       $data = [
-        'jenis_pelatihan'   => $this->input->post('jenis_pelatihan'),
-        'status'            => $this->input->post('status')
+        'jenis_pelatihan'   => strtoupper($this->input->post('jenis_pelatihan')),
+        'status'            => strtoupper($this->input->post('status'))
       ];
 
       $this->db->insert('tb_pelatihan', $data);
@@ -89,9 +89,9 @@ class Pelatihan extends MY_Controller {
   {
       $this->_validate();
       $data = array(
-              'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
-              'status' => $this->input->post('status'),
-          );
+        'jenis_pelatihan'   => strtoupper($this->input->post('jenis_pelatihan')),
+        'status'            => strtoupper($this->input->post('status'))
+      );
       $this->m_pelatihan->update(array('pelatihan_id' => $this->input->post('id')), $data);
       echo json_encode(
         array(

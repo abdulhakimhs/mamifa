@@ -49,7 +49,7 @@ class Mitra extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'nama_mitra'  	=> $this->input->post('nama_mitra')
+			'nama_mitra'  	=> strtoupper($this->input->post('nama_mitra'))
 		];
 
 		$this->db->insert('tb_mitra', $data);
@@ -82,7 +82,7 @@ class Mitra extends MY_Controller {
 	{
 		$this->_validate();
 		$data = array(
-				'nama_mitra'  	=> $this->input->post('nama_mitra')
+				'nama_mitra'  	=> strtoupper($this->input->post('nama_mitra'))
 			);
 		$this->m_mitra->update(array('mitra_id' => $this->input->post('id')), $data);
 		echo json_encode(

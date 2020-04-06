@@ -50,7 +50,7 @@ class Jenis_laporan extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'jenis_laporan'  => $this->input->post('jenis_laporan')
+			'jenis_laporan'  => strtoupper($this->input->post('jenis_laporan'))
 		];
 
 		$this->db->insert('tb_jenis_laporan', $data);
@@ -83,7 +83,7 @@ class Jenis_laporan extends MY_Controller {
 	{
 		$this->_validate();
 		$data = array(
-				'jenis_laporan' 	=> $this->input->post('jenis_laporan')
+				'jenis_laporan' 	=> strtoupper($this->input->post('jenis_laporan'))
 			);
 		$this->m_jenislaporan->update(array('jenis_lap_id' => $this->input->post('id')), $data);
 		echo json_encode(

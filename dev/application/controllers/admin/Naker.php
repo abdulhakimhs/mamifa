@@ -57,12 +57,12 @@ class Naker extends MY_Controller {
 		$this->_validate();
 		$data = [
 			'nik'  				=> $this->input->post('nik'),
-			'nama'  			=> $this->input->post('nama'),
-			'position_name'  	=> $this->input->post('position_name'),
-			'position_title'  	=> $this->input->post('position_title'),
-			'sektor'  			=> $this->input->post('sektor'),
-			'rayon'  			=> $this->input->post('rayon'),
-			'level'  			=> $this->input->post('level')
+			'nama'  			=> strtoupper($this->input->post('nama')),
+			'position_name'  	=> strtoupper($this->input->post('position_name')),
+			'position_title'  	=> strtoupper($this->input->post('position_title')),
+			'sektor'  			=> strtoupper($this->input->post('sektor')),
+			'rayon'  			=> strtoupper($this->input->post('rayon')),
+			'level'  			=> strtoupper($this->input->post('level'))
 		];
 
 		if(!empty($_FILES['photo']['name']))
@@ -106,11 +106,11 @@ class Naker extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'position_name'  	=> $this->input->post('position_name'),
-			'position_title'  	=> $this->input->post('position_title'),
-			'sektor'  			=> $this->input->post('sektor'),
-			'rayon'  			=> $this->input->post('rayon'),
-			'level'  			=> $this->input->post('level')
+			'position_name'  	=> strtoupper($this->input->post('position_name')),
+			'position_title'  	=> strtoupper($this->input->post('position_title')),
+			'sektor'  			=> strtoupper($this->input->post('sektor')),
+			'rayon'  			=> strtoupper($this->input->post('rayon')),
+			'level'  			=> strtoupper($this->input->post('level'))
 		];
 
 		if($this->input->post('remove_photo')) // if remove photo checked
@@ -192,24 +192,24 @@ class Naker extends MY_Controller {
 						if($this->m_naker->get_by_nama($row['D']) > 0) {
 							// Kita push (add) array data ke variabel data_update
 							array_push($data_update, array(
-								'position_name'		=>$row['A'],
-								'position_title'	=>$row['B'],
-								'nik'				=>$row['C'],
-								'nama'				=>$row['D'],
-								'sektor'			=>$row['E'],
-								'rayon'				=>$row['F'],
-								'level'				=>$row['K']
+								'position_name'		=>strtoupper($row['A']),
+								'position_title'	=>strtoupper($row['B']),
+								'nik'				=>strtoupper($row['C']),
+								'nama'				=>strtoupper($row['D']),
+								'sektor'			=>strtoupper($row['E']),
+								'rayon'				=>strtoupper($row['F']),
+								'level'				=>strtoupper($row['K'])
 							));
 						} else {
 							// Kita push (add) array data ke variabel data_insert
 							array_push($data_insert, array(
-								'position_name'		=>$row['A'],
-								'position_title'	=>$row['B'],
-								'nik'				=>$row['C'],
-								'nama'				=>$row['D'],
-								'sektor'			=>$row['E'],
-								'rayon'				=>$row['F'],
-								'level'				=>$row['K']
+								'position_name'		=>strtoupper($row['A']),
+								'position_title'	=>strtoupper($row['B']),
+								'nik'				=>strtoupper($row['C']),
+								'nama'				=>strtoupper($row['D']),
+								'sektor'			=>strtoupper($row['E']),
+								'rayon'				=>strtoupper($row['F']),
+								'level'				=>strtoupper($row['K'])
 							));
 						}
 					}

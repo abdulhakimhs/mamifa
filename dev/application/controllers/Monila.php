@@ -55,11 +55,11 @@ class Monila extends MY_Controller {
 
 			$data = [
 				'jenis_lap_id' 		=> $this->input->post('jenis_laporan'),
-				'nama_lengkap' 		=> $this->input->post('nama_lengkap'),
+				'nama_lengkap' 		=> strtoupper($this->input->post('nama_lengkap')),
 				'nik' 				=> $this->input->post('nik'),
-				'lokasi_temuan' 	=> $this->input->post('sto'),
+				'lokasi_temuan' 	=> strtoupper($this->input->post('sto')),
 				'koordinat' 		=> $this->input->post('koordinat'),
-				'odp'				=> $this->input->post('odp'),
+				'odp'				=> strtoupper($this->input->post('odp')),
 				'file_evident' 		=> $nama_file,
 				'saran_perbaikan'	=> $this->input->post('saran')
 			];

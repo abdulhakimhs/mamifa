@@ -51,8 +51,8 @@ class Operation extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'operation_code'  => $this->input->post('operation_code'),
-			'operation_name'  => $this->input->post('operation_name')
+			'operation_code'  => strtoupper($this->input->post('operation_code')),
+			'operation_name'  => strtoupper($this->input->post('operation_name'))
 		];
 
 		$this->db->insert('tb_operation', $data);
@@ -85,9 +85,9 @@ class Operation extends MY_Controller {
 	{
 		$this->_validate();
 		$data = array(
-				'operation_code' 	=> $this->input->post('operation_code'),
-				'operation_name' 	=> $this->input->post('operation_name'),
-			);
+			'operation_code'  => strtoupper($this->input->post('operation_code')),
+			'operation_name'  => strtoupper($this->input->post('operation_name'))
+		);
 		$this->m_operation->update(array('operation_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(

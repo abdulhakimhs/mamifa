@@ -29,10 +29,10 @@ class Training_request extends MY_Controller {
 			]);
 		} else {
 			$data = [
-				'nama_lengkap'		=> $this->input->post('nama_lengkap'),
+				'nama_lengkap'		=> strtoupper($this->input->post('nama_lengkap')),
 				'nik'				=> $this->input->post('nik'),
-				'level'				=> $this->input->post('level'),
-				'sub_level'			=> $this->input->post('sub_level'),
+				'level'				=> strtoupper($this->input->post('level')),
+				'sub_level'			=> strtoupper($this->input->post('sub_level')),
 				'pelatihan_id'		=> $this->input->post('pelatihan'),
 				'alasan_permintaan'	=> $this->input->post('alasan')
 			];
