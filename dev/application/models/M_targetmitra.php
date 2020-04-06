@@ -87,8 +87,8 @@ class M_targetmitra extends CI_Model
     public function getgrafik($bulan, $tahun)
     {
         $this->db->select("p.jenis_pelatihan,
-              SUM(CASE WHEN (level!='Team Leader') THEN 1 ELSE 0 END) AS staff,
-              SUM(CASE WHEN (level='Team Leader') THEN 1 ELSE 0 END) AS tl"
+              SUM(CASE WHEN (t.level!='Team Leader') THEN 1 ELSE 0 END) AS staff,
+              SUM(CASE WHEN (t.level='Team Leader') THEN 1 ELSE 0 END) AS tl"
             );
         $this->db->from('tb_target_mitra as t');
         $this->db->join('tb_pelatihan as p', 't.pelatihan_id = p.pelatihan_id');
