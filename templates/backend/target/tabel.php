@@ -65,6 +65,56 @@
     let staff_mitra = [];
     let tl_mitra = [];
 
+    var color = Chart.helpers.color;
+
+    //Data Grafik TA
+    var barChartData = {
+        labels: label_ta,
+        datasets: [{
+            label: 'STAFF',
+            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: staff_ta
+        }, {
+            label: 'TL',
+            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.blue,
+            borderWidth: 1,
+            data: tl_ta
+        }, {
+            label: 'SM',
+            backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.yellow,
+            borderWidth: 1,
+            data: sm_ta
+        }, {
+            label: 'MANAGER',
+            backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.green,
+            borderWidth: 1,
+            data: m_ta
+        }]
+    };
+
+    //Data Grafik Mitra
+    var barChartDataM = {
+        labels: label_mitra,
+        datasets: [{
+            label: 'STAFF',
+            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.red,
+            borderWidth: 1,
+            data: staff_mitra
+        }, {
+            label: 'TL',
+            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+            borderColor: window.chartColors.blue,
+            borderWidth: 1,
+            data: tl_mitra
+        }]
+    };
+
     $(document).ready(function(){
         //Ajax Load data from ajax
         $.ajax({
@@ -108,56 +158,7 @@
                 alert('Error get data from ajax');
             }
         });
-    });
 
-    var color = Chart.helpers.color;
-    var barChartData = {
-        labels: label_ta,
-        datasets: [{
-            label: 'STAFF',
-            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.red,
-            borderWidth: 1,
-            data: staff_ta
-        }, {
-            label: 'TL',
-            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.blue,
-            borderWidth: 1,
-            data: tl_ta
-        }, {
-            label: 'SM',
-            backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.yellow,
-            borderWidth: 1,
-            data: sm_ta
-        }, {
-            label: 'MANAGER',
-            backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.green,
-            borderWidth: 1,
-            data: m_ta
-        }]
-    };
-
-    var barChartDataM = {
-        labels: label_mitra,
-        datasets: [{
-            label: 'STAFF',
-            backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.red,
-            borderWidth: 1,
-            data: staff_mitra
-        }, {
-            label: 'TL',
-            backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.blue,
-            borderWidth: 1,
-            data: tl_mitra
-        }]
-    };
-
-    window.onload = function() {
         var ctx = document.getElementById('canvas').getContext('2d');
         punya_ta = new Chart(ctx, {
             type: 'bar',
@@ -205,103 +206,46 @@
                 }
             }
         });
-
-    };
+    });
 
     $("#tahun").change(function(){
-        let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
-        let tahun = $("#tahun").val();
-
-        $.ajax({
-            url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-                for (let i = 0; i < data.length; i++) {
-                    label_ta.pop();
-                    staff_ta.pop();
-                    tl_ta.pop();
-                    sm_ta.pop();
-                    m_ta.pop();
-                }
-
-                for (let i = 0; i < data.length; i++) {
-                    label_ta.push(data[i].jenis_pelatihan);
-                    staff_ta.push(data[i].staff);
-                    tl_ta.push(data[i].tl);
-                    sm_ta.push(data[i].sm);
-                    m_ta.push(data[i].m);
-                }
-
-                punya_ta.data = barChartData;
-                punya_ta.update();
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
-
-        $.ajax({
-            url : "<?php echo site_url('admin/target/grafik_mitra/')?>"+ bulan +"/"+ tahun,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-
-                for (let i = 0; i < data.length; i++) {
-                    label_mitra.pop();
-                    staff_mitra.pop();
-                    tl_mitra.pop();
-                }
-
-                for (let i = 0; i < data.length; i++) {
-                    label_mitra.push(data[i].jenis_pelatihan);
-                    staff_mitra.push(data[i].staff);
-                    tl_mitra.push(data[i].tl);
-                }
-
-                punya_mitra.data = barChartDataM;
-                punya_mitra.update();
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
+        ambil_data();
     });
 
     $("#bulan").change(function(){
-        let bulan = $("#bulan").val();
+        ambil_data();
+    });
+
+    function ambil_data(){
+        let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
         let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
 
-        // punya_ta.destroy();
-        // punya_mitra.destroy();
-
+        //Grafik TA
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
             type: "GET",
             dataType: "JSON",
             success: function(data)
             {
-                for (let i = 0; i < data.length; i++) {
-                    label_ta.pop();
-                    staff_ta.pop();
-                    tl_ta.pop();
-                    sm_ta.pop();
-                    m_ta.pop();
-                }
+                let label_ta_new = [];
+                let staff_ta_new = [];
+                let tl_ta_new = [];
+                let sm_ta_new = [];
+                let m_ta_new = [];
 
                 for (let i = 0; i < data.length; i++) {
-                    label_ta.push(data[i].jenis_pelatihan);
-                    staff_ta.push(data[i].staff);
-                    tl_ta.push(data[i].tl);
-                    sm_ta.push(data[i].sm);
-                    m_ta.push(data[i].m);
+                    label_ta_new.push(data[i].jenis_pelatihan);
+                    staff_ta_new.push(data[i].staff);
+                    tl_ta_new.push(data[i].tl);
+                    sm_ta_new.push(data[i].sm);
+                    m_ta_new.push(data[i].m);
                 }
+
+                barChartData.labels = label_ta_new;
+                barChartData.datasets[0].data = staff_ta_new;
+                barChartData.datasets[1].data = tl_ta_new;
+                barChartData.datasets[2].data = sm_ta_new;
+                barChartData.datasets[3].data = m_ta_new;
 
                 punya_ta.data = barChartData;
                 punya_ta.update();
@@ -313,24 +257,26 @@
             }
         });
 
+        //Grafik Mitra
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_mitra/')?>"+ bulan +"/"+ tahun,
             type: "GET",
             dataType: "JSON",
             success: function(data)
-            {
+            {                
+                let label_mitra_new = [];
+                let staff_mitra_new = [];
+                let tl_mitra_new = [];
 
                 for (let i = 0; i < data.length; i++) {
-                    label_mitra.pop();
-                    staff_mitra.pop();
-                    tl_mitra.pop();
+                    label_mitra_new.push(data[i].jenis_pelatihan);
+                    staff_mitra_new.push(data[i].staff);
+                    tl_mitra_new.push(data[i].tl);
                 }
 
-                for (let i = 0; i < data.length; i++) {
-                    label_mitra.push(data[i].jenis_pelatihan);
-                    staff_mitra.push(data[i].staff);
-                    tl_mitra.push(data[i].tl);
-                }
+                barChartDataM.labels = label_mitra_new;
+                barChartDataM.datasets[0].data = staff_mitra_new;
+                barChartDataM.datasets[1].data = tl_mitra_new;
 
                 punya_mitra.data = barChartDataM;
                 punya_mitra.update();
@@ -341,5 +287,5 @@
                 alert('Error get data from ajax');
             }
         });
-    });
+    }
 </script>
