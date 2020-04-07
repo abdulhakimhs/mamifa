@@ -96,64 +96,53 @@
 </div>
 
 <script>
+    let label = [];
+    let staff = [];
+    let tl = [];
+
     var color = Chart.helpers.color;
     var barChartData = {
-        labels: ['HCP', 'KES', 'KOPEGTEL', 'GLOBAL', 'KOPTA'],
+        labels: label,
         datasets: [{
             label: 'STAFF',
             backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
             borderColor: window.chartColors.red,
             borderWidth: 1,
-            data: [
-                3,
-                5,
-                7,
-                3,
-                4
-            ]
+            data: staff
         }, {
             label: 'TL',
             backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
             borderColor: window.chartColors.blue,
             borderWidth: 1,
-            data: [
-                3,
-                2,
-                3,
-                2,
-                3
-            ]
-        }, {
-            label: 'SM',
-            backgroundColor: color(window.chartColors.yellow).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.yellow,
-            borderWidth: 1,
-            data: [
-                2,
-                3,
-                2,
-                1,
-                2
-            ]
-        }, {
-            label: 'MANAGER',
-            backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
-            borderColor: window.chartColors.green,
-            borderWidth: 1,
-            data: [
-                2,
-                2,
-                3,
-                2,
-                1
-            ]
+            data: tl
         }]
 
     };
 
-    window.onload = function() {
+    $(document).ready(function(){
+        //Ajax Load data from ajax
+        $.ajax({
+            url : "<?php echo site_url('admin/penilaian/mitra/ambil_grafik')?>",
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.isi.length; i++) {
+                    label.push(data.isi[i].nama_mitra);
+                    staff.push(data.isi[i].staff);
+                    tl.push(data.isi[i].tl);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+
         var ctx = document.getElementById('canvas').getContext('2d');
-        window.myBar = new Chart(ctx, {
+        grafik = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
             options: {
@@ -168,8 +157,7 @@
                 }
             }
         });
-
-    };
+    });
 
     $("#bulan").change(function(){
         ambil_data();
@@ -195,6 +183,9 @@
             success: function(data)
             {
                 let isi = '';
+                let label_new = [];
+                let staff_new = [];
+                let tl_new = [];
 
                 for (let i = 0; i < data.isi.length; i++) {
                     isi += '<tr>'+
@@ -203,6 +194,10 @@
                         '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].staff +'</td>'+
                         '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].tl +'</td>'+
                     '</tr>';
+                    
+                    label_new.push(data.isi[i].nama_mitra);
+                    staff_new.push(data.isi[i].staff);
+                    tl_new.push(data.isi[i].tl);
                 }
 
                 isi += '<tr>'+
@@ -213,6 +208,13 @@
                 '</tr>';
 
                 $("#tabel_mitra").html(isi);
+
+                barChartData.labels = label_new;
+                barChartData.datasets[0].data = staff_new;
+                barChartData.datasets[1].data = tl_new;
+
+                grafik.data = barChartData;
+                grafik.update();
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
