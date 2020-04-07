@@ -130,13 +130,13 @@ class Target extends MY_Controller {
 		]);
 	}
 
-	public function grafik_ta($bulan = null, $tahun = null)
+	public function grafik_ta($bulan = 'all', $tahun = 'all')
 	{
 		$data = $this->m_targetta->getgrafik($bulan, $tahun)->result();
 		echo json_encode($data);
 	}
 
-	public function grafik_mitra($bulan = null, $tahun = null)
+	public function grafik_mitra($bulan = 'all', $tahun = 'all')
 	{
 		$data = $this->m_targetmitra->getgrafik($bulan, $tahun)->result();
 		echo json_encode($data);

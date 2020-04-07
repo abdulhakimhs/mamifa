@@ -110,59 +110,6 @@
         });
     });
 
-    $("#tahun").change(function(){
-        let bulan = $("#bulan").val();
-        let tahun = $("#tahun").val();
-
-        $.ajax({
-            url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-
-                for (let i = 0; i < data.length; i++) {
-                    label_ta.pop();
-                    staff_ta.pop();
-                    tl_ta.pop();
-                    sm_ta.pop();
-                    m_ta.pop();
-                }
-
-                punya_ta.data = barChartData;
-                punya_ta.update();
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
-
-        $.ajax({
-            url : "<?php echo site_url('admin/target/grafik_mitra/')?>"+ bulan +"/"+ tahun,
-            type: "GET",
-            dataType: "JSON",
-            success: function(data)
-            {
-
-                for (let i = 0; i < data.length; i++) {
-                    label_mitra.pop();
-                    staff_mitra.pop();
-                    tl_mitra.pop();
-                }
-
-                punya_mitra.data = barChartDataM;
-                punya_mitra.update();
-
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error get data from ajax');
-            }
-        });
-    });
-
     var color = Chart.helpers.color;
     var barChartData = {
         labels: label_ta,
@@ -260,33 +207,139 @@
         });
 
     };
+
+    $("#tahun").change(function(){
+        let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
+        let tahun = $("#tahun").val();
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+                for (let i = 0; i < data.length; i++) {
+                    label_ta.pop();
+                    staff_ta.pop();
+                    tl_ta.pop();
+                    sm_ta.pop();
+                    m_ta.pop();
+                }
+
+                for (let i = 0; i < data.length; i++) {
+                    label_ta.push(data[i].jenis_pelatihan);
+                    staff_ta.push(data[i].staff);
+                    tl_ta.push(data[i].tl);
+                    sm_ta.push(data[i].sm);
+                    m_ta.push(data[i].m);
+                }
+
+                punya_ta.data = barChartData;
+                punya_ta.update();
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_mitra/')?>"+ bulan +"/"+ tahun,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.length; i++) {
+                    label_mitra.pop();
+                    staff_mitra.pop();
+                    tl_mitra.pop();
+                }
+
+                for (let i = 0; i < data.length; i++) {
+                    label_mitra.push(data[i].jenis_pelatihan);
+                    staff_mitra.push(data[i].staff);
+                    tl_mitra.push(data[i].tl);
+                }
+
+                punya_mitra.data = barChartDataM;
+                punya_mitra.update();
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    });
+
+    $("#bulan").change(function(){
+        let bulan = $("#bulan").val();
+        let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
+
+        // punya_ta.destroy();
+        // punya_mitra.destroy();
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+                for (let i = 0; i < data.length; i++) {
+                    label_ta.pop();
+                    staff_ta.pop();
+                    tl_ta.pop();
+                    sm_ta.pop();
+                    m_ta.pop();
+                }
+
+                for (let i = 0; i < data.length; i++) {
+                    label_ta.push(data[i].jenis_pelatihan);
+                    staff_ta.push(data[i].staff);
+                    tl_ta.push(data[i].tl);
+                    sm_ta.push(data[i].sm);
+                    m_ta.push(data[i].m);
+                }
+
+                punya_ta.data = barChartData;
+                punya_ta.update();
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+
+        $.ajax({
+            url : "<?php echo site_url('admin/target/grafik_mitra/')?>"+ bulan +"/"+ tahun,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+
+                for (let i = 0; i < data.length; i++) {
+                    label_mitra.pop();
+                    staff_mitra.pop();
+                    tl_mitra.pop();
+                }
+
+                for (let i = 0; i < data.length; i++) {
+                    label_mitra.push(data[i].jenis_pelatihan);
+                    staff_mitra.push(data[i].staff);
+                    tl_mitra.push(data[i].tl);
+                }
+
+                punya_mitra.data = barChartDataM;
+                punya_mitra.update();
+
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    });
 </script>
-
-
-
-<!-- <style type="text/css">
-	table tr td a {
-		color: black;
-		text-decoration: none;
-	}
-</style>
-<div class="table-responsive">
-    <table class="table table-bordered table-sm">
-    	<thead>
-    		<tr>
-                <th rowspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">OPERATION</th>
-                <th rowspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">TOTAL NAKER</th>
-                <th colspan="4" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">AMUNISI</th>
-            </tr>
-            <tr>
-                <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">Pelatihan</th>
-                <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">BREVET</th>
-                <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">TEST ONLINE</th>
-                <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">OJT</th>
-            </tr>
-    	</thead>
-    	<tbody>
-
-    	</tbody>
-    </table>
-</div> -->

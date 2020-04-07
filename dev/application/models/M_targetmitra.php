@@ -92,13 +92,55 @@ class M_targetmitra extends CI_Model
             );
         $this->db->from('tb_target_mitra as t');
         $this->db->join('tb_pelatihan as p', 't.pelatihan_id = p.pelatihan_id');
-        if(!empty($bulan)){
+        if($bulan != 'all'){
             $this->db->where('bulan', $bulan);
         }
-        if(!empty($tahun)){
+        if($tahun != 'all'){
             $this->db->where('tahun', $tahun);
         }
         $this->db->group_by('t.pelatihan_id');
+        $result = $this->db->get();
+        return $result;
+    }
+
+    public function gettabelpenilaian($bulan = 'all', $tahun = 'all', $pelatihan = 'all')
+    {
+        $this->db->select("t.nama_mitra,
+            SUM(CASE WHEN (t.level!='Team Leader') THEN 1 ELSE 0 END) AS staff,
+            SUM(CASE WHEN (t.level='Team Leader') THEN 1 ELSE 0 END) AS tl,
+            COUNT(t.nama) AS total_naker"
+        );
+        $this->db->from('tb_target_mitra as t');
+        if($bulan != 'all'){
+            $this->db->where('bulan', $bulan);
+        }
+        if($tahun != 'all'){
+            $this->db->where('tahun', $tahun);
+        }
+        if($pelatihan != 'all'){
+            $this->db->where('pelatihan_id', $pelatihan);
+        }
+        $this->db->group_by('t.nama_mitra');
+        $result = $this->db->get();
+        return $result;
+    }
+
+    public function gettabelpenilaiantotal($bulan = 'all', $tahun = 'all', $pelatihan = 'all')
+    {
+        $this->db->select("SUM(CASE WHEN (t.level!='Team Leader') THEN 1 ELSE 0 END) AS staff,
+            SUM(CASE WHEN (t.level='Team Leader') THEN 1 ELSE 0 END) AS tl,
+            COUNT(t.nama) AS total_naker"
+        );
+        $this->db->from('tb_target_mitra as t');
+        if($bulan != 'all'){
+            $this->db->where('bulan', $bulan);
+        }
+        if($tahun != 'all'){
+            $this->db->where('tahun', $tahun);
+        }
+        if($pelatihan != 'all'){
+            $this->db->where('pelatihan_id', $pelatihan);
+        }
         $result = $this->db->get();
         return $result;
     }

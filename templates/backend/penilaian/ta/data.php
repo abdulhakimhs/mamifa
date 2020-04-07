@@ -16,14 +16,18 @@
             <label class="form-control-label"><b>Pilih Target Tahun</b></label>
             <select name="tahun" id="tahun" class="form-control">
                 <option value="">-Pilih Tahun-</option>
-                <option value="2002">2020</option>
+                <option value="<?= date('Y') ?>"><?= date('Y') ?></option>
+                <option value="<?= date('Y', strtotime('+1 years')) ?>"><?= date('Y', strtotime('+1 years')) ?></option>
+                <option value="<?= date('Y', strtotime('+2 years')) ?>"><?= date('Y', strtotime('+2 years')) ?></option>
+                <option value="<?= date('Y', strtotime('+3 years')) ?>"><?= date('Y', strtotime('+3 years')) ?></option>
+                <option value="<?= date('Y', strtotime('+4 years')) ?>"><?= date('Y', strtotime('+4 years')) ?></option>
             </select>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label"><b>Pilih Target Bulan</b></label>
-            <select name="tahun" id="tahun" class="form-control">
+            <select name="bulan" id="bulan" class="form-control">
                 <option value="">-Pilih Bulan-</option>
                 <option value="01">Januari</option>
                 <option value="02">Februari</option>
@@ -31,18 +35,23 @@
                 <option value="04">April</option>
                 <option value="05">Mei</option>
                 <option value="06">Juni</option>
+                <option value="07">Juli</option>
+                <option value="08">Agustus</option>
+                <option value="09">September</option>
+                <option value="10">Oktober</option>
+                <option value="11">November</option>
+                <option value="12">Desember</option>
             </select>
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
             <label class="form-control-label"><b>Pilih Jenis Pelatihan</b></label>
-            <select name="tahun" id="tahun" class="form-control">
+            <select name="jenis_pelatihan" id="jenis_pelatihan" class="form-control">
                 <option value="">-Pilih Pelatihan-</option>
-                <option value="01">INDIHOME NON TEKNIS</option>
-                <option value="02">MULTISKILL</option>
-                <option value="03">TS INDIHOME</option>
-                <option value="04">SURVEY DESIGN FTTH</option>
+                <?php foreach ($jenis_pelatihan as $jp) : ?>
+                    <option value="<?= $jp['pelatihan_id'] ?>"><?= $jp['jenis_pelatihan'] ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
     </div>
@@ -64,54 +73,24 @@
                         <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">MANAGER</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tabel_ta">
+                    <?php foreach ($tabel_penilian as $tp) : ?>
                     <tr>
-                        <td style="vertical-align : middle;text-align:center;">PKL</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">10</a></td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tp['operation_name'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tp['total_naker'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tp['staff'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tp['tl'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tp['sm'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tp['m'] ?></td>
                     </tr>
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;">BTG</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">12</a></td>
-                        <td style="vertical-align : middle;text-align:center;">5</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;">TEG</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">15</a></td>
-                        <td style="vertical-align : middle;text-align:center;">7</td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;">SDI</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">8</a></td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                        <td style="vertical-align : middle;text-align:center;">1</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;">CCAN</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">10</a></td>
-                        <td style="vertical-align : middle;text-align:center;">4</td>
-                        <td style="vertical-align : middle;text-align:center;">3</td>
-                        <td style="vertical-align : middle;text-align:center;">2</td>
-                        <td style="vertical-align : middle;text-align:center;">1</td>
-                    </tr>
+                    <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">55</a></td>
-                        <td style="vertical-align : middle;text-align:center;">17</td>
-                        <td style="vertical-align : middle;text-align:center;">13</td>
-                        <td style="vertical-align : middle;text-align:center;">10</td>
-                        <td style="vertical-align : middle;text-align:center;">10</td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tabel_penilian_total['total_naker'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['staff'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['tl'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['sm'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['m'] ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -254,4 +233,46 @@
         });
 
     };
+
+    $("#jenis_pelatihan").change(function(){
+        let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
+        let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
+        let jenis_pelatihan = $("#jenis_pelatihan").val();
+
+        $.ajax({
+            url : "<?php echo site_url('admin/penilaian/ta/ambil_grafik/')?>"+ bulan +"/"+ tahun +"/"+ jenis_pelatihan,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+                let isi = '';
+
+                for (let i = 0; i < data.isi.length; i++) {
+                    isi += '<tr>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].operation_name +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.isi[i].total_naker +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].staff +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].tl +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].sm +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].m +'</td>'+
+                    '</tr>';
+                }
+
+                isi += '<tr>'+
+                    '<td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.total.total_naker +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.staff +'</td>'+
+                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.tl +'</td>'+
+                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.sm +'</td>'+
+                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.m +'</td>'+
+                '</tr>';
+
+                $("#tabel_ta").html(isi);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    });
 </script>
