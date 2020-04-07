@@ -170,4 +170,54 @@
         });
 
     };
+
+    $("#bulan").change(function(){
+        ambil_data();
+    });
+
+    $("#tahun").change(function(){
+        ambil_data();
+    });
+
+    $("#jenis_pelatihan").change(function(){
+        ambil_data();
+    });
+
+    function ambil_data(){
+        let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
+        let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
+        let jenis_pelatihan = $("#jenis_pelatihan").val() == '' ? 'all' : $("#jenis_pelatihan").val();
+
+        $.ajax({
+            url : "<?php echo site_url('admin/penilaian/mitra/ambil_grafik/')?>"+ bulan +"/"+ tahun +"/"+ jenis_pelatihan,
+            type: "GET",
+            dataType: "JSON",
+            success: function(data)
+            {
+                let isi = '';
+
+                for (let i = 0; i < data.isi.length; i++) {
+                    isi += '<tr>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].nama_mitra +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.isi[i].total_naker +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].staff +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].tl +'</td>'+
+                    '</tr>';
+                }
+
+                isi += '<tr>'+
+                    '<td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.total.total_naker +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.staff +'</td>'+
+                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.tl +'</td>'+
+                '</tr>';
+
+                $("#tabel_mitra").html(isi);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('Error get data from ajax');
+            }
+        });
+    };
 </script>

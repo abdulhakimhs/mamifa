@@ -234,10 +234,22 @@
 
     };
 
+    $("#bulan").change(function(){
+        ambil_data();
+    });
+
+    $("#tahun").change(function(){
+        ambil_data();
+    });
+
     $("#jenis_pelatihan").change(function(){
+        ambil_data();
+    });
+
+    function ambil_data(){
         let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
         let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
-        let jenis_pelatihan = $("#jenis_pelatihan").val();
+        let jenis_pelatihan = $("#jenis_pelatihan").val() == '' ? 'all' : $("#jenis_pelatihan").val();
 
         $.ajax({
             url : "<?php echo site_url('admin/penilaian/ta/ambil_grafik/')?>"+ bulan +"/"+ tahun +"/"+ jenis_pelatihan,
@@ -274,5 +286,5 @@
                 alert('Error get data from ajax');
             }
         });
-    });
+    };
 </script>
