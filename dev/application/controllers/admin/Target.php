@@ -142,9 +142,8 @@ class Target extends MY_Controller {
 		echo json_encode($data);
 	}
 
-	public function tes($bulan, $tahun)
+	public function tes()
 	{
-		$data = $this->m_targetmitra->getgrafik($bulan, $tahun)->result();
-		echo json_encode($data);
+		echo $this->uri->segment(2);
 	}
 }

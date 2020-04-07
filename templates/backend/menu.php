@@ -39,7 +39,7 @@
         </div><!-- /.sidebar-shortcuts -->
 
         <ul class="nav nav-list">
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'dashboard' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/dashboard'); ?>">
               <i class="menu-icon fa fa-tachometer"></i>
               <span class="menu-text"> Dashboard </span>
@@ -48,7 +48,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'naker' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/naker'); ?>">
               <i class="menu-icon fa fa-users"></i>
               <span class="menu-text"> Naker </span>
@@ -56,7 +56,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'training_plan' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-calendar"></i>
               <span class="menu-text">
@@ -67,14 +67,14 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == 'add' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/training_plan/add'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Add Plan
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/training_plan'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Show Plan
@@ -84,7 +84,7 @@
             </ul>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'target' || $this->uri->segment(2) == 'penilaian' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-bullseye"></i>
               <span class="menu-text">
@@ -95,28 +95,28 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == 'upload' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/target/upload'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Upload Data
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/target'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Target Pelatihan
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'penilaian' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="#">
                   Penilaian
                   <b class="arrow fa fa-angle-right"></b>
                 </a>
                 <b class="arrow"></b>
                 <ul class="submenu">
-                  <li class="hover">
+                  <li <?= $this->uri->segment(2) == 'penilaian' && $this->uri->segment(3) == 'ta' ? 'class="hover active"' : 'class="hover"' ?>>
                     <a href="<?= site_url('admin/penilaian/ta'); ?>">
                       TA
                     </a>
@@ -124,7 +124,7 @@
                     <b class="arrow"></b>
                   </li>
 
-                  <li class="hover">
+                  <li <?= $this->uri->segment(2) == 'penilaian' && $this->uri->segment(3) == 'mitra' ? 'class="hover active"' : 'class="hover"' ?>>
                     <a href="<?= site_url('admin/penilaian/mitra'); ?>">
                       Mitra
                     </a>
@@ -135,7 +135,7 @@
             </ul>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'material' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/material'); ?>">
               <i class="menu-icon fa fa-recycle"></i>
               <span class="menu-text"> Stok Material </span>
@@ -143,7 +143,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'modul' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/modul'); ?>">
               <i class="menu-icon fa fa-download"></i>
               <span class="menu-text"> Modul </span>
@@ -151,7 +151,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'monila' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/monila'); ?>">
               <i class="menu-icon fa fa-desktop"></i>
               <span class="menu-text"> Monila </span>
@@ -159,7 +159,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'training_request' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/training_request'); ?>">
               <i class="menu-icon fa fa-play"></i>
               <span class="menu-text"> Training Request </span>
@@ -167,7 +167,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="hover">
+          <li <?= $this->uri->segment(2) == 'masters' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-edit"></i>
               <span class="menu-text">
@@ -178,35 +178,35 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'pelatihan' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/masters/pelatihan'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Pelatihan
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'training' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/masters/training'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Name of Training
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'operation' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/masters/operation'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Operation
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'jenis_laporan' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/masters/jenis_laporan'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Jenis Laporan
                 </a>
                 <b class="arrow"></b>
               </li>
-              <li class="hover">
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'mitra' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/masters/mitra'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Mitra

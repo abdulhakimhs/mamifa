@@ -48,13 +48,13 @@
         <script src="<?= base_url() ?>assets/backend/js/ace.min.js"></script>
 
         <script type="text/javascript">
-        $(document).ready(function () {
-            var url = window.location;
-            $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
-            $('ul.nav a').filter(function() {
-                 return this.href == url;
-            }).parent().addClass('active');
-        });
+        // $(document).ready(function () {
+        //     var url = window.location;
+        //     $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+        //     $('ul.nav a').filter(function() {
+        //          return this.href == url;
+        //     }).parent().addClass('active');
+        // });
         </script>
         <!-- inline scripts related to this page -->
         <script type="text/javascript">
