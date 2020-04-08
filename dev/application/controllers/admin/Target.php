@@ -16,7 +16,7 @@ class Target extends MY_Controller {
 	{
 		$data['title'] 			= 'Target';
 		$data['subtitle'] 		= 'Data';
-		$data['pelatihan']		= $this->m_pelatihan->ambil()->result_array();
+		// $data['pelatihan']		= $this->m_pelatihan->ambil()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/target/tabel',$data,true)
 		]);
@@ -144,6 +144,6 @@ class Target extends MY_Controller {
 
 	public function tes()
 	{
-		echo $this->uri->segment(2);
+		echo date('Y');
 	}
 }
