@@ -64,7 +64,7 @@
                     <tr>
                         <th rowspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">OPERATION</th>
                         <th rowspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">TOTAL NAKER</th>
-                        <th colspan="4" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">INDIHOME NON TEKNIS</th>
+                        <th colspan="4" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">PESERTA</th>
                     </tr>
                     <tr>
                         <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">STAFF</th>
@@ -76,21 +76,21 @@
                 <tbody id="tabel_ta">
                     <?php foreach ($tabel_penilian as $tp) : ?>
                     <tr>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tp['operation_name'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tp['total_naker'] ?></a></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tp['staff'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tp['tl'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tp['sm'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tp['m'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><?= $tp['operation_code'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/<?= strtolower($tp['operation_code']) ?>"><?= $tp['total_naker'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/<?= strtolower($tp['operation_code']) ?>/staff"><?= $tp['staff'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/<?= strtolower($tp['operation_code']) ?>/tl"><?= $tp['tl'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/<?= strtolower($tp['operation_code']) ?>/sm"><?= $tp['sm'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/<?= strtolower($tp['operation_code']) ?>/manager"><?= $tp['m'] ?></a></td>
                     </tr>
                     <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tabel_penilian_total['total_naker'] ?></a></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['staff'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['tl'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['sm'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilian_total['m'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show"><?= $tabel_penilian_total['total_naker'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/staff"><?= $tabel_penilian_total['staff'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/tl"><?= $tabel_penilian_total['tl'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/sm"><?= $tabel_penilian_total['sm'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/manager"><?= $tabel_penilian_total['m'] ?></a></td>
                     </tr>
                 </tbody>
             </table>
@@ -212,12 +212,12 @@
 
                 for (let i = 0; i < data.isi.length; i++) {
                     isi += '<tr>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].operation_name +'</td>'+
-                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.isi[i].total_naker +'</a></td>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].staff +'</td>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].tl +'</td>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].sm +'</td>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].m +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].operation_code +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/'+ data.isi[i].operation_code +'/all/'+jenis_pelatihan+'">'+ data.isi[i].total_naker +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/'+ data.isi[i].operation_code +'/staff/'+jenis_pelatihan+'">'+ data.isi[i].staff +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/'+ data.isi[i].operation_code +'/tl/'+jenis_pelatihan+'">'+ data.isi[i].tl +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/'+ data.isi[i].operation_code +'/sm/'+jenis_pelatihan+'">'+ data.isi[i].sm +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/'+ data.isi[i].operation_code +'/manager/'+jenis_pelatihan+'">'+ data.isi[i].m +'</a></td>'+
                     '</tr>';
 
                     label_new.push(data.isi[i].operation_name);
@@ -229,11 +229,11 @@
 
                 isi += '<tr>'+
                     '<td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>'+
-                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.total.total_naker +'</a></td>'+
-                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.staff +'</td>'+
-                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.tl +'</td>'+
-                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.sm +'</td>'+
-                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.m +'</td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/all/'+jenis_pelatihan+'">'+ data.total.total_naker +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/staff/'+jenis_pelatihan+'">'+ data.total.staff +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/tl/'+jenis_pelatihan+'">'+ data.total.tl +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/sm/'+jenis_pelatihan+'">'+ data.total.sm +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="ta/show/all/manager/'+jenis_pelatihan+'">'+ data.total.m +'</a></td>'+
                 '</tr>';
 
                 $("#tabel_ta").html(isi);

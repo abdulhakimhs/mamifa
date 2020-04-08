@@ -82,7 +82,7 @@ class M_operation extends CI_Model
     {
         $this->db->select('operation_id');
         $this->db->from($this->table);
-        $this->db->where('operation_name', $name);
+        $this->db->where('operation_code', $name);
         $query = $this->db->get();
         return $query->row_array();
     }

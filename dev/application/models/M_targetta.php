@@ -100,6 +100,7 @@ class M_targetta extends CI_Model
         if($tahun != 'all'){
             $this->db->where('tahun', $tahun);
         }
+        $this->db->where('t.status', 0);
         $this->db->group_by('t.pelatihan_id');
         $result = $this->db->get();
         return $result;
@@ -107,7 +108,7 @@ class M_targetta extends CI_Model
 
     public function gettabelpenilaian($bulan = 'all', $tahun = 'all', $pelatihan = 'all')
     {
-        $this->db->select("o.operation_name,
+        $this->db->select("o.operation_name,o.operation_code,
             SUM(CASE WHEN (t.level!='Team Leader' AND t.level!='Site Manager' AND t.level!='Manager') THEN 1 ELSE 0 END) AS staff,
             SUM(CASE WHEN (t.level='Team Leader') THEN 1 ELSE 0 END) AS tl,
             SUM(CASE WHEN (t.level='Site Manager') THEN 1 ELSE 0 END) AS sm,
@@ -125,6 +126,7 @@ class M_targetta extends CI_Model
         if($pelatihan != 'all'){
             $this->db->where('pelatihan_id', $pelatihan);
         }
+        $this->db->where('t.status', 0);
         $this->db->group_by('t.operation_id');
         $result = $this->db->get();
         return $result;
@@ -149,6 +151,42 @@ class M_targetta extends CI_Model
         if($pelatihan != 'all'){
             $this->db->where('pelatihan_id', $pelatihan);
         }
+        $this->db->where('t.status', 0);
+        $result = $this->db->get();
+        return $result;
+    }
+
+    public function show($unit = 'all', $level='all', $pelatihan = 'all')
+    {
+        $this->db->select("*");
+        $this->db->from('tb_target_ta as t');
+        $this->db->join('tb_operation as o', 't.operation_id = o.operation_id');
+        $this->db->join('tb_pelatihan as p', 'p.pelatihan_id = t.pelatihan_id');
+        if($unit != 'all'){
+            $this->db->where('o.operation_code', $unit);
+        }
+        if($level != 'all'){
+            if ($level == 'staff') {
+                $where = "t.level!='Team Leader' AND t.level!='Site Manager' AND t.level!='Manager'";
+                $this->db->where($where);
+            }
+            elseif ($level == 'tl') {
+                $where = "t.level='Team Leader'";
+                $this->db->where($where);
+            }
+            elseif ($level == 'sm') {
+                $where = "t.level='Site Manager'";
+                $this->db->where($where);
+            }
+            else{
+                $where = "t.level='Manager'";
+                $this->db->where($where);
+            }
+        }
+        if($pelatihan != 'all'){
+            $this->db->where('t.pelatihan_id', $pelatihan);
+        }
+        $this->db->where('t.status', 0);
         $result = $this->db->get();
         return $result;
     }

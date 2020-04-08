@@ -43,13 +43,13 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12" style="height: 350px">
+    <div class="col-lg-12" style="width: 100%; height: 350px;">
         <canvas id="canvas"></canvas>
     </div>
 </div>
 <br><br><br>
 <div class="row" style="border-top: 2px solid grey;">
-    <div class="col-lg-12" style="height: 350px">
+    <div class="col-lg-12" style="width: 100%; height: 350px;">
         <canvas id="canvas_mitra"></canvas>
     </div>
 </div>
@@ -115,8 +115,10 @@
         }]
     };
 
-    $(document).ready(function(){
-        //Ajax Load data from ajax
+    window.onload = function() {
+        var bulan = $("#bulan").val() == '' ? 'All' : $("#bulan").val();
+        var tahun = $("#tahun").val() == '' ? 'All' : $("#tahun").val();
+        
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_ta')?>",
             type: "GET",
@@ -178,7 +180,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA (TA) Pekalongan Januari 2020'
+                    text: 'Pelatihan FA (TA) Pekalongan '+bulan+' '+tahun+''
                 }
             }
         });
@@ -202,11 +204,11 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA (MITRA) Pekalongan Januari 2020'
+                    text: 'Pelatihan FA (TA) Pekalongan '+bulan+' '+tahun+''
                 }
             }
         });
-    });
+    };
 
     $("#tahun").change(function(){
         ambil_data();
@@ -217,10 +219,9 @@
     });
 
     function ambil_data(){
+        //Grafik TA
         let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
         let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
-
-        //Grafik TA
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
             type: "GET",
@@ -288,4 +289,5 @@
             }
         });
     }
+
 </script>

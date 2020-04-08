@@ -98,6 +98,7 @@ class M_targetmitra extends CI_Model
         if($tahun != 'all'){
             $this->db->where('tahun', $tahun);
         }
+        $this->db->where('t.status', 0);
         $this->db->group_by('t.pelatihan_id');
         $result = $this->db->get();
         return $result;
@@ -120,6 +121,7 @@ class M_targetmitra extends CI_Model
         if($pelatihan != 'all'){
             $this->db->where('pelatihan_id', $pelatihan);
         }
+        $this->db->where('t.status', 0);
         $this->db->group_by('t.nama_mitra');
         $result = $this->db->get();
         return $result;
@@ -141,6 +143,7 @@ class M_targetmitra extends CI_Model
         if($pelatihan != 'all'){
             $this->db->where('pelatihan_id', $pelatihan);
         }
+        $this->db->where('t.status', 0);
         $result = $this->db->get();
         return $result;
     }
