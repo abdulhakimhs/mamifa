@@ -138,7 +138,7 @@
         }]
     };
 
-    $(window).load(function(){
+    $(document).ready(function(){
         //Ajax Load data from ajax
         $.ajax({
             url : "<?php echo site_url('admin/penilaian/ta/ambil_grafik')?>",
@@ -161,8 +161,10 @@
                 alert('Error get data from ajax');
             }
         });
+    });
 
-        var ctx = document.getElementById('canvas').getContext('2d');
+    $(window).load(function(){
+        let ctx = document.getElementById('canvas').getContext('2d');
         grafik = new Chart(ctx, {
             type: 'bar',
             data: barChartData,

@@ -115,7 +115,7 @@
         }]
     };
 
-    $(window).load(function(){
+    $(document).ready(function(){
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_ta')?>",
             type: "GET",
@@ -157,7 +157,9 @@
                 alert('Error get data from ajax');
             }
         });
+    });
 
+    $(window).load(function(){
         let ctx = document.getElementById('canvas').getContext('2d');
         punya_ta = new Chart(ctx, {
             type: 'bar',
