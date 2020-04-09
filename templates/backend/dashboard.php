@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
-            <label class="form-control-label"><b>Pilih Target Tahun</b></label>
+            <label class="form-control-label"><b>Pilih Tahun</b></label>
             <select name="tahun" id="tahun" class="form-control" required>
                 <option value="">-Pilih Tahun-</option>
                 <option value="<?= date('Y') ?>"><?= date('Y') ?></option>
@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            <label class="form-control-label"><b>Pilih Target Bulan</b></label>
+            <label class="form-control-label"><b>Pilih Bulan</b></label>
             <select name="bulan" id="bulan" class="form-control" required>
                 <option value="">-Pilih Bulan-</option>
                 <option value="01">Januari</option>
@@ -70,10 +70,10 @@
     let staff_mitra = [];
     let tl_mitra = [];
 
-    var color = Chart.helpers.color;
+    let color = Chart.helpers.color;
 
     //Data Grafik TA
-    var barChartData = {
+    let barChartData = {
         labels: label_ta,
         datasets: [{
             label: 'STAFF',
@@ -103,7 +103,7 @@
     };
 
     //Data Grafik Mitra
-    var barChartDataM = {
+    let barChartDataM = {
         labels: label_mitra,
         datasets: [{
             label: 'STAFF',
@@ -120,10 +120,7 @@
         }]
     };
 
-    window.onload = function() {
-        var bulan = $("#bulan").val() == '' ? 'All' : $("#bulan").val();
-        var tahun = $("#tahun").val() == '' ? 'All' : $("#tahun").val();
-        
+    $(window).load(function(){
         $.ajax({
             url : "<?php echo site_url('admin/dashboard/grafik_ta')?>",
             type: "GET",
@@ -166,7 +163,7 @@
             }
         });
 
-        var ctx = document.getElementById('canvas').getContext('2d');
+        let ctx = document.getElementById('canvas').getContext('2d');
         punya_ta = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
@@ -185,12 +182,12 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA (TA) Pekalongan '+bulan+' '+tahun+''
+                    text: 'Hasil Pelatihan FA (TA) Pekalongan <?= bulan(date('m')) ?> <?= date('Y') ?>'
                 }
             }
         });
 
-        var ctxm = document.getElementById('canvas_mitra').getContext('2d');
+        let ctxm = document.getElementById('canvas_mitra').getContext('2d');
         punya_mitra = new Chart(ctxm, {
             type: 'bar',
             data: barChartDataM,
@@ -209,11 +206,12 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA (TA) Pekalongan '+bulan+' '+tahun+''
+                    text: 'Hasil Pelatihan FA (Mitra) Pekalongan <?= bulan(date('m')) ?> <?= date('Y') ?>'
                 }
             }
         });
-    };
+    
+    });
 
     $("#tahun").change(function(){
         ambil_data();
@@ -227,6 +225,9 @@
         //Grafik TA
         let bulan = $("#bulan").val() == '' ? 'now' : $("#bulan").val();
         let tahun = $("#tahun").val() == '' ? 'now' : $("#tahun").val();
+        let title_bulan = bulan == 'now' ? '<?= bulan(date('m')) ?>' : $("#bulan :selected").text();
+        let title_tahun = tahun == 'now' ? '<?= date('Y') ?>' : $("#tahun :selected").text();
+
         $.ajax({
             url : "<?php echo site_url('admin/dashboard/grafik_ta/')?>"+ bulan +"/"+ tahun,
             type: "GET",
@@ -253,6 +254,7 @@
                 barChartData.datasets[2].data = sm_ta_new;
                 barChartData.datasets[3].data = m_ta_new;
 
+                punya_ta.options.title.text = 'Hasil Pelatihan FA (TA) Pekalongan '+ title_bulan +' '+ title_tahun;
                 punya_ta.data = barChartData;
                 punya_ta.update();
 
@@ -284,6 +286,7 @@
                 barChartDataM.datasets[0].data = staff_mitra_new;
                 barChartDataM.datasets[1].data = tl_mitra_new;
 
+                punya_mitra.options.title.text = 'Hasil Pelatihan FA (Mitra) Pekalongan '+ title_bulan +' '+ title_tahun;
                 punya_mitra.data = barChartDataM;
                 punya_mitra.update();
 

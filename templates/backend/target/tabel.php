@@ -65,10 +65,10 @@
     let staff_mitra = [];
     let tl_mitra = [];
 
-    var color = Chart.helpers.color;
+    let color = Chart.helpers.color;
 
     //Data Grafik TA
-    var barChartData = {
+    let barChartData = {
         labels: label_ta,
         datasets: [{
             label: 'STAFF',
@@ -98,7 +98,7 @@
     };
 
     //Data Grafik Mitra
-    var barChartDataM = {
+    let barChartDataM = {
         labels: label_mitra,
         datasets: [{
             label: 'STAFF',
@@ -115,10 +115,7 @@
         }]
     };
 
-    window.onload = function() {
-        var bulan = $("#bulan").val() == '' ? 'All' : $("#bulan").val();
-        var tahun = $("#tahun").val() == '' ? 'All' : $("#tahun").val();
-        
+    $(window).load(function(){
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_ta')?>",
             type: "GET",
@@ -161,7 +158,7 @@
             }
         });
 
-        var ctx = document.getElementById('canvas').getContext('2d');
+        let ctx = document.getElementById('canvas').getContext('2d');
         punya_ta = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
@@ -180,12 +177,12 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA (TA) Pekalongan '+bulan+' '+tahun+''
+                    text: 'Target Pelatihan FA (TA) Pekalongan All'
                 }
             }
         });
 
-        var ctxm = document.getElementById('canvas_mitra').getContext('2d');
+        let ctxm = document.getElementById('canvas_mitra').getContext('2d');
         punya_mitra = new Chart(ctxm, {
             type: 'bar',
             data: barChartDataM,
@@ -204,11 +201,11 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan FA (TA) Pekalongan '+bulan+' '+tahun+''
+                    text: 'Target Pelatihan FA (Mitra) Pekalongan All'
                 }
             }
         });
-    };
+    });
 
     $("#tahun").change(function(){
         ambil_data();
@@ -222,6 +219,9 @@
         //Grafik TA
         let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
         let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
+        let title_bulan = bulan == 'all' ? '' : $("#bulan :selected").text();
+        let title_tahun = tahun == 'all' ? '' : $("#tahun :selected").text();
+
         $.ajax({
             url : "<?php echo site_url('admin/target/grafik_ta/')?>"+ bulan +"/"+ tahun,
             type: "GET",
@@ -248,6 +248,11 @@
                 barChartData.datasets[2].data = sm_ta_new;
                 barChartData.datasets[3].data = m_ta_new;
 
+                if(title_bulan == '' && title_tahun == '') {
+                    punya_ta.options.title.text = 'Target Pelatihan FA (TA) Pekalongan All';
+                } else {
+                    punya_ta.options.title.text = 'Target Pelatihan FA (TA) Pekalongan '+ title_bulan +' '+ title_tahun;
+                }
                 punya_ta.data = barChartData;
                 punya_ta.update();
 
@@ -279,6 +284,11 @@
                 barChartDataM.datasets[0].data = staff_mitra_new;
                 barChartDataM.datasets[1].data = tl_mitra_new;
 
+                if(title_bulan == '' && title_tahun == '') {
+                    punya_mitra.options.title.text = 'Target Pelatihan FA (Mitra) Pekalongan All';
+                } else {
+                    punya_mitra.options.title.text = 'Target Pelatihan FA (Mitra) Pekalongan '+ title_bulan +' '+ title_tahun;
+                }
                 punya_mitra.data = barChartDataM;
                 punya_mitra.update();
 

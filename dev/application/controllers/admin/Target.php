@@ -144,6 +144,6 @@ class Target extends MY_Controller {
 
 	public function tes()
 	{
-		echo date('Y');
+		echo medium_bulan(date('m'));
 	}
 }

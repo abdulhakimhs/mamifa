@@ -64,7 +64,7 @@
                     <tr>
                         <th rowspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">MITRA</th>
                         <th rowspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">TOTAL NAKER</th>
-                        <th colspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">INDIHOME NON TEKNIS</th>
+                        <th colspan="2" style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;" id="tabel_judul">SEMUA PELATIHAN</th>
                     </tr>
                     <tr>
                         <th style="vertical-align : middle;text-align:center; background: #00A65A; color: #fff;">STAFF</th>
@@ -81,7 +81,7 @@
                         </tr>
                     <?php endforeach; ?>
                     <tr>
-                        <td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>
+                        <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
                         <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tabel_penilaian_total['total_naker'] ?></a></td>
                         <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilaian_total['staff'] ?></td>
                         <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilaian_total['tl'] ?></td>
@@ -100,8 +100,8 @@
     let staff = [];
     let tl = [];
 
-    var color = Chart.helpers.color;
-    var barChartData = {
+    let color = Chart.helpers.color;
+    let barChartData = {
         labels: label,
         datasets: [{
             label: 'STAFF',
@@ -119,7 +119,7 @@
 
     };
 
-    $(document).ready(function(){
+    $(window).load(function(){
         //Ajax Load data from ajax
         $.ajax({
             url : "<?php echo site_url('admin/penilaian/mitra/ambil_grafik')?>",
@@ -141,7 +141,7 @@
             }
         });
 
-        var ctx = document.getElementById('canvas').getContext('2d');
+        let ctx = document.getElementById('canvas').getContext('2d');
         grafik = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
@@ -153,7 +153,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'Pelatihan Indihome Non Teknis FA Pekalongan Januari 2020'
+                    text: 'Target SEMUA PELATIHAN FA (Mitra) Pekalongan All'
                 }
             }
         });
@@ -175,6 +175,10 @@
         let bulan = $("#bulan").val() == '' ? 'all' : $("#bulan").val();
         let tahun = $("#tahun").val() == '' ? 'all' : $("#tahun").val();
         let jenis_pelatihan = $("#jenis_pelatihan").val() == '' ? 'all' : $("#jenis_pelatihan").val();
+
+        let title_bulan = bulan == 'all' ? '' : $("#bulan :selected").text();
+        let title_tahun = tahun == 'all' ? '' : $("#tahun :selected").text();
+        let tabel = jenis_pelatihan == 'all' ? 'SEMUA PELATIHAN' : $("#jenis_pelatihan :selected").text();
 
         $.ajax({
             url : "<?php echo site_url('admin/penilaian/mitra/ambil_grafik/')?>"+ bulan +"/"+ tahun +"/"+ jenis_pelatihan,
@@ -201,7 +205,7 @@
                 }
 
                 isi += '<tr>'+
-                    '<td style="vertical-align : middle;text-align:center;">GRAND TOTAL</td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>'+
                     '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.total.total_naker +'</a></td>'+
                     '<td style="vertical-align : middle;text-align:center;">'+ data.total.staff +'</td>'+
                     '<td style="vertical-align : middle;text-align:center;">'+ data.total.tl +'</td>'+
@@ -213,6 +217,13 @@
                 barChartData.datasets[0].data = staff_new;
                 barChartData.datasets[1].data = tl_new;
 
+                $("#tabel_judul").text(tabel);
+
+                if(title_bulan == '' && title_tahun == '' && tabel == 'SEMUA PELATIHAN') {
+                    grafik.options.title.text = 'Target SEMUA PELATIHAN FA (Mitra) Pekalongan All';
+                } else {
+                    grafik.options.title.text = 'Target '+ tabel +' FA (Mitra) Pekalongan '+ title_bulan +' '+ title_tahun;
+                }
                 grafik.data = barChartData;
                 grafik.update();
             },
