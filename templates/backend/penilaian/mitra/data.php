@@ -143,22 +143,31 @@
     });
 
     $(window).load(function(){
-        let ctx = document.getElementById('canvas').getContext('2d');
-        grafik = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Target SEMUA PELATIHAN FA (Mitra) Pekalongan All'
+        setTimeout(function(){
+            let ctx = document.getElementById('canvas').getContext('2d');
+            grafik = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    scales: {
+                        yAxes:[{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }],
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Target SEMUA PELATIHAN FA (Mitra) Pekalongan All'
+                    }
                 }
-            }
-        });
+            });
+        }, 1000);
     });
 
     $("#bulan").change(function(){

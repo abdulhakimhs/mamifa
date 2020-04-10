@@ -160,53 +160,55 @@
     });
 
     $(window).load(function(){
-        let ctx = document.getElementById('canvas').getContext('2d');
-        punya_ta = new Chart(ctx, {
-            type: 'bar',
-            data: barChartData,
-            options: {
-                scales: {
-                    yAxes:[{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }],
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Target Pelatihan FA (TA) Pekalongan All'
+        setTimeout(function(){
+            let ctx = document.getElementById('canvas').getContext('2d');
+            punya_ta = new Chart(ctx, {
+                type: 'bar',
+                data: barChartData,
+                options: {
+                    scales: {
+                        yAxes:[{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }],
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Target Pelatihan FA (TA) Pekalongan All'
+                    }
                 }
-            }
-        });
+            });
 
-        let ctxm = document.getElementById('canvas_mitra').getContext('2d');
-        punya_mitra = new Chart(ctxm, {
-            type: 'bar',
-            data: barChartDataM,
-            options: {
-                scales: {
-                    yAxes:[{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }],
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Target Pelatihan FA (Mitra) Pekalongan All'
+            let ctxm = document.getElementById('canvas_mitra').getContext('2d');
+            punya_mitra = new Chart(ctxm, {
+                type: 'bar',
+                data: barChartDataM,
+                options: {
+                    scales: {
+                        yAxes:[{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }],
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Target Pelatihan FA (Mitra) Pekalongan All'
+                    }
                 }
-            }
-        });
+            });
+        }, 1000);
     });
 
     $("#tahun").change(function(){
