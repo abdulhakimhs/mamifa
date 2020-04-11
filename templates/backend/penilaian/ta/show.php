@@ -1,7 +1,7 @@
 <style type="text/css">
   @media (min-width: 768px) {
     .modal-xl {
-      width: 55%;
+      width: 100%;
      max-width:1200px;
     }
   }
@@ -87,6 +87,8 @@
         ]
     });
 
+    // $('.selectm').select2({width: '100%'});
+
     $('.datepicker').datepicker({
         autoclose: true,
         format: "yyyy-mm-dd",
@@ -142,7 +144,7 @@
                     <input type="hidden" value="" name="id"/>
                     <div class="form-body">
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <div class="form-group">
                               <label class="control-label col-md-3">NIK</label>
                               <div class="col-md-9">
@@ -174,7 +176,7 @@
                               </div>
                           </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                            <div class="form-group">
                               <label class="control-label col-md-3">Role Play</label>
                               <div class="col-md-9">
@@ -211,6 +213,32 @@
                               </div>
                           </div>
                         </div>
+                        <div class="col-lg-4">
+                          <div class="row">
+                              <div class="col-lg-7">
+                                  <div class="form-group">
+                                    <div class="col-md-12">
+                                      <select name="material[]" id="material" class="form-control selectm">
+                                        <option value="">-Pilih Material-</option>
+                                        <option value="1">SOC</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-5">
+                                  <div class="form-group">
+                                        <div class="col-md-8">
+                                          <input type="text" class="form-control" id="jumlah" name="jumlah[]" placeholder="Jumlah">
+                                        </div>
+                                        <div class="col-md-4">
+                                          <button class="btn btn-success btn-sm" type="button" id="btnAdd"  onclick="add_fields();"> <span class="fa fa-plus" aria-hidden="true"></span> </button>
+                                        </div>
+                                  </div>
+                              </div>
+                              <div class="clear"></div>
+                          </div>
+                          <div id="form_fields"></div>
+                        </div>
                       </div>
                     </div>
                 </form>
@@ -224,6 +252,9 @@
 </div><!-- /.modal -->
 
 <script type="text/javascript">
+  
+  let room = 1;
+
   function save()
   {
       $('#btnSave').text('saving...'); //change button text
@@ -267,5 +298,41 @@
 
           }
       });
+  }
+
+  function add_fields() {
+      room++;
+      var objTo = document.getElementById('form_fields');
+      var divtest = document.createElement("div");
+      divtest.setAttribute("class", "col-sm-12 form-group removeclass"+room);
+      var rdiv = 'removeclass'+room;
+      divtest.innerHTML = `<div class="row">
+          <div class="col-lg-7">
+              <div class="form-group">
+              <div class="col-md-12">
+                  <select name="material[]" id="material" class="form-control selectm">
+                  <option value="">-Pilih Material-</option>
+                  <option value="1">SOC</option>
+                  </select>
+              </div>
+              </div>
+          </div>
+          <div class="col-lg-5">
+              <div class="form-group">
+                  <div class="col-md-8">
+                      <input type="text" class="form-control" id="jumlah" name="jumlah[]" placeholder="Jumlah">
+                  </div>
+                  <div class="col-md-4">
+                    <button class="btn btn-danger btn-sm" type="button" onclick="remove_fields(`+room+`);"> <span class="fa fa-minus" aria-hidden="true"></span> </button>
+                  </div>
+              </div>
+          </div>
+          <div class="clear"></div>
+          <div id="form_fields"></div>
+      </div>`;
+      objTo.appendChild(divtest)
+  }
+  function remove_fields(rid) {
+      $('.removeclass'+rid).remove();
   }
 </script>
