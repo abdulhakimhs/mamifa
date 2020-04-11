@@ -135,8 +135,8 @@
             </ul>
           </li>
 
-          <li <?= $this->uri->segment(2) == 'material' ? 'class="hover active"' : 'class="hover"' ?>>
-            <a href="<?= site_url('admin/material'); ?>">
+          <li <?= $this->uri->segment(2) == 'stok_material' ? 'class="hover active"' : 'class="hover"' ?>>
+            <a href="<?= site_url('admin/stok_material'); ?>">
               <i class="menu-icon fa fa-recycle"></i>
               <span class="menu-text"> Stok Material </span>
             </a>
@@ -210,6 +210,13 @@
                 <a href="<?= site_url('admin/masters/mitra'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
                   Mitra
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'material' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/masters/material'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Material
                 </a>
                 <b class="arrow"></b>
               </li>
