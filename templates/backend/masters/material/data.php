@@ -31,6 +31,9 @@
 		                <tr>
                             <th width="10">NO</th>
                             <th>Material</th>
+                            <th>Merk</th>
+                            <th>Type</th>
+                            <th>Jenis</th>
                             <th>Stok</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>

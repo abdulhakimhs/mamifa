@@ -13,7 +13,7 @@ class Stok_material extends CI_Controller {
 		$data['title'] 			= 'Stok';
 		$data['subtitle'] 		= 'Material';
 		$this->load->view('backend/template',[
-			'content' => $this->load->view('backend/masters/material/stok',$data,true)
+			'content' => $this->load->view('backend/stok_material/stok',$data,true)
 		]);
 	}
 
