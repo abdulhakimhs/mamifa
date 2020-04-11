@@ -5,13 +5,16 @@ class Stok_material extends CI_Controller {
 
 	public function __construct()
 	{
-        parent::__construct();
+		parent::__construct();
+		$this->load->model('m_stok_material');
 	}
 
 	public function index()
 	{
 		$data['title'] 			= 'Stok';
 		$data['subtitle'] 		= 'Material';
+		$data['material']		= $this->m_stok_material->ambil()->result_array();
+		$data['total']			= $this->m_stok_material->grandtotal()->row_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/stok_material/stok',$data,true)
 		]);

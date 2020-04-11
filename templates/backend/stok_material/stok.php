@@ -16,14 +16,18 @@
                         <th style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">STOK</th>
                     </tr>
                 </thead>
-                <tbody id="tabel_ta">
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;">SOC</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="show/soc">0</a></td>
-                    <tr>
+                <tbody>
+                    <?php foreach ($material as $m) : ?>
+                        <?php if ($m['jenis'] == 'MATERIAL') {  ?>
+                            <tr>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['material'] ?></td>
+                                <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="show/soc"><?= $m['stok'] ?></a></td>
+                            <tr>
+                        <?php } ?>
+                    <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><a style="text-decoration: none;" href="#">0</a></b></td>
+                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><a style="text-decoration: none;" href="#"><?= $total['total_m'] ?></a></b></td>
                     </tr>
                 </tbody>
             </table>
@@ -39,14 +43,18 @@
                         <th style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">STOK</th>
                     </tr>
                 </thead>
-                <tbody id="tabel_ta">
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;">SOC</td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="show/soc">0</a></td>
-                    <tr>
+                <tbody>
+                    <?php foreach ($material as $m) : ?>
+                        <?php if ($m['jenis'] == 'HABIS PAKAI') {  ?>
+                            <tr>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['material'] ?></td>
+                                <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="show/soc"><?= $m['stok'] ?></a></td>
+                            <tr>
+                        <?php } ?>
+                    <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><a style="text-decoration: none;" href="#">0</a></b></td>
+                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><a style="text-decoration: none;" href="#"><?= $total['total_mhp'] ?></a></b></td>
                     </tr>
                 </tbody>
             </table>
