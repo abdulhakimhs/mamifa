@@ -52,7 +52,7 @@
 		<div class="widget-body">
 			<div class="widget-main">
 				<div id="pesan" style="margin: 10px 5px;"></div>
-				<form autocomplete="off" method="POST" action="<?= site_url('admin/training_plan/search_plan') ?>">
+				<form method="POST" action="<?= site_url('admin/training_plan/search_plan') ?>" autocomplete="off">
 					<div class="row">
 						<div class="col-lg-3">
 							<div class="form-group">
@@ -60,7 +60,7 @@
 	                            <div class="row">
 	                                <div class="col-xs-8 col-sm-11">
 	                                    <div class="input-group">
-	                                        <input class="form-control date-picker" name="ftgl_awal_search" id="ftgl_awal_search" type="text" data-date-format="yyyy-mm-dd" autocomplete="false" />
+	                                        <input class="form-control date-picker" name="ftgl_awal_search" id="ftgl_awal_search" type="text" data-date-format="yyyy-mm-dd"/>
 											<span class="input-group-addon">
 	                                            <i class="fa fa-calendar bigger-110"></i>
 	                                        </span>

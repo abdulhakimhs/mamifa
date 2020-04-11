@@ -304,6 +304,17 @@ function delete_data(id)
                                 <span class="help-block"></span>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Jenis</label>
+                            <div class="col-md-9">
+                                <select name="jenis" id="jenis" class="form-control">
+                                    <option value="">-Pilih Jenis Material-</option>
+                                    <option value="HABIS PAKAI">MATERIAL HABIS PAKAI</option>
+                                    <option value="MATERIAL">MATERIAL</option>
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
