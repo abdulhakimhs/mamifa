@@ -94,7 +94,7 @@ function add_data()
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
+    $('.modal-title').text('Tambah Data Material'); // Set Title to Bootstrap modal title
 }
 
 function material_in()
