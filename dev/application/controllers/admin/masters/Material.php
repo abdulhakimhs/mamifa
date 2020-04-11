@@ -13,6 +13,7 @@ class Material extends MY_Controller {
 	{
 		$data['title'] 			= 'Master Data';
 		$data['subtitle'] 		= 'Material';
+		$data['material']		= $this->m_material->ambil()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/masters/material/data',$data,true)
 		]);
@@ -54,10 +55,13 @@ class Material extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'jenis_laporan'  => strtoupper($this->input->post('jenis_laporan'))
+			'material'  => strtoupper($this->input->post('material')),
+			'merk'  	=> strtoupper($this->input->post('merk')),
+			'type'  	=> strtoupper($this->input->post('type')),
+			'jenis'  	=> strtoupper($this->input->post('jenis'))
 		];
 
-		$this->db->insert('tb_jenis_laporan', $data);
+		$this->db->insert('tb_material', $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -86,10 +90,13 @@ class Material extends MY_Controller {
 	public function ajax_update()
 	{
 		$this->_validate();
-		$data = array(
-				'jenis_laporan' 	=> strtoupper($this->input->post('jenis_laporan'))
-			);
-		$this->m_material->update(array('jenis_lap_id' => $this->input->post('id')), $data);
+		$data = [
+			'material'  => strtoupper($this->input->post('material')),
+			'merk'  	=> strtoupper($this->input->post('merk')),
+			'type'  	=> strtoupper($this->input->post('type')),
+			'jenis'  	=> strtoupper($this->input->post('jenis'))
+		];
+		$this->m_material->update(array('material_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -105,10 +112,17 @@ class Material extends MY_Controller {
 		$data['inputerror'] = array();
 		$data['status'] = TRUE;
 
-		if($this->input->post('jenis_laporan') == '')
+		if($this->input->post('material') == '')
 		{
-			$data['inputerror'][] = 'jenis_laporan';
-			$data['error_string'][] = 'Jenis Laporan is required';
+			$data['inputerror'][] = 'material';
+			$data['error_string'][] = 'Material is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('jenis') == '')
+		{
+			$data['inputerror'][] = 'jenis';
+			$data['error_string'][] = 'Jenis is required';
 			$data['status'] = FALSE;
 		}
 
@@ -117,6 +131,81 @@ class Material extends MY_Controller {
 			echo json_encode($data);
 			exit();
 		}
+	}
+
+	public function material_masuk()
+	{
+		$this->_validate_masuk();
+
+		$stok = $this->m_material->cek_stok($this->input->post('material_id'))->row_array();
+		$saldo = $this->input->post('jumlah_masuk') + $stok['stok'];
+
+		$data = [
+			'material_id'  	=> $this->input->post('material_id'),
+			'jumlah'  		=> $this->input->post('jumlah_masuk'),
+			'sumber_tujuan' => strtoupper($this->input->post('sumber')),
+			'tanggal'  		=> $this->input->post('tanggal'),
+			'status'  		=> 0,
+			'saldo'  		=> $saldo
+		];
+
+		$this->m_material->update(['material_id' => $this->input->post('material_id')], ['stok' => $saldo]);
+		$this->db->insert('tb_material_trans', $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully added!</div>'
+			)
+		);
+	}
+
+	private function _validate_masuk()
+	{
+		$data = array();
+		$data['error_string'] = array();
+		$data['inputerror'] = array();
+		$data['status'] = TRUE;
+
+		if($this->input->post('material_id') == '')
+		{
+			$data['inputerror'][] = 'material_id';
+			$data['error_string'][] = 'Material is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('jumlah_masuk') == '')
+		{
+			$data['inputerror'][] = 'jumlah_masuk';
+			$data['error_string'][] = 'Jumlah Masuk is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('sumber') == '')
+		{
+			$data['inputerror'][] = 'sumber';
+			$data['error_string'][] = 'Sumber is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('tanggal') == '')
+		{
+			$data['inputerror'][] = 'tanggal';
+			$data['error_string'][] = 'Tanggal is required';
+			$data['status'] = FALSE;
+		}
+
+		if($data['status'] === FALSE)
+		{
+			echo json_encode($data);
+			exit();
+		}
+	}
+
+	public function tes($id)
+	{
+		$stok = $this->m_material->cek_stok($id)->row_array();
+
+		echo $stok['stok'];
 	}
 
 }

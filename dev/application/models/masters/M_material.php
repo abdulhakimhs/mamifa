@@ -56,9 +56,9 @@ class M_material extends CI_Model
 
     public function ambil()
     {
-        $this->db->select('*');
+        $this->db->select('material_id, material');
         $this->db->from($this->table);
-        $data = $this->db->get('');
+        $data = $this->db->get();
         return $data;
     }
 
@@ -80,5 +80,14 @@ class M_material extends CI_Model
     {
         $this->db->where('material_id', $id);
         $this->db->delete($this->table);
+    }
+
+    public function cek_stok($id)
+    {
+        $this->db->select('stok');
+        $this->db->from($this->table);
+        $this->db->where('material_id', $id);
+        $data = $this->db->get();
+        return $data;
     }
 }
