@@ -71,6 +71,8 @@ $(document).ready(function() {
 		]
     });
 
+    $('#selmat').select2({width: '100%'});
+
     $('.datepicker').datepicker({
         autoclose: true,
         format: "yyyy-mm-dd",
@@ -326,7 +328,7 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3">Pilih Material</label>
                             <div class="col-md-9">
-                                <select class="form-control" name="material_id">
+                                <select class="form-control" name="material_id" id="selmat">
                                     <option>-Pilih Material-</option>
                                     <option value="">SOC</option>
                                 </select>
