@@ -94,7 +94,7 @@ function add_data()
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
     $('#modal_form').modal('show'); // show bootstrap modal
-    $('.modal-title').text('Tambah Data'); // Set Title to Bootstrap modal title
+    $('.modal-title').text('Tambah Data Material'); // Set Title to Bootstrap modal title
 }
 
 function material_in()
@@ -126,6 +126,7 @@ function detail(id)
 			$('[name="material"]').val(data.material);
             $('[name="merk"]').val(data.merk);
             $('[name="type"]').val(data.type);
+            $('[name="jenis"]').val(data.jenis);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
  
@@ -197,17 +198,10 @@ function insert_material()
 {
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
-    var url;
- 
-    if(save_method == 'add') {
-        url = "<?php echo site_url('admin/masters/material/ajax_add')?>";
-    } else {
-        url = "<?php echo site_url('admin/masters/material/ajax_update')?>";
-    }
  
     // ajax adding data to database
     $.ajax({
-        url : url,
+        url : "<?php echo site_url('admin/masters/material/material_masuk')?>",
         type: "POST",
         data: $('#form_in').serialize(),
         dataType: "JSON",
@@ -216,7 +210,7 @@ function insert_material()
  
             if(data.status) //if success close modal and reload ajax table
             {
-                $('#modal_form').modal('hide');
+                $('#modal_material_in').modal('hide');
                 reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
                 setTimeout(function(){ $('#pesan').empty(); }, 3000);
@@ -225,8 +219,13 @@ function insert_material()
             {
                 for (var i = 0; i < data.inputerror.length; i++) 
                 {
-                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    if(data.inputerror[i] == 'material_id') {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().next().text(data.error_string[i]); //select span help-block class set text error string
+                    } else {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
                 }
             }
             $('#btnSave').text('save'); //change button text
@@ -343,8 +342,10 @@ function delete_data(id)
                             <label class="control-label col-md-3">Pilih Material</label>
                             <div class="col-md-9">
                                 <select class="form-control" name="material_id" id="selmat">
-                                    <option>-Pilih Material-</option>
-                                    <option value="">SOC</option>
+                                    <option value="">-Pilih Material-</option>
+                                    <?php foreach ($material as $m) : ?>
+                                        <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>                                        
+                                    <?php endforeach; ?>
                                 </select>
                                 <span class="help-block"></span>
                             </div>
@@ -359,7 +360,7 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3">Sumber</label>
                             <div class="col-md-9">
-                                <input name="jumlah_masuk" class="form-control" placeholder="Sumber Material" type="text">
+                                <input name="sumber" class="form-control" placeholder="Sumber Material" type="text">
                                 <span class="help-block"></span>
                             </div>
                         </div>
