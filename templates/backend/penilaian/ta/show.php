@@ -217,7 +217,7 @@
                               <div class="col-lg-7">
                                   <div class="form-group">
                                     <div class="col-md-12">
-                                      <select name="material[]" id="material" class="form-control selectm">
+                                      <select name="material[]" id="material0" class="form-control selectm">
                                         <option value="">-Pilih Material-</option>
                                         <?php foreach ($material as $m) : ?>
                                           <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
@@ -265,6 +265,7 @@
   });
 
   let room = 1;
+  let id_m = 1;
 
   function save()
   {
@@ -291,6 +292,10 @@
               {
                   for (var i = 0; i < data.inputerror.length; i++)
                   {
+                    if(data.error_string[i] == 'Jumlah melebihi batas stok material'){
+                      $('[id="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                      $('[id="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
                       $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
                       $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
                   }
@@ -320,12 +325,13 @@
           <div class="col-lg-7">
               <div class="form-group">
               <div class="col-md-12">
-                  <select name="material[]" id="material" class="form-control selectm">
+                  <select name="material[]" id="material`+ id_m +`" class="form-control selectm">
                   <option value="">-Pilih Material-</option>
                   <?php foreach ($material as $m) : ?>
                     <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
                   <?php endforeach; ?>
                   </select>
+                  <span class="help-block"></span>
               </div>
               </div>
           </div>
@@ -342,10 +348,12 @@
           <div class="clear"></div>
           <div id="form_fields"></div>
       </div>`;
-      objTo.appendChild(divtest)
+      objTo.appendChild(divtest);
+      id_m++;
   }
 
   function remove_fields(rid) {
       $('.removeclass'+rid).remove();
+      id_m--;
   }
 </script>

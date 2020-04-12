@@ -52,7 +52,6 @@ class Ta extends MY_Controller {
 	public function insert_nilai()
 	{
 		$this->_validate();
-		exit();
 		$data = array(
                 'target_id' 	=> $this->input->post('id'),
                 'roleplay' 		=> $this->input->post('roleplay'),
@@ -159,7 +158,7 @@ class Ta extends MY_Controller {
 			foreach ($material as $key => $m) {
 				$cek_stok = $this->m_material->cek_stok($m)->row_array();
 				if($jumlah[$key] > $cek_stok['stok']) {
-					$data['inputerror'][] = "material[$key]";
+					$data['inputerror'][] = "material$key";
 					$data['error_string'][] = 'Jumlah melebihi batas stok material';
 					$data['status'] = FALSE;
 				}
