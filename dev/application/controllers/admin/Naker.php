@@ -30,7 +30,6 @@ class Naker extends MY_Controller {
           $row[] = $naker->nama;
           $row[] = $naker->position_title;
           $row[] = $naker->position_name;
-          $row[] = $naker->sektor;
           $row[] = $naker->rayon;
           $row[] = $naker->level;
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$naker->naker_id."'".')">
@@ -60,7 +59,6 @@ class Naker extends MY_Controller {
 			'nama'  			=> strtoupper($this->input->post('nama')),
 			'position_name'  	=> strtoupper($this->input->post('position_name')),
 			'position_title'  	=> strtoupper($this->input->post('position_title')),
-			'sektor'  			=> strtoupper($this->input->post('sektor')),
 			'rayon'  			=> strtoupper($this->input->post('rayon')),
 			'level'  			=> strtoupper($this->input->post('level'))
 		];
@@ -108,7 +106,6 @@ class Naker extends MY_Controller {
 		$data = [
 			'position_name'  	=> strtoupper($this->input->post('position_name')),
 			'position_title'  	=> strtoupper($this->input->post('position_title')),
-			'sektor'  			=> strtoupper($this->input->post('sektor')),
 			'rayon'  			=> strtoupper($this->input->post('rayon')),
 			'level'  			=> strtoupper($this->input->post('level'))
 		];
@@ -196,7 +193,6 @@ class Naker extends MY_Controller {
 								'position_title'	=>strtoupper($row['B']),
 								'nik'				=>strtoupper($row['C']),
 								'nama'				=>strtoupper($row['D']),
-								'sektor'			=>strtoupper($row['E']),
 								'rayon'				=>strtoupper($row['F']),
 								'level'				=>strtoupper($row['K'])
 							));
@@ -207,7 +203,6 @@ class Naker extends MY_Controller {
 								'position_title'	=>strtoupper($row['B']),
 								'nik'				=>strtoupper($row['C']),
 								'nama'				=>strtoupper($row['D']),
-								'sektor'			=>strtoupper($row['E']),
 								'rayon'				=>strtoupper($row['F']),
 								'level'				=>strtoupper($row['K'])
 							));
