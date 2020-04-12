@@ -75,30 +75,33 @@ class Ta extends MY_Controller {
         	$this->db->update('tb_target_ta', $update);
 		}
 
-		//Variabel yang menampung transaksi
-		$m_transaksi = [];
-		
-		//Perulangan untuk mengambil nilai material transaksi
-		foreach ($material as $key => $m) {
-			//Cek stok material saat ini
-			$stok = $this->m_material->cek_stok($m)->row_array();
-			//Pengurangan stok material
-			$saldo = $stok['stok'] - $jumlah[$key];
-			//Mengisi variabel material transaksi
-			$m_transaksi[] = [
-				'material_id'	=> $m,
-				'jumlah'		=> $jumlah[$key],
-				'sumber_tujuan'	=> $this->input->post('nama_pelatihan'),
-				'tanggal'		=> $this->input->post('periode_tgl'),
-				'status'		=> 1,
-				'saldo'			=> $saldo
-			];
-			//Mengupdate stok material
-			$this->m_material->update(['material_id' => $m], ['stok' => $saldo]);
+		//Cek apakah ada inputan material
+		if($material[0] != "") {
+			//Variabel yang menampung transaksi
+			$m_transaksi = [];
+			
+			//Perulangan untuk mengambil nilai material transaksi
+			foreach ($material as $key => $m) {
+				//Cek stok material saat ini
+				$stok = $this->m_material->cek_stok($m)->row_array();
+				//Pengurangan stok material
+				$saldo = $stok['stok'] - $jumlah[$key];
+				//Mengisi variabel material transaksi
+				$m_transaksi[] = [
+					'material_id'	=> $m,
+					'jumlah'		=> $jumlah[$key],
+					'sumber_tujuan'	=> $this->input->post('nama_pelatihan'),
+					'tanggal'		=> $this->input->post('periode_tgl'),
+					'status'		=> 1,
+					'saldo'			=> $saldo
+				];
+				//Mengupdate stok material
+				$this->m_material->update(['material_id' => $m], ['stok' => $saldo]);
+			}
+	
+			//Menginputkan data ke database secara massal (array)
+			$this->db->insert_batch('tb_material_trans', $m_transaksi);
 		}
-
-		//Menginputkan data ke database secara massal (array)
-		$this->db->insert_batch('tb_material_trans', $m_transaksi);
 
         echo json_encode(
 			array(
