@@ -68,16 +68,15 @@ class Target extends MY_Controller {
 					if($numrow > 1){
 						if($this->input->post('target_for') == 'TA') {
 							//Cek apakah operation tersedia di data master
-							$operation = $this->m_operation->get_by_name($row['G']);
+							$operation = $this->m_operation->get_by_name($row['F']);
 							if(!empty($operation)){
 								// Kita push (add) array data ke variabel data_ta
 								array_push($data_ta, array(
 									'nik'				=>$row['A'],
 									'nama'				=>strtoupper($row['B']),
-									'sektor'			=>strtoupper($row['C']),
-									'level'				=>strtoupper($row['D']),
-									'position_name'		=>strtoupper($row['E']),
-									'subunit'			=>strtoupper($row['F']),
+									'level'				=>strtoupper($row['C']),
+									'position_name'		=>strtoupper($row['D']),
+									'subunit'			=>strtoupper($row['E']),
 									'bulan'				=>$this->input->post('bulan'),
 									'tahun'				=>$this->input->post('tahun'),
 									'pelatihan_id'		=>$this->input->post('jenis_pelatihan'),
