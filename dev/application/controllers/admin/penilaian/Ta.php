@@ -9,6 +9,7 @@ class Ta extends MY_Controller {
 		$this->load->model('m_targetta');
 		$this->load->model('m_nilai_ta');
 		$this->load->model('masters/m_pelatihan');
+		$this->load->model('masters/m_material');
 	}
 
 	public function index()
@@ -35,7 +36,7 @@ class Ta extends MY_Controller {
 	{
 		$data['title'] 		= 'Penilaian TA';
 		$data['subtitle'] 	= strtoupper($unit).' | '.strtoupper($level);
-		$datap['pelatihan'] = $pelatihan;
+		$data['material'] 	= $this->m_material->stok_tersedia()->result_array();
 		$data['rowdata']	= $this->m_targetta->show($unit,$level,$pelatihan)->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/penilaian/ta/show',$data,true)
@@ -60,7 +61,10 @@ class Ta extends MY_Controller {
                 'lokasi' 		=> $this->input->post('lokasi'),
                 'periode_tgl' 	=> $this->input->post('periode_tgl'),
                 'keterangan' 	=> $this->input->post('keterangan'),
-            );
+			);
+		$material 	= $this->input->post('material');
+		$jumlah 	= $this->input->post('jumlah');
+		
         $insert = $this->m_nilai_ta->save($data);
         if ($insert) {
         	$update = array(
@@ -68,7 +72,33 @@ class Ta extends MY_Controller {
         	);
         	$this->db->where('target_id', $this->input->post('id'));
         	$this->db->update('tb_target_ta', $update);
-        }
+		}
+
+		//Variabel yang menampung transaksi
+		$m_transaksi = [];
+		
+		//Perulangan untuk mengambil nilai material transaksi
+		foreach ($material as $key => $m) {
+			//Cek stok material saat ini
+			$stok = $this->m_material->cek_stok($m)->row_array();
+			//Pengurangan stok material
+			$saldo = $stok['stok'] - $jumlah[$key];
+			//Mengisi variabel material transaksi
+			$m_transaksi[] = [
+				'material_id'	=> $m,
+				'jumlah'		=> $jumlah[$key],
+				'sumber_tujuan'	=> $this->input->post('nama_pelatihan'),
+				'tanggal'		=> $this->input->post('periode_tgl'),
+				'status'		=> 1,
+				'saldo'			=> $saldo
+			];
+			//Mengupdate stok material
+			$this->m_material->update(['material_id' => $m], ['stok' => $saldo]);
+		}
+
+		//Menginputkan data ke database secara massal (array)
+		$this->db->insert_batch('tb_material_trans', $m_transaksi);
+
         echo json_encode(
 			array(
 				"status" => TRUE,

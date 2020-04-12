@@ -62,6 +62,15 @@ class M_material extends CI_Model
         return $data;
     }
 
+    public function stok_tersedia()
+    {
+        $this->db->select('material_id, material');
+        $this->db->from($this->table);
+        $this->db->where('stok >', 0);
+        $data = $this->db->get();
+        return $data;
+    }
+
     public function get_by_id($id)
     {
         $this->db->from($this->table);

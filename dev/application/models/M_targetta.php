@@ -66,7 +66,7 @@ class M_targetta extends CI_Model
     public function get_by_id($id)
     {
         $this->db->from($this->table);
-        // $this->db->join('tb_jenis_laporan', 'tb_jenis_laporan.jenis_lap_id = tb_monila.jenis_lap_id');
+        $this->db->join('tb_pelatihan', 'tb_pelatihan.pelatihan_id = tb_target_ta.pelatihan_id');
         $this->db->where('target_id',$id);
         $query = $this->db->get();
         return $query->row();

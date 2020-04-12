@@ -7,7 +7,6 @@
   }
 </style>
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
-  <button class="btn btn-sm btn-danger ap" id="send" onclick="material()"><i class="fa fa-hammer"></i> Input Material</button>
   <div class="widget-box widget-color-dark" id="widget-box-1">
     <div class="widget-header">
       <h5 class="widget-title">Penilaian TA <?= $subtitle ?></h5>
@@ -117,6 +116,7 @@
               $('[name="id"]').val(data.target_id);
               $('[name="nik"]').val(data.nik);
               $('[name="nama"]').val(data.nama);
+              $('[name="nama_pelatihan"]').val(data.jenis_pelatihan);
               
               $('#modal_nilai').modal('show'); // show bootstrap modal when complete loaded
               $('.modal-title').text('Beri Nilai Pelatihan'); // Set title to Bootstrap modal title
@@ -142,6 +142,7 @@
             <div class="modal-body form">
                 <form action="#" id="form" class="form-horizontal">
                     <input type="hidden" value="" name="id"/>
+                    <input type="hidden" value="" name="nama_pelatihan"/>
                     <div class="form-body">
                       <div class="row">
                         <div class="col-md-4">
@@ -220,7 +221,9 @@
                                     <div class="col-md-12">
                                       <select name="material[]" id="material" class="form-control selectm">
                                         <option value="">-Pilih Material-</option>
-                                        <option value="1">SOC</option>
+                                        <?php foreach ($material as $m) : ?>
+                                          <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
+                                        <?php endforeach; ?>
                                       </select>
                                     </div>
                                   </div>
@@ -259,13 +262,10 @@
   {
       $('#btnSave').text('saving...'); //change button text
       $('#btnSave').attr('disabled',true); //set button disable
-      var url;
 
-      url = "<?php echo site_url('admin/penilaian/ta/insert_nilai')?>";
-      
       // ajax adding data to database
       $.ajax({
-          url : url,
+          url : "<?php echo site_url('admin/penilaian/ta/insert_nilai')?>",
           type: "POST",
           data: $('#form').serialize(),
           dataType: "JSON",
@@ -276,6 +276,7 @@
               {
                   $('#modal_nilai').modal('hide');
                   document.getElementById('pesan').innerHTML = data.pesan;
+                  setTimeout(function(){ $("#pesan").empty(); }, 3000);
               }
               else
               {
@@ -312,7 +313,9 @@
               <div class="col-md-12">
                   <select name="material[]" id="material" class="form-control selectm">
                   <option value="">-Pilih Material-</option>
-                  <option value="1">SOC</option>
+                  <?php foreach ($material as $m) : ?>
+                    <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
+                  <?php endforeach; ?>
                   </select>
               </div>
               </div>
@@ -332,6 +335,7 @@
       </div>`;
       objTo.appendChild(divtest)
   }
+
   function remove_fields(rid) {
       $('.removeclass'+rid).remove();
   }
