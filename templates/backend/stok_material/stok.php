@@ -21,13 +21,13 @@
                         <?php if ($m['jenis'] == 'MATERIAL') {  ?>
                             <tr>
                                 <td style="vertical-align : middle;text-align:center;"><?= $m['material'] ?></td>
-                                <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="show/soc"><?= $m['stok'] ?></a></td>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['stok'] ?></td>
                             <tr>
                         <?php } ?>
                     <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><a style="text-decoration: none;" href="#"><?= $total['total_m'] ?></a></b></td>
+                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><?= $total['total_m'] ?></b></td>
                     </tr>
                 </tbody>
             </table>
@@ -48,13 +48,13 @@
                         <?php if ($m['jenis'] == 'HABIS PAKAI') {  ?>
                             <tr>
                                 <td style="vertical-align : middle;text-align:center;"><?= $m['material'] ?></td>
-                                <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="show/soc"><?= $m['stok'] ?></a></td>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['stok'] ?></td>
                             <tr>
                         <?php } ?>
                     <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><a style="text-decoration: none;" href="#"><?= $total['total_mhp'] ?></a></b></td>
+                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><?= $total['total_mhp'] ?></b></td>
                     </tr>
                 </tbody>
             </table>

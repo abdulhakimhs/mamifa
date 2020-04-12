@@ -47,7 +47,6 @@
                   <th>POSITION NAME</th>
                   <th>SUBUNIT</th>
                   <th>LEVEL</th>
-                  <th>SEKTOR</th>
                   <th><i class="fa fa-gear"></i></th>
               </tr>
             </thead>
@@ -61,7 +60,6 @@
                   <td><?= $row['position_name'] ?></td>
                   <td><?= $row['subunit'] ?></td>
                   <td><?= $row['level'] ?></td>
-                  <td><?= $row['sektor'] ?></td>
                   <td>
                       <a href="javascript:void(0)" title="Follow UP" onclick="detail(<?= $row['target_id'];?>)"><i class="fa fa-edit"></i></a>
                     </td>
@@ -275,6 +273,7 @@
               if(data.status) //if success close modal and reload ajax table
               {
                   $('#modal_nilai').modal('hide');
+                  window.location.reload()
                   document.getElementById('pesan').innerHTML = data.pesan;
                   setTimeout(function(){ $("#pesan").empty(); }, 3000);
               }
