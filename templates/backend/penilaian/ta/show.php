@@ -289,9 +289,8 @@
               if(data.status) //if success close modal and reload ajax table
               {
                   $('#modal_nilai').modal('hide');
-                  window.location.reload()
                   document.getElementById('pesan').innerHTML = data.pesan;
-                  setTimeout(function(){ $("#pesan").empty(); }, 3000);
+                  setTimeout(function(){ window.location.reload(); }, 1000);
               }
               else
               {
