@@ -69,6 +69,11 @@ $(document).ready(function() {
 			}
 		]
     });
+
+    $("input").change(function(){
+      $(this).parent().parent().removeClass('has-error');
+      $(this).parent().find('.help-block').empty();
+    });
  
 });
 

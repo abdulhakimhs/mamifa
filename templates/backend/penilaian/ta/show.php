@@ -225,6 +225,7 @@
                                           <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
                                         <?php endforeach; ?>
                                       </select>
+                                      <span class="help-block"></span>
                                     </div>
                                   </div>
                               </div>
@@ -256,6 +257,15 @@
 
 <script type="text/javascript">
   
+  $(document).ready(function(){
+
+    $("input").change(function(){
+      $(this).parent().parent().removeClass('has-error');
+      $(this).parent().find('.help-block').empty();
+    });
+
+  });
+
   let room = 1;
 
   function save()

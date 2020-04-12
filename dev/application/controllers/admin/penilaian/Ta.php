@@ -51,6 +51,8 @@ class Ta extends MY_Controller {
 
 	public function insert_nilai()
 	{
+		$this->_validate();
+		exit();
 		$data = array(
                 'target_id' 	=> $this->input->post('id'),
                 'roleplay' 		=> $this->input->post('roleplay'),
@@ -107,7 +109,69 @@ class Ta extends MY_Controller {
 		);
 	}
 
+	private function _validate()
+	{
+		$data = array();
+		$data['error_string'] = array();
+		$data['inputerror'] = array();
+		$data['status'] = TRUE;
 
+		if($this->input->post('periode_tgl') == '')
+		{
+			$data['inputerror'][] = 'periode_tgl';
+			$data['error_string'][] = 'Periode Tanggal is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('roleplay') == '')
+		{
+			$data['inputerror'][] = 'roleplay';
+			$data['error_string'][] = 'Role Play is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('pre_test') == '')
+		{
+			$data['inputerror'][] = 'pre_test';
+			$data['error_string'][] = 'Pre Test is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('post_test') == '')
+		{
+			$data['inputerror'][] = 'post_test';
+			$data['error_string'][] = 'Post Test is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('kehadiran') == '')
+		{
+			$data['inputerror'][] = 'kehadiran';
+			$data['error_string'][] = 'Kehadiran is required';
+			$data['status'] = FALSE;
+		}
+
+		$material = $this->input->post('material');
+		$jumlah = $this->input->post('jumlah');
+
+		if(!empty($material))
+		{
+			foreach ($material as $key => $m) {
+				$cek_stok = $this->m_material->cek_stok($m)->row_array();
+				if($jumlah[$key] > $cek_stok['stok']) {
+					$data['inputerror'][] = "material[$key]";
+					$data['error_string'][] = 'Jumlah melebihi batas stok material';
+					$data['status'] = FALSE;
+				}
+			}
+		}
+
+		if($data['status'] === FALSE)
+		{
+			echo json_encode($data);
+			exit();
+		}
+	}
 }
 
 /* End of file Ta.php */
