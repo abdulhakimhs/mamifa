@@ -34,6 +34,7 @@
                             <th>Nama</th>
                             <th>Position Title</th>
                             <th>Position Name</th>
+                            <th>Sektor</th>
                             <th>Rayon</th>
                             <th>Level</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
@@ -121,6 +122,7 @@ function detail(id)
 			$('[name="nama"]').val(data.nama);
 			$('[name="position_name"]').val(data.position_name);
 			$('[name="position_title"]').val(data.position_title);
+			$('[name="sektor"]').val(data.sektor);
 			$('[name="rayon"]').val(data.rayon);
 			$('[name="level"]').val(data.level);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
@@ -276,6 +278,13 @@ function delete_data(id)
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-3">Sektor</label>
+                            <div class="col-md-9">
+                                <input name="sektor" class="form-control" type="text" placeholder="Nama Sektor">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-3">Rayon</label>
                             <div class="col-md-9">
                                 <input name="rayon" class="form-control" type="text" placeholder="Nama Rayon">
@@ -286,14 +295,14 @@ function delete_data(id)
                             <label class="control-label col-md-3">Level</label>
                             <div class="col-md-9">
                                 <select name="level" id="level" class="form-control">
-                                    <option value="DRAFTER">Drafter</option>
-                                    <option value="HELPDESK">Helpdesk</option>
-                                    <option value="MANAGER">Manager</option>
-                                    <option value="SITE MANAGER">Site Manager</option>
-                                    <option value="STAFF">Staff</option>
-                                    <option value="SURVEYOR">Surveyor</option>
-                                    <option value="TEAM LEADER">Team Leader</option>
-                                    <option value="TEKNISI">Teknisi</option>
+                                    <option value="Drafter">Drafter</option>
+                                    <option value="Helpdesk">Helpdesk</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Site Manager">Site Manager</option>
+                                    <option value="Staff">Staff</option>
+                                    <option value="Surveyor">Surveyor</option>
+                                    <option value="Team Leader">Team Leader</option>
+                                    <option value="Teknisi">Teknisi</option>
                                 </select>
                                 <span class="help-block"></span>
                             </div>

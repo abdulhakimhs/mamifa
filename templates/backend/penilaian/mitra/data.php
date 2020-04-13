@@ -75,16 +75,16 @@
                     <?php foreach ($tabel_penilaian as $tp) : ?>
                         <tr>
                             <td style="vertical-align : middle;text-align:center;"><?= $tp['nama_mitra'] ?></td>
-                            <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tp['total_naker'] ?></a></td>
-                            <td style="vertical-align : middle;text-align:center;"><?= $tp['staff'] ?></td>
-                            <td style="vertical-align : middle;text-align:center;"><?= $tp['tl'] ?></td>
+                            <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/<?= strtolower($tp['nama_mitra']) ?>"><?= $tp['total_naker'] ?></a></td>
+                            <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/<?= strtolower($tp['nama_mitra']) ?>/staff"><?= $tp['staff'] ?></a></td>
+                            <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/<?= strtolower($tp['nama_mitra']) ?>/tl"><?= $tp['tl'] ?></a></td>
                         </tr>
                     <?php endforeach; ?>
                     <tr>
                         <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show"><?= $tabel_penilaian_total['total_naker'] ?></a></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilaian_total['staff'] ?></td>
-                        <td style="vertical-align : middle;text-align:center;"><?= $tabel_penilaian_total['tl'] ?></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show"><?= $tabel_penilaian_total['total_naker'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/all/staff"><?= $tabel_penilaian_total['staff'] ?></a></td>
+                        <td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/all/tl"><?= $tabel_penilaian_total['tl'] ?></a></td>
                     </tr>
                 </tbody>
             </table>
@@ -205,9 +205,9 @@
                 for (let i = 0; i < data.isi.length; i++) {
                     isi += '<tr>'+
                         '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].nama_mitra +'</td>'+
-                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.isi[i].total_naker +'</a></td>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].staff +'</td>'+
-                        '<td style="vertical-align : middle;text-align:center;">'+ data.isi[i].tl +'</td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/'+ data.isi[i].nama_mitra +'/all/'+jenis_pelatihan+'">'+ data.isi[i].total_naker +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/'+ data.isi[i].nama_mitra +'/staff/'+jenis_pelatihan+'">'+ data.isi[i].staff +'</a></td>'+
+                        '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/'+ data.isi[i].nama_mitra +'/tl/'+jenis_pelatihan+'">'+ data.isi[i].tl +'</a></td>'+
                     '</tr>';
                     
                     label_new.push(data.isi[i].nama_mitra);
@@ -217,9 +217,9 @@
 
                 isi += '<tr>'+
                     '<td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>'+
-                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="penilaian/show">'+ data.total.total_naker +'</a></td>'+
-                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.staff +'</td>'+
-                    '<td style="vertical-align : middle;text-align:center;">'+ data.total.tl +'</td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/all/all/'+jenis_pelatihan+'">'+ data.total.total_naker +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/all/all/'+jenis_pelatihan+'">'+ data.total.staff +'</a></td>'+
+                    '<td style="vertical-align : middle;text-align:center;"><a style="text-decoration: none;" href="mitra/show/all/all/'+jenis_pelatihan+'">'+ data.total.tl +'</a></td>'+
                 '</tr>';
 
                 $("#tabel_mitra").html(isi);

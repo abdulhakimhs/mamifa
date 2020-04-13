@@ -8,6 +8,7 @@ class Mitra extends MY_Controller {
 		parent::__construct();
 		$this->load->model('m_targetmitra');
 		$this->load->model('masters/m_pelatihan');
+		$this->load->model('masters/m_material');
 	}
 
 	public function index()
@@ -27,6 +28,23 @@ class Mitra extends MY_Controller {
 		$data['isi'] = $this->m_targetmitra->gettabelpenilaian($bulan, $tahun, $pelatihan)->result_array();
 		$data['total'] = $this->m_targetmitra->gettabelpenilaiantotal($bulan, $tahun, $pelatihan)->row_array();
 
+		echo json_encode($data);
+	}
+
+	public function show($mitra = 'all', $level='all', $pelatihan='all')
+	{
+		$data['title'] 		= 'Penilaian Mitra';
+		$data['subtitle'] 	= strtoupper($mitra).' | '.strtoupper($level);
+		$data['material'] 	= $this->m_material->stok_tersedia()->result_array();
+		$data['rowdata']	= $this->m_targetmitra->show($mitra,$level,$pelatihan)->result_array();
+		$this->load->view('backend/template',[
+			'content' => $this->load->view('backend/penilaian/mitra/show',$data,true)
+		]);
+	}
+
+	public function detail($id)
+	{
+		$data = $this->m_targetmitra->get_by_id($id);
 		echo json_encode($data);
 	}
 

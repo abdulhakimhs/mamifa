@@ -67,6 +67,7 @@ class M_targetmitra extends CI_Model
     {
         $this->db->from($this->table);
         // $this->db->join('tb_jenis_laporan', 'tb_jenis_laporan.jenis_lap_id = tb_monila.jenis_lap_id');
+        $this->db->join('tb_pelatihan', 'tb_pelatihan.pelatihan_id = tb_target_mitra.pelatihan_id');
         $this->db->where('target_m_id',$id);
         $query = $this->db->get();
         return $query->row();
@@ -142,6 +143,32 @@ class M_targetmitra extends CI_Model
         }
         if($pelatihan != 'all'){
             $this->db->where('pelatihan_id', $pelatihan);
+        }
+        $this->db->where('t.status', 0);
+        $result = $this->db->get();
+        return $result;
+    }
+
+    public function show($mitra = 'all', $level='all', $pelatihan = 'all')
+    {
+        $this->db->select("*");
+        $this->db->from('tb_target_mitra as t');
+        $this->db->join('tb_pelatihan as p', 'p.pelatihan_id = t.pelatihan_id');
+        if($mitra != 'all'){
+            $this->db->where('t.nama_mitra', $mitra);
+        }
+        if($level != 'all'){
+            if ($level == 'staff') {
+                $where = "t.level!='Team Leader' AND t.level!='Site Manager' AND t.level!='Manager'";
+                $this->db->where($where);
+            }
+            elseif ($level == 'tl') {
+                $where = "t.level='Team Leader'";
+                $this->db->where($where);
+            }
+        }
+        if($pelatihan != 'all'){
+            $this->db->where('t.pelatihan_id', $pelatihan);
         }
         $this->db->where('t.status', 0);
         $result = $this->db->get();

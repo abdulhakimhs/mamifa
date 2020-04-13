@@ -4,13 +4,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_Naker extends CI_Model
 {
     var $table = 'tb_naker';
-    var $column_order = array('nik','nama', 'position_name', 'position_title', 'rayon', 'level');
-    var $column_search = array('nik','nama', 'position_name', 'position_title', 'rayon', 'level');
+    var $column_order = array('nik','nama','level');
+    var $column_search = array('nik','nama');
     var $order = array('naker_id' => 'desc');
  
     private function _get_datatables_query() {
         $this->db->select('*');
-        $this->db->from($this->table);
+        $this->db->from('tb_naker');
+
+        //Filter
+        /*
+        if($this->input->post('jenis_pelatihan'))
+        {
+            $this->db->where('tb_pelatihan.pelatihan_id', $this->input->post('jenis_pelatihan'));
+        }
+        */
 
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -50,14 +58,14 @@ class M_Naker extends CI_Model
     }
 
     function count_all() {
-        $this->db->from($this->table);
+        $this->db->from('tb_naker');
         return $this->db->count_all_results();
     }
 
     public function ambil()
     {
         $this->db->select('*');
-        $this->db->from($this->table);
+        $this->db->from('tb_naker');
         $data = $this->db->get('');
         return $data;
     }
