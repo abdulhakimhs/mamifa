@@ -167,6 +167,14 @@
             <b class="arrow"></b>
           </li>
 
+          <li <?= $this->uri->segment(2) == 'users' ? 'class="hover active"' : 'class="hover"' ?>>
+            <a href="<?= site_url('admin/users'); ?>">
+              <i class="menu-icon fa fa-users"></i>
+              <span class="menu-text"> Users </span>
+            </a>
+            <b class="arrow"></b>
+          </li>
+
           <li <?= $this->uri->segment(2) == 'masters' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-edit"></i>
