@@ -201,6 +201,12 @@ class Material extends MY_Controller {
 		}
 	}
 
+	public function cek_stok($id)
+	{
+		$data = $this->m_material->cek_stok($id)->row_array();
+		echo json_encode($data);
+	}
+
 	public function tes($id)
 	{
 		$stok = $this->m_material->cek_stok($id)->row_array();

@@ -111,7 +111,7 @@
           success: function(data)
           {
 
-              $('[name="id"]').val(data.target_id);
+              $('[name="id"]').val(data.target_m_id);
               $('[name="nik"]').val(data.nik);
               $('[name="nama"]').val(data.nama);
               $('[name="nama_mitra"]').val(data.nama_mitra);
@@ -273,6 +273,11 @@
       $(this).parent().find('.help-block').empty();
     });
 
+    $("select").change(function(){
+      $(this).parent().parent().removeClass('has-error');
+      $(this).parent().find('.help-block').empty();
+    });
+
   });
 
   let room = 1;
@@ -295,9 +300,8 @@
               if(data.status) //if success close modal and reload ajax table
               {
                   $('#modal_nilai').modal('hide');
-                  window.location.reload()
                   document.getElementById('pesan').innerHTML = data.pesan;
-                  setTimeout(function(){ $("#pesan").empty(); }, 3000);
+                  setTimeout(function(){ window.location.reload(); }, 1000);
               }
               else
               {

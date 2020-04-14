@@ -224,6 +224,7 @@
                                         <?php endforeach; ?>
                                       </select>
                                       <span class="help-block"></span>
+                                      <span class="stok"></span>
                                     </div>
                                   </div>
                               </div>
@@ -265,6 +266,25 @@
     $("select").change(function(){
       $(this).parent().parent().removeClass('has-error');
       $(this).parent().find('.help-block').empty();
+      $(this).parent().find('.stok').empty();
+      let elemen = $(this).parent().find('.stok');
+
+      if($(this).val() != ''){
+        $.ajax({
+          url : "<?= site_url('admin/masters/material/cek_stok/')?>" + $(this).val(),
+          type: "GET",
+          dataType: "JSON",
+          success: function(data)
+          {
+            let isi_stok = 'Stok Tersedia '+ data.stok;
+            $(elemen).text(isi_stok);
+          },
+          error: function (jqXHR, textStatus, errorThrown)
+          {
+            alert('Error adding / update data');
+          }
+        });
+      }
     });
 
   });
@@ -330,12 +350,13 @@
               <div class="form-group">
               <div class="col-md-12">
                   <select name="material[]" id="material`+ id_m +`" class="form-control selectm">
-                  <option value="">-Pilih Material-</option>
-                  <?php foreach ($material as $m) : ?>
-                    <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
-                  <?php endforeach; ?>
+                    <option value="">-Pilih Material-</option>
+                    <?php foreach ($material as $m) : ?>
+                      <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
+                    <?php endforeach; ?>
                   </select>
                   <span class="help-block"></span>
+                  <span class="stok"></span>
               </div>
               </div>
           </div>
