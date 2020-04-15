@@ -27,7 +27,10 @@ class Modul extends MY_Controller {
 		  $no++;
 		  $row = array();
 		  $row[] = $no;
-		  $row[] = $modul->nama_mitra;
+		  $row[] = $modul->file_title;
+		  $row[] = formatSizeUnits($modul->file_size);
+		  $row[] = $modul->file_type;
+		  $row[] = $modul->file_created;
           $row[] = '
           <a class="btn btn-minier btn-success" href="modul/download/'.$modul->file_id.'" title="Download"><i class="fa fa-download"></i></a>&nbsp
           <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$modul->file_id."'".')"><i class="fa fa-trash"></i></a>';
@@ -45,20 +48,51 @@ class Modul extends MY_Controller {
 
 	public function ajax_add()
 	{
-        $this->_validate();
-        // file_name nya boleh di enkripsi pakai md5 / setiap spasi replace dengan underscore _
+		$this->_validate();
+
+		// file_name nya boleh di enkripsi pakai md5 / setiap spasi replace dengan underscore _
+		if(!empty($_FILES['file_modul']['name']))
+        {
+            // $nama_file 		= $_FILES['file_modul']['name'];
+            $ukuran_file 	= $_FILES['file_modul']['size'];
+			$tipe_file 		= $_FILES['file_modul']['type'];
+
+			$config['upload_path']          = './assets/backend/files/';
+			$config['allowed_types']        = 'jpg|jpeg|png|avi|mpeg|mp4|mkv|3gp|pdf|docx|doc|xls|xlsx|ppt|pptx|zip|rar|7z';
+			// $config['max_size']             = 5000; //set max size allowed in Kilobyte
+			// $config['file_name']            = $nama_file;
+	
+			// $this->load->library('upload', $config);
+			$this->upload->initialize($config);
+	
+			if(!$this->upload->do_upload('file_modul')) //upload and validate
+			{
+				$data['inputerror'][] = 'file_modul';
+				$data['error_string'][] = 'Upload error: '.$this->upload->display_errors('',''); //show ajax error
+				$data['status'] = FALSE;
+				echo json_encode($data);
+				exit();
+			}
+        }
+		
 		$data = [
-			'nama_mitra'  	=> strtoupper($this->input->post('nama_mitra'))
+			'file_title'  	=> $this->input->post('file_title'),
+			'file_desc'  	=> $this->input->post('file_desc'),
+			'file_name'  	=> $this->upload->data('file_name'),
+			'file_size'  	=> $ukuran_file,
+			'file_type'  	=> $tipe_file,
+			'file_created'  => date('Y-m-d'),
+			'file_by'  		=> 1
 		];
 
-		$this->db->insert('tb_mitra', $data);
+		$this->db->insert('tb_files', $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
 				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully added!</div>'
 			)
 		);
-    }
+	}
     
     public function download($id)
     {

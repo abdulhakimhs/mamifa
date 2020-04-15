@@ -97,16 +97,16 @@ function reload_table()
 function save()
 {
     $('#btnSave').text('saving...'); //change button text
-    $('#btnSave').attr('disabled',true); //set button disable 
-    var url;
- 
-    url = "<?php echo site_url('admin/modul/ajax_add')?>";
+    $('#btnSave').attr('disabled',true); //set button disable
  
     // ajax adding data to database
+    var formData = new FormData($('#form')[0]);
     $.ajax({
-        url : url,
+        url : "<?php echo site_url('admin/modul/ajax_add')?>",
         type: "POST",
-        data: $('#form').serialize(),
+        data: formData,
+        contentType: false,
+        processData: false,
         dataType: "JSON",
         success: function(data)
         {
@@ -197,7 +197,7 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3" id="label-photo">Upload File </label>
                             <div class="col-md-9">
-                                <input name="file_name" type="file">
+                                <input name="file_modul" type="file">
                                 <span class="help-block"></span>
                             </div>
                         </div>

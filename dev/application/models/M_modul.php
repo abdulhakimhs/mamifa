@@ -11,7 +11,7 @@ class M_modul extends CI_Model
     private function _get_datatables_query() {
         $this->db->select('*');
         $this->db->from('tb_files');
-        $this->db->join('tb_users', 'tb_users.users_id = tb_files.file_id');
+        $this->db->join('tb_users', 'tb_users.users_id = tb_files.file_by');
         $i = 0;
         foreach ($this->column_search as $item) {
             if(@$_POST['search']['value']) {
@@ -50,14 +50,14 @@ class M_modul extends CI_Model
     }
 
     function count_all() {
-        $this->db->from('tb_files');
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     public function ambil()
     {
         $this->db->select('*');
-        $this->db->from('tb_files');
+        $this->db->from($this->table);
         $data = $this->db->get('');
         return $data;
     }
