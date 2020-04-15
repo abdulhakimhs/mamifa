@@ -145,7 +145,7 @@
 
           <li <?= $this->uri->segment(2) == 'modul' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/modul'); ?>">
-              <i class="menu-icon fa fa-download"></i>
+              <i class="menu-icon fa fa-file"></i>
               <span class="menu-text"> Modul </span>
             </a>
             <b class="arrow"></b>
@@ -165,6 +165,34 @@
               <span class="menu-text"> Training Request </span>
             </a>
             <b class="arrow"></b>
+          </li>
+
+          <li <?= $this->uri->segment(2) == 'report' ? 'class="hover active"' : 'class="hover"' ?>>
+            <a href="#" class="dropdown-toggle">
+              <i class="menu-icon fa fa-download"></i>
+              <span class="menu-text">
+                Laporan
+              </span>
+              <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+              <li <?= $this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'material' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/report/material'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Stok Material
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <li <?= $this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'nilai' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/report/nilai'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Nilai Ta/Mitra
+                </a>
+                <b class="arrow"></b>
+              </li>
+            </ul>
           </li>
 
           <li <?= $this->uri->segment(2) == 'users' ? 'class="hover active"' : 'class="hover"' ?>>
