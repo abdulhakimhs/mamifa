@@ -37,9 +37,9 @@ class Report extends MY_Controller {
 	}
 
 	public function tes(){
-		// $report = $this->m_report->cetak_nilai()->result();
-		// echo json_encode($report);
-		echo str_replace(' ', '_', 'PELATIHAN INDIHOME');
+		$report = $this->m_report->cetak_nilai()->result();
+		echo json_encode($report);
+		// echo str_replace(' ', '_', 'PELATIHAN INDIHOME');
 	}
 	
 	public function cetak_nilai($download)
