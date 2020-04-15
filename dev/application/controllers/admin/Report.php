@@ -25,7 +25,8 @@ class Report extends MY_Controller {
     public function nilai()
 	{
         if(isset($_POST['submit'])) {
-            
+			$download = $this->input->post('target_for');
+			$this->cetak_nilai($download);
         }
 		$data['title'] 			= 'Laporan';
 		$data['subtitle'] 		= 'Nilai TA/Mitra';
@@ -33,6 +34,12 @@ class Report extends MY_Controller {
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/report/nilai',$data,true)
 		]);
+	}
+
+	public function tes(){
+		// $report = $this->m_report->cetak_nilai()->result();
+		// echo json_encode($report);
+		echo str_replace(' ', '_', 'PELATIHAN INDIHOME');
 	}
 	
 	public function cetak_nilai($download)
@@ -46,9 +53,9 @@ class Report extends MY_Controller {
 			
 			$excel->getProperties()->setCreator('FIBER ACADEMY PEKALONGAN')
 						 ->setLastModifiedBy('FIBER ACADEMY PEKALONGAN')
-						 ->setTitle("Laporan Nilai $download")
+						 ->setTitle("Laporan Nilai Mitra")
 						 ->setSubject("Admin")
-						 ->setDescription("Laporan Nilai $download")
+						 ->setDescription("Laporan Nilai Mitra")
 						 ->setKeywords("Laporan Nilai");
 			
 			$style_col = array(
@@ -89,6 +96,24 @@ class Report extends MY_Controller {
 					'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
 				)
 			);
+
+			$style_heading_pink = array(
+				'fill' => array(
+					'type' => PHPExcel_Style_Fill::FILL_SOLID,
+					'color' => array('rgb' => 'FFBF9E')
+				)
+			);
+
+			$style_heading_merah = array(
+				'fill' => array(
+					'type' => PHPExcel_Style_Fill::FILL_SOLID,
+					'color' => array('rgb' => 'BF292E')
+				),
+				'font'  => array(
+					'bold'  => true,
+					'color' => array('rgb' => 'FFFFFF')
+				)
+			);
 			
 			//Set Heading
 			$excel->setActiveSheetIndex(0)->setCellValue('A1', "NO");
@@ -110,6 +135,9 @@ class Report extends MY_Controller {
 			$excel->setActiveSheetIndex(0)->setCellValue('Q1', "KETERANGAN");
 			
 			//Set Style Heading
+			$excel->getActiveSheet()->getStyle('A1:H1')->applyFromArray($style_heading_pink);
+			$excel->getActiveSheet()->getStyle('I1:Q1')->applyFromArray($style_heading_merah);
+
 			$excel->getActiveSheet()->getStyle('A1')->applyFromArray($style_col);
 			$excel->getActiveSheet()->getStyle('B1')->applyFromArray($style_col);
 			$excel->getActiveSheet()->getStyle('C1')->applyFromArray($style_col);
@@ -129,35 +157,39 @@ class Report extends MY_Controller {
 			$excel->getActiveSheet()->getStyle('Q1')->applyFromArray($style_col);
 			
 			//Set Isi Tabel
-			$pasien = $this->m_trainingplan->ambil($ftgl_awal_search)->result();
+			$tahun 				= $this->input->post('tahun');
+			$bulan 				= $this->input->post('bulan');
+			$jenis_pelatihan 	= $this->input->post('jenis_pelatihan');
+			$replace_jp			= '';
+
+			if($bulan == 'all') {
+				$t_bulan = 'ALL';
+			} else {
+				$t_bulan = bulan($bulan);
+			}
+
+			$report = $this->m_report->cetak_nilai($tahun, $bulan, $jenis_pelatihan, $download)->result();
 			$no = 1;
-			$numrow = 5;
-			foreach($pasien as $data){
-			  $total = 0;
-			  $total += ($data->ta_pelatihan == null ? 0 : $data->ta_pelatihan);
-			  $total += ($data->ta_bop == null ? 0 : $data->ta_bop);
-			  $total += ($data->mitra_pelatihan == null ? 0 : $data->mitra_pelatihan);
+			$numrow = 2;
+			foreach($report as $data){
 	
 			  $excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
-			  $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->jenis_pelatihan);
-			  $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->name_of_training);
-			  $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->ta_pelatihan == null ? '' : $data->ta_pelatihan);
-			  $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->ta_bop == null ? '' : $data->ta_bop);
-			  $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->mitra_pelatihan == null ? '' : $data->mitra_pelatihan);
-			  $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->nama_mitra == null ? '' : $data->nama_mitra);
-			  $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->staff_teknisi == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->team_leader == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->officer == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->site_manager == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, $data->mgr == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->mitra == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, $data->senin == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, $data->selasa == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $data->rabu == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $data->kamis == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('R'.$numrow, $data->jumat == 0 ? '' : '✓');
-			  $excel->setActiveSheetIndex(0)->setCellValue('S'.$numrow, $data->nama_pengajar);
-			  $excel->setActiveSheetIndex(0)->setCellValue('T'.$numrow, $total);
+			  $excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nik);
+			  $excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nama);
+			  $excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->jenis_kelamin);
+			  $excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->nama_mitra);
+			  $excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->jenis_mitra);
+			  $excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, 'PEKALONGAN');
+			  $excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, 'REGIONAL 4');
+			  $excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $data->jenis_pelatihan);
+			  $excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $data->jenis_teknisi);
+			  $excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->lokasi);
+			  $excel->setActiveSheetIndex(0)->setCellValue('L'.$numrow, bulan($data->bulan));
+			  $excel->setActiveSheetIndex(0)->setCellValue('M'.$numrow, $data->tahun);
+			  $excel->setActiveSheetIndex(0)->setCellValue('N'.$numrow, mediumdate_indo($data->tgl_mulai));
+			  $excel->setActiveSheetIndex(0)->setCellValue('O'.$numrow, mediumdate_indo($data->tgl_selesai));
+			  $excel->setActiveSheetIndex(0)->setCellValue('P'.$numrow, $data->nilai);
+			  $excel->setActiveSheetIndex(0)->setCellValue('Q'.$numrow, $data->keterangan);
 			  
 			  $excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row_normal);
@@ -165,7 +197,7 @@ class Report extends MY_Controller {
 			  $excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row_tengah);
-			  $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row_normal);
+			  $excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('J'.$numrow)->applyFromArray($style_row_tengah);
@@ -176,45 +208,40 @@ class Report extends MY_Controller {
 			  $excel->getActiveSheet()->getStyle('O'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('P'.$numrow)->applyFromArray($style_row_tengah);
 			  $excel->getActiveSheet()->getStyle('Q'.$numrow)->applyFromArray($style_row_tengah);
-			  $excel->getActiveSheet()->getStyle('R'.$numrow)->applyFromArray($style_row_tengah);
-			  $excel->getActiveSheet()->getStyle('S'.$numrow)->applyFromArray($style_row_normal);
-			  $excel->getActiveSheet()->getStyle('T'.$numrow)->applyFromArray($style_row_tengah);
 			  
 			  $no++;
 			  $numrow++;
+			  $replace_jp = str_replace(' ', '_', $data->jenis_pelatihan);
 			}
 			
 			//Set Lebar Tabel
 			$excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
 			$excel->getActiveSheet()->getColumnDimension('B')->setWidth(20);
-			$excel->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+			$excel->getActiveSheet()->getColumnDimension('C')->setWidth(30);
 			$excel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
-			$excel->getActiveSheet()->getColumnDimension('E')->setWidth(30);
+			$excel->getActiveSheet()->getColumnDimension('E')->setWidth(20);
 			$excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
-			$excel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
+			$excel->getActiveSheet()->getColumnDimension('G')->setWidth(20);
 			$excel->getActiveSheet()->getColumnDimension('H')->setWidth(17);
-			$excel->getActiveSheet()->getColumnDimension('I')->setWidth(17);
-			$excel->getActiveSheet()->getColumnDimension('J')->setWidth(17);
-			$excel->getActiveSheet()->getColumnDimension('K')->setWidth(17);
-			$excel->getActiveSheet()->getColumnDimension('L')->setWidth(17);
-			$excel->getActiveSheet()->getColumnDimension('M')->setWidth(17);
-			$excel->getActiveSheet()->getColumnDimension('N')->setWidth(10);
-			$excel->getActiveSheet()->getColumnDimension('O')->setWidth(10);
+			$excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+			$excel->getActiveSheet()->getColumnDimension('J')->setWidth(25);
+			$excel->getActiveSheet()->getColumnDimension('K')->setWidth(30);
+			$excel->getActiveSheet()->getColumnDimension('L')->setWidth(15);
+			$excel->getActiveSheet()->getColumnDimension('M')->setWidth(15);
+			$excel->getActiveSheet()->getColumnDimension('N')->setWidth(20);
+			$excel->getActiveSheet()->getColumnDimension('O')->setWidth(20);
 			$excel->getActiveSheet()->getColumnDimension('P')->setWidth(10);
-			$excel->getActiveSheet()->getColumnDimension('Q')->setWidth(10);
-			$excel->getActiveSheet()->getColumnDimension('R')->setWidth(10);
-			$excel->getActiveSheet()->getColumnDimension('S')->setWidth(20);
-			$excel->getActiveSheet()->getColumnDimension('T')->setWidth(20);
+			$excel->getActiveSheet()->getColumnDimension('Q')->setWidth(30);
 			
 			$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
 			
 			$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 			
-			$excel->getActiveSheet(0)->setTitle("Laporan Training Plan");
+			$excel->getActiveSheet(0)->setTitle("Laporan Nilai Mitra");
 			$excel->setActiveSheetIndex(0);
 			
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			header('Content-Disposition: attachment; filename="Training Plan '.date('d-m-Y').'.xlsx"');
+			header('Content-Disposition: attachment; filename="NILAI_'.$download.'_'.$t_bulan.'_'.strtoupper($tahun).'_'.$replace_jp.'.xlsx"');
 			header('Cache-Control: max-age=0');
 			$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
 			ob_end_clean();

@@ -346,10 +346,10 @@ class Training_plan extends MY_Controller {
         $excel->getActiveSheet()->getStyle('T2:T4')->applyFromArray($style_col);
 		
 		//Set Isi Tabel
-        $pasien = $this->m_trainingplan->ambil($ftgl_awal_search)->result();
+        $training = $this->m_trainingplan->ambil($ftgl_awal_search)->result();
         $no = 1;
         $numrow = 5;
-        foreach($pasien as $data){
+        foreach($training as $data){
 		  $total = 0;
 		  $total += ($data->ta_pelatihan == null ? 0 : $data->ta_pelatihan);
 		  $total += ($data->ta_bop == null ? 0 : $data->ta_bop);
