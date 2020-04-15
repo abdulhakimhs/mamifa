@@ -7,6 +7,7 @@ class Report extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('masters/m_pelatihan');
+		$this->load->model('m_report');
 	}
 
 	public function material()
