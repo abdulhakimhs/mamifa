@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Laporan Nilai TA</h5>
+			<h5 class="widget-title">Laporan Nilai TA / Mitra</h5>
 
 			<div class="widget-toolbar">
 
