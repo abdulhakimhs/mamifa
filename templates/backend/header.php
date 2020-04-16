@@ -89,10 +89,10 @@
 
             <li class="light-blue dropdown-modal user-min">
               <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                <img class="nav-user-photo" src="<?= base_url() ?>assets/backend/images/avatars/user.jpg" alt="Jason's Photo" /> Administrator
+                <img class="nav-user-photo" src="<?= base_url() ?>assets/backend/images/avatars/user.jpg" alt="Jason's Photo" /> <?= $this->session->userdata('nama'); ?>
                 <span class="user-info">
                   <small>Welcome,</small>
-                  Administrator
+                  <?= $this->session->userdata('nama'); ?>
                 </span>
 
                 <i class="ace-icon fa fa-caret-down"></i>

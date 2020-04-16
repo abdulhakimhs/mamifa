@@ -39,7 +39,7 @@
         </div><!-- /.sidebar-shortcuts -->
 
         <ul class="nav nav-list">
-          <li <?= $this->uri->segment(2) == 'dashboard' ? 'class="hover active"' : 'class="hover"' ?>>
+          <li <?= ($this->uri->segment(2) == 'dashboard') || $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == null ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/dashboard'); ?>">
               <i class="menu-icon fa fa-tachometer"></i>
               <span class="menu-text"> Dashboard </span>
