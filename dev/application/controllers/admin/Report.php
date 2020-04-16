@@ -38,18 +38,6 @@ class Report extends MY_Controller {
 			'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
 			)
 		);
-		
-		$style_row_normal = array(
-			'alignment' => array(
-			'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
-			),
-			'borders' => array(
-			'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-			'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-			'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
-			'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
-			)
-		);
 
 		$style_row_tengah = array(
 			'alignment' => array(
@@ -335,10 +323,7 @@ class Report extends MY_Controller {
 		$excel->setActiveSheetIndex(0)->setCellValue('D7', ': '.$sub->tahun);
 		$excel->setActiveSheetIndex(0)->setCellValue('D8', ': '.date_indo($sub->periode_tgl));
 		$excel->setActiveSheetIndex(0)->setCellValue('D9', ': '.strtoupper($sub->lokasi));
-		// $excel->setActiveSheetIndex(0)->setCellValue('D6', ': CX BEHAVIOR');
-		// $excel->setActiveSheetIndex(0)->setCellValue('D7', ': 2020');
-		// $excel->setActiveSheetIndex(0)->setCellValue('D8', ': 16 April 2020');
-		// $excel->setActiveSheetIndex(0)->setCellValue('D9', ': R. FIBER ACADEMY PEKALONGAN');
+		
 		$excel->getActiveSheet()->mergeCells('D6:G6');
 		$excel->getActiveSheet()->mergeCells('D7:G7');
 		$excel->getActiveSheet()->mergeCells('D8:G8');
@@ -420,7 +405,8 @@ class Report extends MY_Controller {
 		$numrow 	= 15;
 		$replace_jp	= '';
 		foreach($report as $data){
-
+			$peningkatan = ($data->post_test - $data->pre_test)/100;
+			$na 		 = (0.4*$data->post_test)+(0.5*$data->roleplay)+(0.1*$data->kehadiran);
 			$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
 			$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nama);
 			$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nik);
@@ -429,8 +415,8 @@ class Report extends MY_Controller {
 			$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->pre_test);
 			$excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->post_test);
 			$excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->kehadiran);
-			$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, '100%'); // Menggunakan Rumus
-			$excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, '100'); // Menggunakan Rumus
+			$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $peningkatan.'%'); // Menggunakan Rumus
+			$excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $na); // Menggunakan Rumus
 			$excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->keterangan);
 			
 			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row_tengah);
@@ -719,11 +705,5 @@ class Report extends MY_Controller {
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
 		ob_end_clean();
 		$write->save('php://output');
-	}
-
-	public function tes(){
-		$report = $this->m_report->sub_ta('2020-04-10', 3)->row();
-		echo json_encode($report);
-		// echo $report->tahun;
 	}
 }
