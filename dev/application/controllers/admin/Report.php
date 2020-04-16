@@ -24,14 +24,21 @@ class Report extends MY_Controller {
     
     public function nilai()
 	{
-        if(isset($_POST['submit'])) {
-            # code...
-        }
 		$data['title'] 			= 'Laporan';
 		$data['subtitle'] 		= 'Nilai TA/Mitra';
 		$data['pelatihan']		= $this->m_pelatihan->ambil()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/report/nilai',$data,true)
 		]);
-    }
+	}
+	
+	public function nilai_ta()
+	{
+		# code...
+	}
+
+	public function nilai_mitra()
+	{
+		# code...
+	}
 }
