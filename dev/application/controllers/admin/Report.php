@@ -7,6 +7,7 @@ class Report extends MY_Controller {
 	{
 		parent::__construct();
 		$this->load->model('masters/m_pelatihan');
+		$this->load->model('masters/m_material');
 		$this->load->model('m_report');
 	}
 
@@ -17,6 +18,7 @@ class Report extends MY_Controller {
         }
 		$data['title'] 			= 'Laporan';
 		$data['subtitle'] 		= 'Stok Material';
+		$data['material'] 		= $this->m_material->stok_tersedia()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/report/material',$data,true)
 		]);
@@ -139,16 +141,18 @@ class Report extends MY_Controller {
 		$excel->getActiveSheet()->getStyle('A8:C8')->getFont()->setBold(TRUE);
 		$excel->getActiveSheet()->getStyle('A9:C9')->getFont()->setBold(TRUE);
 
-		// $sub = $this->m_report->sub()->result();
+		$periode_tgl 		= $this->input->post('periode_tgl');
+		$jenis_pelatihan 	= $this->input->post('jenis_pelatihan');
+		$sub = $this->m_report->sub_ta($periode_tgl, $jenis_pelatihan)->row();
 
-		// $excel->setActiveSheetIndex(0)->setCellValue('D6', ': '.strtoupper($sub->jenis_pelatihan));
-		// $excel->setActiveSheetIndex(0)->setCellValue('D7', ': '.$sub->tahun);
-		// $excel->setActiveSheetIndex(0)->setCellValue('D8', ': '.$sub->periode_tgl);
-		// $excel->setActiveSheetIndex(0)->setCellValue('D9', ': '.strtoupper($sub->lokasi));
-		$excel->setActiveSheetIndex(0)->setCellValue('D6', ': CX BEHAVIOR');
-		$excel->setActiveSheetIndex(0)->setCellValue('D7', ': 2020');
-		$excel->setActiveSheetIndex(0)->setCellValue('D8', ': 16 April 2020');
-		$excel->setActiveSheetIndex(0)->setCellValue('D9', ': R. FIBER ACADEMY PEKALONGAN');
+		$excel->setActiveSheetIndex(0)->setCellValue('D6', ': '.strtoupper($sub->jenis_pelatihan));
+		$excel->setActiveSheetIndex(0)->setCellValue('D7', ': '.$sub->tahun);
+		$excel->setActiveSheetIndex(0)->setCellValue('D8', ': '.date_indo($sub->periode_tgl));
+		$excel->setActiveSheetIndex(0)->setCellValue('D9', ': '.strtoupper($sub->lokasi));
+		// $excel->setActiveSheetIndex(0)->setCellValue('D6', ': CX BEHAVIOR');
+		// $excel->setActiveSheetIndex(0)->setCellValue('D7', ': 2020');
+		// $excel->setActiveSheetIndex(0)->setCellValue('D8', ': 16 April 2020');
+		// $excel->setActiveSheetIndex(0)->setCellValue('D9', ': R. FIBER ACADEMY PEKALONGAN');
 		$excel->getActiveSheet()->mergeCells('D6:G6');
 		$excel->getActiveSheet()->mergeCells('D7:G7');
 		$excel->getActiveSheet()->mergeCells('D8:G8');
@@ -225,20 +229,10 @@ class Report extends MY_Controller {
 		$excel->getActiveSheet()->getStyle('K14')->applyFromArray($style_col);
 		
 		//Set Isi Tabel
-		$tahun 				= $this->input->post('tahun');
-		$bulan 				= $this->input->post('bulan');
-		$jenis_pelatihan 	= $this->input->post('jenis_pelatihan');
-		$replace_jp			= '';
-
-		if($bulan == 'all') {
-			$t_bulan = 'ALL';
-		} else {
-			$t_bulan = bulan($bulan);
-		}
-
-		$report = $this->m_report->cetak_nilai($tahun, $bulan, $jenis_pelatihan, $download)->result();
-		$no = 1;
-		$numrow = 15;
+		$report 	= $this->m_report->nilai_ta($periode_tgl, $jenis_pelatihan)->result();
+		$no 		= 1;
+		$numrow 	= 15;
+		$replace_jp	= '';
 		foreach($report as $data){
 
 			$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
@@ -272,37 +266,43 @@ class Report extends MY_Controller {
 			$replace_jp = str_replace(' ', '_', $data->jenis_pelatihan);
 		}
 
+		$r = $numrow + 1;
+
 		//Set Catatan
-		$excel->setActiveSheetIndex(0)->setCellValue('A30', "Catatan :");
-		$excel->getActiveSheet()->getStyle('A30')->getFont()->setBold(TRUE);
-		$excel->setActiveSheetIndex(0)->setCellValue('A31', "1");
-		$excel->setActiveSheetIndex(0)->setCellValue('A32', "2");
-		$excel->setActiveSheetIndex(0)->setCellValue('A33', "3");
-		$excel->setActiveSheetIndex(0)->setCellValue('A34', "4");
-		$excel->setActiveSheetIndex(0)->setCellValue('B31', "Nilai Akhir = 40 % Nilai Post Test + 50 % (Nilai Mastery Test/Praktek+ Nilai Keaktifan/Observasi )+ 10 % (kehadiran).");
-		$excel->setActiveSheetIndex(0)->setCellValue('B32', "Nilai Akhir = Apabila pada pelatihan tidak ada nilai Masteri Test/Praktek dan Nilai Keaktifan/Observasi.");
-		$excel->setActiveSheetIndex(0)->setCellValue('B33', "Maka bobot nilai post tes 90 % + 10 % (kehadiran).");
-		$excel->setActiveSheetIndex(0)->setCellValue('B34', "Syarat Kelulusan Nilai Akhir harus >= 65 dan kehadiran >=80 % kecuali area Jakarta > 90 %.");
+		$excel->setActiveSheetIndex(0)->setCellValue('A'.$r, "Catatan :");
+		$excel->getActiveSheet()->getStyle('A'.$r)->getFont()->setBold(TRUE);
+		$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+1), "1");
+		$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+2), "2");
+		$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+3), "3");
+		$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+4), "4");
+		$excel->setActiveSheetIndex(0)->setCellValue('B'.($r+1), "Nilai Akhir = 40 % Nilai Post Test + 50 % (Nilai Mastery Test/Praktek+ Nilai Keaktifan/Observasi )+ 10 % (kehadiran).");
+		$excel->setActiveSheetIndex(0)->setCellValue('B'.($r+2), "Nilai Akhir = Apabila pada pelatihan tidak ada nilai Masteri Test/Praktek dan Nilai Keaktifan/Observasi.");
+		$excel->setActiveSheetIndex(0)->setCellValue('B'.($r+3), "Maka bobot nilai post tes 90 % + 10 % (kehadiran).");
+		$excel->setActiveSheetIndex(0)->setCellValue('B'.($r+4), "Syarat Kelulusan Nilai Akhir harus >= 65 dan kehadiran >=80 % kecuali area Jakarta > 90 %.");
 
 		//Set Tanda Tangan
-		$excel->setActiveSheetIndex(0)->setCellValue('H35', "Pekalongan, ".date_indo(date('Y-m-d')));
-		$excel->setActiveSheetIndex(0)->setCellValue('H38', "INSTRUKTUR");
-		$excel->setActiveSheetIndex(0)->setCellValue('H43', "....................");
-		$excel->setActiveSheetIndex(0)->setCellValue('K43', "....................");
-		$excel->getActiveSheet()->mergeCells('H35:L35');
-		$excel->getActiveSheet()->mergeCells('H38:L38');
-		$excel->getActiveSheet()->mergeCells('H43:I43');
-		$excel->getActiveSheet()->mergeCells('K43:L43');
-		$excel->getActiveSheet()->getStyle('H35:L35')->getFont()->setBold(TRUE);
-		$excel->getActiveSheet()->getStyle('H38:L38')->getFont()->setBold(TRUE);
-		$excel->getActiveSheet()->getStyle('H43')->getFont()->setBold(TRUE);
-		$excel->getActiveSheet()->getStyle('K43')->getFont()->setBold(TRUE);
-		$excel->getActiveSheet()->getStyle('H43')->getFont()->setUnderline(TRUE);
-		$excel->getActiveSheet()->getStyle('K43')->getFont()->setUnderline(TRUE);
-		$excel->getActiveSheet()->getStyle('H35:L35')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$excel->getActiveSheet()->getStyle('H38:L38')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$excel->getActiveSheet()->getStyle('H43:I43')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-		$excel->getActiveSheet()->getStyle('K43:L43')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$excel->setActiveSheetIndex(0)->setCellValue('H'.($r+5), "Pekalongan, ".date_indo(date('Y-m-d')));
+		$excel->setActiveSheetIndex(0)->setCellValue('H'.($r+8), "INSTRUKTUR");
+		$excel->setActiveSheetIndex(0)->setCellValue('H'.($r+13), "............................");
+		$excel->setActiveSheetIndex(0)->setCellValue('J'.($r+13), "............................");
+		$pkl 	= "H".($r+5).":L".($r+5);
+		$ins 	= "H".($r+8).":L".($r+8);
+		$titik1 = "H".($r+13).":I".($r+13);
+		$titik2 = "J".($r+13).":L".($r+13);
+		$excel->getActiveSheet()->mergeCells($pkl);
+		$excel->getActiveSheet()->mergeCells($ins);
+		$excel->getActiveSheet()->mergeCells($titik1);
+		$excel->getActiveSheet()->mergeCells($titik2);
+		$excel->getActiveSheet()->getStyle($pkl)->getFont()->setBold(TRUE);
+		$excel->getActiveSheet()->getStyle($ins)->getFont()->setBold(TRUE);
+		$excel->getActiveSheet()->getStyle('H'.($r+13))->getFont()->setBold(TRUE);
+		$excel->getActiveSheet()->getStyle('J'.($r+13))->getFont()->setBold(TRUE);
+		$excel->getActiveSheet()->getStyle('H'.($r+13))->getFont()->setUnderline(TRUE);
+		$excel->getActiveSheet()->getStyle('J'.($r+13))->getFont()->setUnderline(TRUE);
+		$excel->getActiveSheet()->getStyle($pkl)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$excel->getActiveSheet()->getStyle($ins)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$excel->getActiveSheet()->getStyle($titik1)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$excel->getActiveSheet()->getStyle($titik2)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 		
 		//Set Lebar Tabel
 		$excel->getActiveSheet()->getColumnDimension('A')->setWidth(10);
@@ -325,7 +325,7 @@ class Report extends MY_Controller {
 		$excel->setActiveSheetIndex(0);
 		
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="NILAI_'.$download.'_'.$t_bulan.'_'.strtoupper($tahun).'_'.$replace_jp.'.xlsx"');
+		header('Content-Disposition: attachment; filename="NILAI_TA_'.date_indo($periode_tgl).'_'.strtoupper($replace_jp).'.xlsx"');
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
 		ob_end_clean();
@@ -446,7 +446,7 @@ class Report extends MY_Controller {
 		//Set Isi Tabel
 		$tahun 				= $this->input->post('tahun');
 		$bulan 				= $this->input->post('bulan');
-		$jenis_pelatihan 	= $this->input->post('jenis_pelatihan');
+		$jenis_pelatihan 	= $this->input->post('jenis_pelatihan_m');
 		$replace_jp			= '';
 
 		if($bulan == 'all') {
@@ -455,7 +455,7 @@ class Report extends MY_Controller {
 			$t_bulan = bulan($bulan);
 		}
 
-		$report = $this->m_report->cetak_nilai($tahun, $bulan, $jenis_pelatihan, $download)->result();
+		$report = $this->m_report->nilai_mitra($tahun, $bulan, $jenis_pelatihan)->result();
 		$no = 1;
 		$numrow = 2;
 		foreach($report as $data){
@@ -528,7 +528,7 @@ class Report extends MY_Controller {
 		$excel->setActiveSheetIndex(0);
 		
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		header('Content-Disposition: attachment; filename="NILAI_MITRA_'.$t_bulan.'_'.strtoupper($tahun).'_'.$replace_jp.'.xlsx"');
+		header('Content-Disposition: attachment; filename="NILAI_MITRA_'.strtoupper($t_bulan).'_'.strtoupper($tahun).'_'.strtoupper($replace_jp).'.xlsx"');
 		header('Cache-Control: max-age=0');
 		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
 		ob_end_clean();
@@ -536,8 +536,8 @@ class Report extends MY_Controller {
 	}
 
 	public function tes(){
-		$report = $this->m_report->cetak_nilai()->result();
+		$report = $this->m_report->sub_ta('2020-04-10', 3)->row();
 		echo json_encode($report);
-		// echo str_replace(' ', '_', 'PELATIHAN INDIHOME');
+		// echo $report->tahun;
 	}
 }

@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Laporan Nilai TA / Mitra</h5>
+			<h5 class="widget-title">Laporan Nilai TA</h5>
 
 			<div class="widget-toolbar">
 
@@ -126,7 +126,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label class="form-control-label"><b>Pilih Jenis Pelatihan</b></label>
-                                <select name="jenis_pelatihan" id="jenis_pelatihan" class="form-control" required>
+                                <select name="jenis_pelatihan_m" id="jenis_pelatihan_m" class="form-control" required>
                                     <option value="">-Pilih Pelatihan-</option>
                                     <?php foreach ($pelatihan as $p) : ?>
                                         <option value="<?= $p['pelatihan_id'] ?>"><?= $p['jenis_pelatihan'] ?></option>

@@ -65,6 +65,9 @@
                                 <label class="form-control-label"><b>Pilih Material</b></label>
                                 <select name="material" id="material" class="form-control" required>
                                     <option value="">-Pilih Material-</option>
+                                    <?php foreach ($material as $m) : ?>
+                                          <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
