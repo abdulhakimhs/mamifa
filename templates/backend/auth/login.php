@@ -42,7 +42,7 @@
                     <div class="col-sm-10 col-sm-offset-1">
                         <div class="login-container">
                             <div class="center">
-                                <h4 class="blue" id="id-company-text"><a href=""></a> &copy; FA Pekalongan</h4>
+                                <h4 class="blue" id="id-company-text"><a href=""></a> &copy; Fiber Academy Pekalongan</h4>
                             </div>
 
                             <div class="space-6"></div>
