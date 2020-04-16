@@ -47,7 +47,9 @@
                   <th>POSITION NAME</th>
                   <th>SUBUNIT</th>
                   <th>LEVEL</th>
-                  <th><i class="fa fa-gear"></i></th>
+                  <?php if($this->session->userdata('level') == 1){ ?>
+                    <th><i class="fa fa-gear"></i></th>
+                  <?php } ?>
               </tr>
             </thead>
             <tbody>
@@ -60,9 +62,11 @@
                   <td><?= $row['position_name'] ?></td>
                   <td><?= $row['subunit'] ?></td>
                   <td><?= $row['level'] ?></td>
+                  <?php if($this->session->userdata('level') == 1){ ?>
                   <td>
                       <a href="javascript:void(0)" title="Follow UP" onclick="detail(<?= $row['target_id'];?>)"><i class="fa fa-edit"></i></a>
-                    </td>
+                  </td>
+                  <?php } ?>
                 </tr>
               <?php } ?>
             </tbody>

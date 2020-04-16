@@ -48,6 +48,7 @@
             <b class="arrow"></b>
           </li>
 
+          <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'naker' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/naker'); ?>">
               <i class="menu-icon fa fa-users"></i>
@@ -55,6 +56,7 @@
             </a>
             <b class="arrow"></b>
           </li>
+          <?php } ?>
 
           <li <?= $this->uri->segment(2) == 'training_plan' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="#" class="dropdown-toggle">
@@ -67,6 +69,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+              <?php if($this->session->userdata('level') == 1){ ?>
               <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == 'add' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/training_plan/add'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
@@ -74,6 +77,7 @@
                 </a>
                 <b class="arrow"></b>
               </li>
+              <?php } ?>
               <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/training_plan'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
@@ -95,6 +99,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+              <?php if($this->session->userdata('level') == 1){ ?>
               <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == 'upload' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/target/upload'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
@@ -102,6 +107,7 @@
                 </a>
                 <b class="arrow"></b>
               </li>
+              <?php } ?>
               <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/target'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
@@ -151,6 +157,7 @@
             <b class="arrow"></b>
           </li>
 
+          <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'monila' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/monila'); ?>">
               <i class="menu-icon fa fa-desktop"></i>
@@ -258,6 +265,7 @@
               </li>
             </ul>
           </li>
+          <?php } ?>
 
         </ul><!-- /.nav-list -->
       </div>

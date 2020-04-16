@@ -6,6 +6,9 @@ class Ta extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->userdata('logged_in') != TRUE){
+            redirect(base_url("admin/auth"));
+        }
 		$this->load->model('m_targetta');
 		$this->load->model('m_nilai_ta');
 		$this->load->model('masters/m_pelatihan');

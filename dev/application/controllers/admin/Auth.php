@@ -5,11 +5,14 @@ class Auth extends MY_Controller {
 
 	public function __construct()
 	{
- 		parent::__construct();
+		parent::__construct();
 	}
 
 	public function login()
 	{
+		if($this->session->userdata('logged_in') == TRUE){
+            redirect(base_url("admin"));
+        }
 		$this->load->view('backend/auth/login');
 	}
 

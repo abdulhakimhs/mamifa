@@ -33,7 +33,9 @@
                             <th>Ukuran</th>
                             <th>Tipe File</th>
                             <th>Upload By</th>
-			                <th width="100"><i class="fa fa-gear"></i></th>
+                            <?php if($this->session->userdata('level') == 1){ ?>
+                                <th width="100"><i class="fa fa-gear"></i></th>
+                            <?php } ?>
 		                </tr>
 		            </thead>
 		            <tbody>

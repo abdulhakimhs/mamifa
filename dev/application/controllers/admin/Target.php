@@ -6,6 +6,9 @@ class Target extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->userdata('logged_in') != TRUE){
+            redirect(base_url("admin/auth"));
+        }
 		$this->load->model('m_targetta');
 		$this->load->model('m_targetmitra');
 		$this->load->model('masters/m_operation');
@@ -24,6 +27,9 @@ class Target extends MY_Controller {
 
 	public function upload()
 	{
+		if($this->session->userdata('level') == 0){
+		  redirect(base_url("admin"));
+		}
 		if(isset($_POST['upload'])){
 			/* 
 				1) jika taregt untuk TA, maka insert ke tb_target_ta, jika mitra tb_target_mitra.
@@ -139,10 +145,5 @@ class Target extends MY_Controller {
 	{
 		$data = $this->m_targetmitra->getgrafik($bulan, $tahun)->result();
 		echo json_encode($data);
-	}
-
-	public function tes()
-	{
-		echo medium_bulan(date('m'));
 	}
 }

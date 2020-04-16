@@ -1,14 +1,24 @@
-  <!-- Masthead -->
-  <header class="masthead text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <h1 class="mb-5">&nbsp</h1>
-        </div>
-      </div>
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active" style="height: 500px;">
+      <img style="width: 100%;" class="d-block w-100" src="<?= base_url ()?>assets/frontend/img/juara.jpg" alt="First slide">
     </div>
-  </header>
+    <div class="carousel-item" style="height: 500px;">
+      <img style="width: 100%;" class="d-block w-100" src="<?= base_url ()?>assets/frontend/img/5p.jpg" alt="Second slide">
+    </div>
+    <div class="carousel-item" style="height: 500px;">
+      <img style="width: 100%;" class="d-block w-100" src="<?= base_url ()?>assets/frontend/img/quality_act.jpg" alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
   <!-- Icons Grid -->
   <section class="features-icons bg-light text-center">

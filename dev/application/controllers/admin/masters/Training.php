@@ -6,6 +6,12 @@ class Training extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->userdata('logged_in') != TRUE){
+            redirect(base_url("admin/auth"));
+        }
+		if($this->session->userdata('level') == 0){
+		  redirect(base_url("admin"));
+		}
 		$this->load->model('masters/m_training');
 	}
 

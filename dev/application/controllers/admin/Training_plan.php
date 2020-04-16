@@ -6,6 +6,9 @@ class Training_plan extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->userdata('logged_in') != TRUE){
+            redirect(base_url("admin/auth"));
+        }
 		$this->load->model('m_trainingplan');
 		$this->load->model('masters/m_mitra');
 		$this->load->model('masters/m_pelatihan');
@@ -24,6 +27,9 @@ class Training_plan extends MY_Controller {
 
 	public function add()
 	{
+		if($this->session->userdata('level') == 0){
+		  redirect(base_url("admin"));
+		}
 		$data['title'] 			= 'ADMIN MAMI FA';
 		$data['subtitle'] 		= 'Add Training Plan';
 		$data['mitra'] 			= $this->m_mitra->ambil()->result_array();

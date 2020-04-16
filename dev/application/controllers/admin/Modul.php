@@ -6,6 +6,9 @@ class Modul extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		if($this->session->userdata('logged_in') != TRUE){
+            redirect(base_url("admin/auth"));
+        }
         $this->load->model('m_modul');
         $this->load->helper('download');
 	}
@@ -31,9 +34,11 @@ class Modul extends MY_Controller {
 		  $row[] = formatSizeUnits($modul->file_size);
 		  $row[] = $modul->file_type;
 		  $row[] = $modul->file_created;
-          $row[] = '
-          <a class="btn btn-minier btn-success" href="'.site_url("admin/modul/download/".$modul->file_id).'" title="Download"><i class="fa fa-download"></i></a>&nbsp
-          <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$modul->file_id."'".')"><i class="fa fa-trash"></i></a>';
+		  if($this->session->userdata('level') == 1){
+			$row[] = '
+			<a class="btn btn-minier btn-success" href="'.site_url("admin/modul/download/".$modul->file_id).'" title="Download"><i class="fa fa-download"></i></a>&nbsp
+			<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$modul->file_id."'".')"><i class="fa fa-trash"></i></a>';
+		  }
 		  $data[] = $row;
 		}
 	
