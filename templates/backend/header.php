@@ -100,7 +100,7 @@
 
               <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                 <li>
-                  <a href="<?php echo site_url('changePassword') ?>">
+                  <a href="<?php echo site_url('admin/changePassword') ?>">
                     <i class="ace-icon fa fa-cog"></i>
                     Change Password
                   </a>
@@ -109,7 +109,7 @@
                 <li class="divider"></li>
 
                 <li>
-                  <a href="<?php echo site_url('auth/logout') ?>">
+                  <a href="<?php echo site_url('admin/auth/logout') ?>">
                     <i class="ace-icon fa fa-power-off"></i>
                     Logout
                   </a>

@@ -82,7 +82,7 @@ class Modul extends MY_Controller {
 			'file_size'  	=> $ukuran_file,
 			'file_type'  	=> $tipe_file,
 			'file_created'  => date('Y-m-d'),
-			'file_by'  		=> 1
+			'file_by'  		=> $this->session->userdata('user_id')
 		];
 
 		$this->db->insert('tb_files', $data);
