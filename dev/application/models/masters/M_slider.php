@@ -10,7 +10,7 @@ class M_slider extends CI_Model
  
     private function _get_datatables_query() {
         $this->db->select('*');
-        $this->db->from('tb_slider');
+        $this->db->from($this->table);
 
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -50,14 +50,15 @@ class M_slider extends CI_Model
     }
 
     function count_all() {
-        $this->db->from('tb_slider');
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     public function ambil()
     {
         $this->db->select('*');
-        $this->db->from('tb_slider');
+        $this->db->from($this->table);
+        $this->db->where('slide_active', 1);
         $data = $this->db->get('');
         return $data;
     }

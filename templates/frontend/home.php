@@ -1,14 +1,10 @@
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
-    <div class="carousel-item active" style="height: 500px;">
-      <img style="width: 100%;" class="d-block w-100" src="<?= base_url ()?>assets/frontend/img/juara.jpg" alt="First slide">
-    </div>
-    <div class="carousel-item" style="height: 500px;">
-      <img style="width: 100%;" class="d-block w-100" src="<?= base_url ()?>assets/frontend/img/5p.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item" style="height: 500px;">
-      <img style="width: 100%;" class="d-block w-100" src="<?= base_url ()?>assets/frontend/img/quality_act.jpg" alt="Third slide">
-    </div>
+    <?php foreach ($slider as $key => $s) { ?>
+      <div class="<?= $key == 0 ? 'carousel-item active' : 'carousel-item' ?>" style="height: 500px;">
+        <img style="width: 100%;" class="d-block w-100" src="<?= base_url('assets/backend/images/slider/'.$s->slide_image) ?>" alt="First slide">
+      </div>
+    <?php } ?>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -53,27 +49,24 @@
   <!-- Image Showcases -->
   <section class="showcase">
     <div class="container-fluid p-0">
-      <div class="row no-gutters">
-
-        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('<?= base_url() ?>assets/frontend/img/juara.jpg');"></div>
-        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-          <h2>TRADISI PARA JUARA</h2>
-          <p class="lead mb-0">FIBER ACADEMY PEKALONGAN dengan para juara lomba dinas melakukan seleksi tahap pertama.</p>
-        </div>
-      </div>
-      <div class="row no-gutters">
-        <div class="col-lg-6 text-white showcase-img" style="background-image: url('<?= base_url() ?>assets/frontend/img/pt2.jpg');"></div>
-        <div class="col-lg-6 my-auto showcase-text">
-          <h2>PELATIHAN PT 2</h2>
-          <p class="lead mb-0">Fiber Academy pekalongan melakukan PELATIHAN PT 2 untuk seluruh mitra Telkom Akses witel pekalongan</p>
-        </div>
-      </div>
-      <div class="row no-gutters">
-        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('<?= base_url() ?>assets/frontend/img/quality_act.jpg');"></div>
-        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-          <h2>Quality Acceleration</h2>
-          <p class="lead mb-0">FIBER ACADEMY Pekalongan melanjutkan program monila yang sudah berjalan dari tahun 2019 dengan membuat program baru yaitu Quality Acceleration. Progam ini fokus pada penguatan  pada semua sektor wilayah teretori witel pekalongan</p>
-        </div>
-      </div>
+      <?php foreach ($content as $key => $c) { ?>
+        <?php if($key%2) { ?>
+          <div class="row no-gutters">
+            <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url('<?= base_url('assets/backend/images/content/'.$c->content_image) ?>');"></div>
+            <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+              <h2><?= strtoupper($c->content_title) ?></h2>
+              <p class="lead mb-0"><?= $c->content_desc ?></p>
+            </div>
+          </div>
+        <?php } else { ?>
+          <div class="row no-gutters">
+            <div class="col-lg-6 text-white showcase-img" style="background-image: url('<?= base_url('assets/backend/images/content/'.$c->content_image) ?>');"></div>
+            <div class="col-lg-6 my-auto showcase-text">
+              <h2><?= strtoupper($c->content_title) ?></h2>
+              <p class="lead mb-0"><?= $c->content_desc ?></p>
+            </div>
+          </div>
+        <?php } ?>
+      <?php } ?>
     </div>
   </section>

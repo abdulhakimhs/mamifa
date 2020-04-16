@@ -33,7 +33,7 @@ class Slider extends MY_Controller {
 		  $row = array();
 		  $row[] = $no;
           $row[] = $slider->slide_title;
-          $row[] = $slider->slide_active;
+		  $row[] = $slider->slide_active == 1 ? '<span class="label label-success">Active</span>' : '<span class="label label-secondary">Draft</span>';
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$slider->slide_id."'".')">
 				<i class="fa fa-edit"></i>
 			  </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$slider->slide_id."'".')">
@@ -57,22 +57,17 @@ class Slider extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'nik'  				=> $this->input->post('nik'),
-			'nama'  			=> strtoupper($this->input->post('nama')),
-			'position_name'  	=> strtoupper($this->input->post('position_name')),
-			'position_title'  	=> strtoupper($this->input->post('position_title')),
-			'sektor'  			=> strtoupper($this->input->post('sektor')),
-			'rayon'  			=> strtoupper($this->input->post('rayon')),
-			'level'  			=> strtoupper($this->input->post('level'))
+			'slide_title'  	=> strtoupper($this->input->post('slide_title')),
+			'slide_active'  => $this->input->post('slide_active')
 		];
 
 		if(!empty($_FILES['photo']['name']))
         {
             $upload = $this->_do_upload();
-            $data['bpjs'] = $upload;
+            $data['slide_image'] = $upload;
         }
 
-		$this->db->insert('tb_naker', $data);
+		$this->db->insert('tb_slider', $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -89,12 +84,11 @@ class Slider extends MY_Controller {
 
 	public function ajax_delete($id)
 	{
-		//delete file bpjs
-		$naker = $this->m_naker->get_by_id($id);
-        if(file_exists('./assets/backend/images/bpjs/'.$naker->bpjs) && $naker->bpjs)
-            unlink('./assets/backend/images/bpjs/'.$naker->bpjs);
+		$slide = $this->m_slider->get_by_id($id);
+        if(file_exists('./assets/backend/images/slider/'.$slide->slide_image) && $slide->slide_image)
+            unlink('./assets/backend/images/slider/'.$slide->slide_image);
 
-		$this->m_naker->delete_by_id($id);
+		$this->m_slider->delete_by_id($id);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -107,33 +101,29 @@ class Slider extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'position_name'  	=> strtoupper($this->input->post('position_name')),
-			'position_title'  	=> strtoupper($this->input->post('position_title')),
-			'sektor'  			=> strtoupper($this->input->post('sektor')),
-			'rayon'  			=> strtoupper($this->input->post('rayon')),
-			'level'  			=> strtoupper($this->input->post('level'))
+			'slide_title'  	=> strtoupper($this->input->post('slide_title')),
+			'slide_active'  => $this->input->post('slide_active')
 		];
 
 		if($this->input->post('remove_photo')) // if remove photo checked
         {
-            if(file_exists('./assets/backend/images/bpjs/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
-                unlink('./assets/backend/images/bpjs/'.$this->input->post('remove_photo'));
-            $data['bpjs'] = null;
+            if(file_exists('./assets/backend/images/slider/'.$this->input->post('remove_photo')) && $this->input->post('remove_photo'))
+                unlink('./assets/backend/images/slider/'.$this->input->post('remove_photo'));
+            $data['slide_image'] = null;
         }
  
         if(!empty($_FILES['photo']['name']))
         {
-			//delete file bpjs
-			$naker = $this->m_naker->get_by_id($this->input->post('id'));
-			if(file_exists('./assets/backend/images/bpjs/'.$naker->bpjs) && $naker->bpjs)
-				unlink('./assets/backend/images/bpjs/'.$naker->bpjs);
+			$slide = $this->m_slider->get_by_id($this->input->post('id'));
+			if(file_exists('./assets/backend/images/slider/'.$slide->slide_image) && $slide->slide_image)
+				unlink('./assets/backend/images/slider/'.$slide->slide_image);
 
             $upload = $this->_do_upload();
  
-            $data['bpjs'] = $upload;
+            $data['slide_image'] = $upload;
         }
 
-		$this->m_naker->update(array('naker_id' => $this->input->post('id')), $data);
+		$this->m_slider->update(array('slide_id' => $this->input->post('id')), $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -141,116 +131,12 @@ class Slider extends MY_Controller {
 			)
 		);
 	}
-	
-	public function upload()
-	{
-		$data = array();
-	    if(isset($_POST['upload'])){
-			/* 
-				1) jika nama naker sudah ada pada database, maka update data naker tsb dengan data di excel yg di upload. 
-				namun jika nama naker belum ada di database, maka insert data naker tsb .
-				2) jenis file xlsx.
-				3) hanya upload data saja, foto BPJS bisa di NULL kan terlebih dahulu.
-				4) upload foto BPJS akan dilakukan manual oleh admin nanti.  
-			*/
-
-			$this->load->library('upload'); // Load librari upload
-
-		  	// Load plugin PHPExcel nya
-			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
-
-			$config['upload_path'] 		= './assets/backend/excel/';
-			$config['allowed_types'] 	= 'xlsx';
-			$config['max_size']  		= '10000';
-			$config['overwrite'] 		= true;
-	
-			$this->upload->initialize($config); // Load konfigurasi uploadnya
-	
-			if (!$this->upload->do_upload('file')) {
-	
-				//upload gagal
-				$this->session->set_flashdata('notif', '<div class="alert alert-danger"><b>PROSES IMPORT GAGAL!</b> '.$this->upload->display_errors().'</div>');
-				//redirect halaman
-				redirect('admin/naker/upload');
-	
-			} else {
-	
-				$data_upload = $this->upload->data();
-	
-				$excelreader     	= new PHPExcel_Reader_Excel2007();
-				$loadexcel          = $excelreader->load('assets/backend/excel/'.$data_upload['file_name']); // Load file yang telah diupload ke folder excel
-				$sheet              = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
-	
-				$data_insert = array();
-				$data_update = array();
-	
-				$numrow = 1;
-				foreach($sheet as $row){
-					// Cek $numrow apakah lebih dari 1
-					// Artinya karena baris pertama adalah nama-nama kolom
-					// Jadi dilewat saja, tidak usah diimport
-					if($numrow > 1){
-						if($this->m_naker->get_by_nama($row['D']) > 0) {
-							// Kita push (add) array data ke variabel data_update
-							array_push($data_update, array(
-								'position_name'		=>strtoupper($row['A']),
-								'position_title'	=>strtoupper($row['B']),
-								'nik'				=>strtoupper($row['C']),
-								'nama'				=>strtoupper($row['D']),
-								'sektor'			=>strtoupper($row['E']),
-								'rayon'				=>strtoupper($row['F']),
-								'level'				=>strtoupper($row['K'])
-							));
-						} else {
-							// Kita push (add) array data ke variabel data_insert
-							array_push($data_insert, array(
-								'position_name'		=>strtoupper($row['A']),
-								'position_title'	=>strtoupper($row['B']),
-								'nik'				=>strtoupper($row['C']),
-								'nama'				=>strtoupper($row['D']),
-								'sektor'			=>strtoupper($row['E']),
-								'rayon'				=>strtoupper($row['F']),
-								'level'				=>strtoupper($row['K'])
-							));
-						}
-					}
-					
-					$numrow++; // Tambah 1 setiap kali looping
-				}
-
-				if(!empty($data_insert)) {
-					$this->db->insert_batch('tb_naker', $data_insert);
-				}
-
-				if(!empty($data_update)) {
-					$this->db->update_batch('tb_naker', $data_update, 'nama');
-				}
-
-				//delete file from server
-				unlink(realpath('assets/backend/excel/'.$data_upload['file_name']));
-	
-				//upload success
-				$this->session->set_flashdata('notif', '<div class="alert alert-success"><b>PROSES IMPORT BERHASIL!</b> Data berhasil diimport!</div>');
-
-				//redirect halaman
-				redirect('admin/naker/upload');
-	
-			}
-		}
-		
-	    $data['title'] 		 = 'Naker';
-		$data['subtitle'] 	 = 'Upload Naker';
-	    $this->load->view('backend/template',[
-			'content' => $this->load->view('backend/naker/upload',$data,true)
-		]);
-	}
 
 	private function _do_upload()
     {
-        $config['upload_path']          = './assets/backend/images/bpjs/';
+        $config['upload_path']          = './assets/backend/images/slider/';
         $config['allowed_types']        = 'jpg|jpeg|png';
         $config['max_size']             = 5000; //set max size allowed in Kilobyte
-        $config['file_name']            = $this->input->post('nik'); //just milisecond timestamp fot unique name
  
 		// $this->load->library('upload', $config);
 		$this->upload->initialize($config);
@@ -272,31 +158,13 @@ class Slider extends MY_Controller {
         $data['error_string'] = array();
         $data['inputerror'] = array();
 		$data['status'] = TRUE;
-		
-		$nama = $this->m_naker->get_by_nama($this->input->post('nama'));
-
-		if($this->input->post('method') == 'add') {
-			if($nama > 0)
-			{
-				$data['inputerror'][] = 'nama';
-				$data['error_string'][] = 'Nama already exists';
-				$data['status'] = FALSE;
-			}			
-		}
  
-		if($this->input->post('nik') == '')
+		if($this->input->post('slide_title') == '')
         {
-            $data['inputerror'][] = 'nik';
-            $data['error_string'][] = 'NIK is required';
+            $data['inputerror'][] = 'slide_title';
+            $data['error_string'][] = 'Judul Slider is required';
             $data['status'] = FALSE;
         }
-		
-		if($this->input->post('nama') == '')
-        {
-            $data['inputerror'][] = 'nama';
-            $data['error_string'][] = 'Nama is required';
-            $data['status'] = FALSE;
-		}
  
         if($data['status'] === FALSE)
         {

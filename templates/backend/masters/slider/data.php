@@ -261,7 +261,7 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3" id="label-photo">Upload Gambar </label>
                             <div class="col-md-9">
-                                <input name="photo" type="file">
+                                <input name="photo" type="file" required/>
                                 <span class="help-block"></span>
                             </div>
                         </div>
