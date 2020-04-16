@@ -14,7 +14,193 @@ class Report extends MY_Controller {
 	public function material()
 	{
         if(isset($_POST['submit'])) {
-            # code...
+            include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+	
+		$excel = new PHPExcel();
+		
+		$excel->getProperties()->setCreator('FIBER ACADEMY PEKALONGAN')
+						->setLastModifiedBy('FIBER ACADEMY PEKALONGAN')
+						->setTitle("Laporan Stok Material")
+						->setSubject("Admin")
+						->setDescription("Laporan Stok Material")
+						->setKeywords("Laporan Stok Material");
+		
+		$style_col = array(
+			'font' => array('bold' => true),
+			'alignment' => array(
+			'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+			'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+			),
+			'borders' => array(
+			'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+			)
+		);
+		
+		$style_row_normal = array(
+			'alignment' => array(
+			'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+			),
+			'borders' => array(
+			'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+			'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+			)
+		);
+
+		$style_row_tengah = array(
+			'alignment' => array(
+				'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+				'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+			),
+			'borders' => array(
+				'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+				'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+				'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+				'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+			)
+		);
+
+		$style_heading_yellow = array(
+			'fill' => array(
+				'type' => PHPExcel_Style_Fill::FILL_SOLID,
+				'color' => array('rgb' => 'fdd835')
+			)
+		);
+		
+		//Set Heading
+		$excel->setActiveSheetIndex(0)->setCellValue('A1', "Gudang");
+		$excel->setActiveSheetIndex(0)->setCellValue('A2', "Barang/Material");
+		$excel->setActiveSheetIndex(0)->setCellValue('A3', "Merk");
+		$excel->setActiveSheetIndex(0)->setCellValue('A4', "Type");
+		$excel->getActiveSheet()->mergeCells('A1:B1');
+		$excel->getActiveSheet()->mergeCells('A2:B2');
+		$excel->getActiveSheet()->mergeCells('A3:B3');
+		$excel->getActiveSheet()->mergeCells('A4:B4');
+
+		$material 	= $this->input->post('material');
+		$gm 	  	= $this->m_report->get_material($material)->row();
+		$tahun 		= $this->input->post('tahun');
+		$bulan 		= $this->input->post('bulan');
+
+		$excel->setActiveSheetIndex(0)->setCellValue('C1',": FA PEKALONGAN");
+		$excel->setActiveSheetIndex(0)->setCellValue('C2',': '.$gm->material);
+		$excel->setActiveSheetIndex(0)->setCellValue('C3',': '.$gm->merk);
+		$excel->setActiveSheetIndex(0)->setCellValue('C4',': '.$gm->type);
+
+		$excel->setActiveSheetIndex(0)->setCellValue('A6', "No");
+		$excel->setActiveSheetIndex(0)->setCellValue('B6', "Tanggal");
+		$excel->setActiveSheetIndex(0)->setCellValue('C6', "Masuk");
+		$excel->setActiveSheetIndex(0)->setCellValue('C7', "Dari");
+		$excel->setActiveSheetIndex(0)->setCellValue('D7', "Jumlah");
+		$excel->setActiveSheetIndex(0)->setCellValue('E6', "Keluar");
+		$excel->setActiveSheetIndex(0)->setCellValue('E7', "Ke");
+		$excel->setActiveSheetIndex(0)->setCellValue('F7', "Jumlah");
+		$excel->setActiveSheetIndex(0)->setCellValue('G6', "Saldo");
+		$excel->setActiveSheetIndex(0)->setCellValue('H6', "Paraf");
+		$excel->setActiveSheetIndex(0)->setCellValue('I6', "No ID");
+
+		$excel->getActiveSheet()->mergeCells('A6:A7');
+		$excel->getActiveSheet()->mergeCells('B6:B7');
+		$excel->getActiveSheet()->mergeCells('C6:D6');
+		$excel->getActiveSheet()->mergeCells('E6:F6');
+		$excel->getActiveSheet()->mergeCells('G6:G7');
+		$excel->getActiveSheet()->mergeCells('H6:H7');
+		$excel->getActiveSheet()->mergeCells('I6:I7');
+
+		$excel->getActiveSheet()->getStyle('A6:I6')->applyFromArray($style_heading_yellow);
+		$excel->getActiveSheet()->getStyle('A6:I6')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('A6:A7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('B6:B7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('C6:D6')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('E6:F6')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('G6:G7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('H6:H7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('I6:I7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('C7:F7')->applyFromArray($style_heading_yellow);
+		$excel->getActiveSheet()->getStyle('C7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('D7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('E7')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('F7')->applyFromArray($style_col);
+
+		//Set Isi Tabel
+		$report 	= $this->m_report->stok_material($tahun, $bulan, $material)->result();
+		$no 		= 1;
+		$numrow 	= 8;
+		foreach($report as $data){
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
+			$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->tanggal);
+			if ($data->status == 1) {
+				$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->sumber_tujuan);
+				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->jumlah);
+			}
+			else{
+				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->sumber_tujuan);
+				$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->jumlah);
+			}
+			$excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->saldo);
+			$excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, '');
+			$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, '');
+
+			$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('G'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('H'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row_tengah);
+			$excel->getActiveSheet()->getStyle('I'.$numrow)->applyFromArray($style_row_tengah);
+
+			$no++;
+        	$numrow++;
+		}
+
+		$r = $numrow;
+		//Set Tanda Tangan
+		$excel->setActiveSheetIndex(0)->setCellValue('F'.($r+1), "Pekalongan, ".date_indo(date('Y-m-d')));
+		$excel->setActiveSheetIndex(0)->setCellValue('F'.($r+5), "BENNY TARWIDI");
+		$excel->setActiveSheetIndex(0)->setCellValue('F'.($r+6), "NIK. 93153453");
+		$pkl 	= "F".($r+1).":H".($r+1);
+		$nama 	= "F".($r+5).":H".($r+5);
+		$nik 	= "F".($r+6).":H".($r+6);
+		$excel->getActiveSheet()->mergeCells($pkl);
+		$excel->getActiveSheet()->mergeCells($nama);
+		$excel->getActiveSheet()->mergeCells($nik);
+		$excel->getActiveSheet()->getStyle('F'.($r+5))->getFont()->setUnderline(TRUE);
+		$excel->getActiveSheet()->getStyle('F'.($r+6))->getFont()->setUnderline(TRUE);
+		$excel->getActiveSheet()->getStyle($pkl)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$excel->getActiveSheet()->getStyle($nama)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		$excel->getActiveSheet()->getStyle($nik)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+		//Set Lebar Tabel
+		$excel->getActiveSheet()->getColumnDimension('A')->setWidth(5);
+		$excel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+		$excel->getActiveSheet()->getColumnDimension('C')->setWidth(25);
+		$excel->getActiveSheet()->getColumnDimension('D')->setWidth(10);
+		$excel->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+		$excel->getActiveSheet()->getColumnDimension('F')->setWidth(10);
+		$excel->getActiveSheet()->getColumnDimension('G')->setWidth(10);
+		$excel->getActiveSheet()->getColumnDimension('H')->setWidth(10);
+		$excel->getActiveSheet()->getColumnDimension('I')->setWidth(10);
+
+		$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+		
+		$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+		
+		$excel->getActiveSheet(0)->setTitle($gm->material);
+		$excel->setActiveSheetIndex(0);
+		
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+		header('Content-Disposition: attachment; filename="STOK_'.$gm->material.'_'.$tahun.'_'.$bulan.'.xlsx"');
+		header('Cache-Control: max-age=0');
+		$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+		ob_end_clean();
+		$write->save('php://output');
         }
 		$data['title'] 			= 'Laporan';
 		$data['subtitle'] 		= 'Stok Material';

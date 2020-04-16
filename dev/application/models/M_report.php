@@ -48,13 +48,22 @@ class M_report extends CI_Model
 
     public function stok_material($tahun, $bulan, $material)
     {
-        $this->db->select('*');
+        $this->db->select('t.*,m.material_id,m.material,m.merk,m.type,m.jenis');
         $this->db->from('tb_material_trans t');
         $this->db->join('tb_material m', 'm.material_id = t.material_id');
         $this->db->where('YEAR(t.tanggal)',$tahun);
         $this->db->where('MONTH(t.tanggal)',$bulan);
         $this->db->where('t.material_id', $material);
-        
+        $result = $this->db->get();
+        return $result;
+    }
 
+    public function get_material($material)
+    {
+        $this->db->select('*');
+        $this->db->from('tb_material');
+        $this->db->where('material_id', $material);
+        $result = $this->db->get();
+        return $result;
     }
 }
