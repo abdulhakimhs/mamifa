@@ -147,7 +147,9 @@
 								</th>
 								<th rowspan="3">NAMA PENGAJAR</th>
 								<th rowspan="3">TOTAL PESERTA</th>
-								<th rowspan="3"><i class="fa fa-gear"></i></th>
+								<?php if($this->session->userdata('level') == 1 ) { ?>
+									<th rowspan="3"><i class="fa fa-gear"></i></th>
+								<?php } ?>
 							</tr>
 							<tr>
 								<th colspan="2">TELKOM AKSES</th>
@@ -252,6 +254,7 @@ function reload_table()
         dataType: "JSON",
         success: function(data)
         {
+			var level = <?= $this->session->userdata('level') ?>;
 			var isi = '';
 			var no = 1;
 			var total = 0;
@@ -260,7 +263,8 @@ function reload_table()
 				total += (data[i].ta_bop == null ? 0 : parseInt(data[i].ta_bop));
 				total += (data[i].ta_pelatihan == null ? 0 : parseInt(data[i].ta_pelatihan));
 				total += (data[i].mitra_pelatihan == null ? 0 : parseInt(data[i].mitra_pelatihan));
-				isi += '<tr id="'+i+'">'+
+				if(level == 1) {
+					isi += '<tr id="'+i+'">'+
 							'<td>'+ no +'</td>'+
 							'<td>'+ data[i].jenis_pelatihan +'</td>'+
 							'<td>'+ data[i].name_of_training +'</td>'+
@@ -283,6 +287,30 @@ function reload_table()
 							'<td>'+ total +'</td>'+
 							'<td><a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('+ "'" + data[i].training_plan_id + "'" +')"><i class="fa fa-edit"></i></a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data(' + "'" + data[i].training_plan_id + "'" + ')"><i class="fa fa-trash"></i></a></td>'+
 						'</tr>';
+				} else {
+					isi += '<tr id="'+i+'">'+
+							'<td>'+ no +'</td>'+
+							'<td>'+ data[i].jenis_pelatihan +'</td>'+
+							'<td>'+ data[i].name_of_training +'</td>'+
+							'<td>'+ (data[i].ta_pelatihan == null ? '' : data[i].ta_pelatihan) +'</td>'+
+							'<td>'+ (data[i].ta_bop == null ? '' : data[i].ta_bop) +'</td>'+
+							'<td>'+ (data[i].mitra_pelatihan == null ? '' : data[i].mitra_pelatihan) +'</td>'+
+							'<td>'+ (data[i].nama_mitra == null ? '' : data[i].nama_mitra) +'</td>'+
+							'<td>'+ (data[i].staff_teknisi == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].team_leader == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].officer == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].site_manager == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].mgr == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].mitra == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].senin == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].selasa == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].rabu == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].kamis == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ (data[i].jumat == 0 ? '' : '<i class="fa fa-check"></i>') +'</td>'+
+							'<td>'+ data[i].nama_pengajar +'</td>'+
+							'<td>'+ total +'</td>'+
+						'</tr>';
+				}
 				no++;
 				total = 0;
 			}
