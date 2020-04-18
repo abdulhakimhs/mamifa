@@ -278,7 +278,7 @@
       $(this).parent().find('.help-block').empty();
     });
 
-    $("select").change(function(){
+    $(document).on('change','select', function(){
       $(this).parent().parent().removeClass('has-error');
       $(this).parent().find('.help-block').empty();
       $(this).parent().find('.stok').empty();
