@@ -267,7 +267,12 @@
       $(this).parent().find('.help-block').empty();
     });
 
-    $(document).on('change','select', function(){
+    // $("select").change(function(){
+    //     $(this).parent().parent().removeClass('has-error');
+    //     $(this).next().empty();
+    // });
+
+    $(document).on('change','.selectm', function(){
       $(this).parent().parent().removeClass('has-error');
       $(this).parent().find('.help-block').empty();
       $(this).parent().find('.stok').empty();
