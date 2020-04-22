@@ -9,9 +9,6 @@ class Monila extends MY_Controller {
 		if($this->session->userdata('logged_in') != TRUE){
       redirect(base_url("admin/auth"));
     }
-    if($this->session->userdata('level') == 0){
-      redirect(base_url("admin"));
-    }
 		$this->load->model('m_monila');
 	}
 
@@ -42,11 +39,12 @@ class Monila extends MY_Controller {
           } else {
             $row[] = '<td><span class="badge badge-success">Sudah Diterima</span></td>';
           }
+          if($this->session->userdata('level') == 1){
           $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$monila->monila_id."'".')">
-                <i class="fa fa-edit"></i>
-              </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$monila->monila_id."'".')">
-      <i class="fa fa-trash"></i>
-      </a>';
+                    <i class="fa fa-edit"></i></a>&nbsp
+                    <a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$monila->monila_id."'".')">
+                  <i class="fa fa-trash"></i></a>';
+          }
 
     $data[] = $row;
       }

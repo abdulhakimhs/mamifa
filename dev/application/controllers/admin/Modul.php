@@ -9,6 +9,9 @@ class Modul extends MY_Controller {
 		if($this->session->userdata('logged_in') != TRUE){
             redirect(base_url("admin/auth"));
         }
+		if($this->session->userdata('level') == 0){
+		  redirect(base_url("admin"));
+		}
         $this->load->model('m_modul');
         $this->load->helper('download');
 	}
@@ -64,7 +67,7 @@ class Modul extends MY_Controller {
 
 			$config['upload_path']          = './assets/backend/files/modul/';
 			$config['allowed_types']        = 'jpg|jpeg|png|avi|mpeg|mp4|mkv|3gp|pdf|docx|doc|xls|xlsx|ppt|pptx|zip|rar|7z';
-			// $config['max_size']             = 5000; //set max size allowed in Kilobyte
+			$config['max_size']             = 20000; //set max size allowed in Kilobyte (20mb)
 			// $config['file_name']            = $nama_file;
 	
 			// $this->load->library('upload', $config);

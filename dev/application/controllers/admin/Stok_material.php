@@ -9,6 +9,9 @@ class Stok_material extends CI_Controller {
 		if($this->session->userdata('logged_in') != TRUE){
             redirect(base_url("admin/auth"));
         }
+		if($this->session->userdata('level') == 0){
+		  redirect(base_url("admin"));
+		}
 		$this->load->model('m_stok_material');
 	}
 

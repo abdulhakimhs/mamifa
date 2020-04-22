@@ -32,8 +32,10 @@
                             <th>Nama Lengkap</th>
                             <th>Level</th>
                             <th>Jenis Pelatihan</th>
-                            <th>Status</th>
-			                <th width="100"><i class="fa fa-gear"></i></th>
+							<th>Status</th>
+							<?php if($this->session->userdata('level') == 1){ ?>
+							<th width="100"><i class="fa fa-gear"></i></th>
+							<?php } ?>
 		                </tr>
 		            </thead>
 		            <tbody>

@@ -345,7 +345,6 @@ class Report extends MY_Controller {
 		$excel->setActiveSheetIndex(0)->setCellValue('C11', "NIK");
 		$excel->setActiveSheetIndex(0)->setCellValue('D11', "POK");
 		$excel->setActiveSheetIndex(0)->setCellValue('E11', "PRAKTEK");
-		$excel->setActiveSheetIndex(0)->setCellValue('E12', "Role Play");
 		$excel->setActiveSheetIndex(0)->setCellValue('F11', "PRE TEST");
 		$excel->setActiveSheetIndex(0)->setCellValue('G11', "POST TEST");
 		$excel->setActiveSheetIndex(0)->setCellValue('H11', "Kehadiran");
@@ -368,7 +367,7 @@ class Report extends MY_Controller {
 		$excel->getActiveSheet()->mergeCells('B11:B13'); // NAMA
 		$excel->getActiveSheet()->mergeCells('C11:C13'); // NIK
 		$excel->getActiveSheet()->mergeCells('D11:D13'); // POK
-		$excel->getActiveSheet()->mergeCells('E12:E13'); // ROLE PLAY
+		$excel->getActiveSheet()->mergeCells('E11:E13'); // PRAKTEK
 		$excel->getActiveSheet()->mergeCells('F11:F13'); // PRE TEST
 		$excel->getActiveSheet()->mergeCells('G11:G13'); // POST TEST
 		$excel->getActiveSheet()->mergeCells('H11:H13'); // KEHADIRAN
@@ -380,9 +379,8 @@ class Report extends MY_Controller {
 		$excel->getActiveSheet()->getStyle('A11:A13')->applyFromArray($style_col);
 		$excel->getActiveSheet()->getStyle('B11:B13')->applyFromArray($style_col);
 		$excel->getActiveSheet()->getStyle('C11:C13')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('D11:D13')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('E11')->applyFromArray($style_col);
-		$excel->getActiveSheet()->getStyle('E12:E13')->applyFromArray($style_col);
+		$excel->getActiveSheet()->getStyle('D11:D13')->applyFromArray($style_col); 
+		$excel->getActiveSheet()->getStyle('E11:E13')->applyFromArray($style_col);
 		$excel->getActiveSheet()->getStyle('F11:F13')->applyFromArray($style_col);
 		$excel->getActiveSheet()->getStyle('F11:F13')->getAlignment()->setWrapText(true);
 		$excel->getActiveSheet()->getStyle('G11:G13')->applyFromArray($style_col);

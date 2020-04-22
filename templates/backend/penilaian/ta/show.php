@@ -181,7 +181,7 @@
                         </div>
                         <div class="col-md-4">
                            <div class="form-group">
-                              <label class="control-label col-md-3">Role Play</label>
+                              <label class="control-label col-md-3">Praktek</label>
                               <div class="col-md-9">
                                   <input name="roleplay" class="form-control" type="number">
                                   <span class="help-block"></span>
