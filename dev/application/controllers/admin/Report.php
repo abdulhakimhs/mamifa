@@ -410,21 +410,21 @@ class Report extends MY_Controller {
 		$replace_jp	= '';
 		foreach($report as $data){
 			if($data->roleplay == 0 && $data->pre_test == 0 && $data->kehadiran == 0){
-				$peningkatan = 0;
+				$peningkatan = '';
 				$na 		 = $data->post_test;
 			} else {
-				$peningkatan = ($data->post_test - $data->pre_test)/100;
+				$peningkatan = (($data->post_test - $data->pre_test)/100)*100;
 				$na 		 = (0.4*$data->post_test)+(0.5*$data->roleplay)+(0.1*$data->kehadiran);
 			}
 			$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
 			$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nama);
 			$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nik);
 			$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->pok);
-			$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->roleplay);
-			$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->pre_test);
+			$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->roleplay == 0 ? '' : $data->roleplay);
+			$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->pre_test == 0 ? '' : $data->pre_test);
 			$excel->setActiveSheetIndex(0)->setCellValue('G'.$numrow, $data->post_test);
-			$excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->kehadiran);
-			$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $peningkatan.'%'); // Menggunakan Rumus
+			$excel->setActiveSheetIndex(0)->setCellValue('H'.$numrow, $data->kehadiran == 0 ? '' : $data->kehadiran);
+			$excel->setActiveSheetIndex(0)->setCellValue('I'.$numrow, $peningkatan === '' ? '' : $peningkatan.'%'); // Menggunakan Rumus
 			$excel->setActiveSheetIndex(0)->setCellValue('J'.$numrow, $na); // Menggunakan Rumus
 			$excel->setActiveSheetIndex(0)->setCellValue('K'.$numrow, $data->keterangan);
 			
