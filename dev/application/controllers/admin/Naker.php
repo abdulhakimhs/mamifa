@@ -13,6 +13,7 @@ class Naker extends MY_Controller {
 		  redirect(base_url("admin"));
 		}
         $this->load->model('m_naker');
+        $this->load->helper('download');
 	}
 
 	public function index()
@@ -312,5 +313,11 @@ class Naker extends MY_Controller {
             echo json_encode($data);
             exit();
         }
+	}
+	
+	public function download_bpjs($id)
+    {
+        $row = $this->db->get_where('tb_naker', array('naker_id' => $id))->row_array();
+        force_download('assets/backend/images/bpjs/'.$row['bpjs'].'',NULL);
     }
 }
