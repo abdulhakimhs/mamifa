@@ -64,7 +64,7 @@ class Modul extends MY_Controller {
 
 			$config['upload_path']          = './assets/backend/files/modul/';
 			$config['allowed_types']        = 'jpg|jpeg|png|avi|mpeg|mp4|mkv|3gp|pdf|docx|doc|xls|xlsx|ppt|pptx|zip|rar|7z';
-			// $config['max_size']             = 5000; //set max size allowed in Kilobyte
+			$config['max_size']             = 20000; //set max size allowed in Kilobyte
 			// $config['file_name']            = $nama_file;
 	
 			// $this->load->library('upload', $config);

@@ -411,8 +411,13 @@ class Report extends MY_Controller {
 		$numrow 	= 15;
 		$replace_jp	= '';
 		foreach($report as $data){
-			$peningkatan = ($data->post_test - $data->pre_test)/100;
-			$na 		 = (0.4*$data->post_test)+(0.5*$data->roleplay)+(0.1*$data->kehadiran);
+			if($data->roleplay == 0 && $data->pre_test == 0 && $data->kehadiran == 0){
+				$peningkatan = 0;
+				$na 		 = $data->post_test;
+			} else {
+				$peningkatan = ($data->post_test - $data->pre_test)/100;
+				$na 		 = (0.4*$data->post_test)+(0.5*$data->roleplay)+(0.1*$data->kehadiran);
+			}
 			$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
 			$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->nama);
 			$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->nik);
