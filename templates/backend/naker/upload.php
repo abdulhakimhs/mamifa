@@ -33,7 +33,8 @@
 								</div>
 							</div>
 							<br><br>
-					        <button type="submit" name="upload" value="Upload" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i> Import Data</button>
+							<button type="submit" name="upload" value="Upload" class="btn btn-danger btn-sm"><i class="fa fa-upload"></i> Import Data</button>
+							&nbsp;<a href="<?= base_url() ?>assets/backend/files/format_naker.xlsx">Format Upload Naker</a>
 						</div>
 					</div>
 				</form>

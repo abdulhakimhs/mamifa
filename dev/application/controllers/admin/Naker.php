@@ -68,7 +68,10 @@ class Naker extends MY_Controller {
 			'position_title'  	=> strtoupper($this->input->post('position_title')),
 			'sektor'  			=> strtoupper($this->input->post('sektor')),
 			'rayon'  			=> strtoupper($this->input->post('rayon')),
-			'level'  			=> strtoupper($this->input->post('level'))
+			'level'  			=> strtoupper($this->input->post('level')),
+			'nama_cp'  			=> strtoupper($this->input->post('nama_cp')),
+			'hubungan'  		=> $this->input->post('hubungan'),
+			'kontak_cp'  		=> $this->input->post('no_cp')
 		];
 
 		if(!empty($_FILES['photo']['name']))
@@ -116,7 +119,10 @@ class Naker extends MY_Controller {
 			'position_title'  	=> strtoupper($this->input->post('position_title')),
 			'sektor'  			=> strtoupper($this->input->post('sektor')),
 			'rayon'  			=> strtoupper($this->input->post('rayon')),
-			'level'  			=> strtoupper($this->input->post('level'))
+			'level'  			=> strtoupper($this->input->post('level')),
+			'nama_cp'  			=> strtoupper($this->input->post('nama_cp')),
+			'hubungan'  		=> $this->input->post('hubungan'),
+			'kontak_cp'  		=> $this->input->post('no_cp')
 		];
 
 		if($this->input->post('remove_photo')) // if remove photo checked
@@ -151,14 +157,6 @@ class Naker extends MY_Controller {
 	{
 		$data = array();
 	    if(isset($_POST['upload'])){
-			/* 
-				1) jika nama naker sudah ada pada database, maka update data naker tsb dengan data di excel yg di upload. 
-				namun jika nama naker belum ada di database, maka insert data naker tsb .
-				2) jenis file xlsx.
-				3) hanya upload data saja, foto BPJS bisa di NULL kan terlebih dahulu.
-				4) upload foto BPJS akan dilakukan manual oleh admin nanti.  
-			*/
-
 			$this->load->library('upload'); // Load librari upload
 
 		  	// Load plugin PHPExcel nya
@@ -204,7 +202,10 @@ class Naker extends MY_Controller {
 								'nama'				=>strtoupper($row['D']),
 								'sektor'			=>strtoupper($row['E']),
 								'rayon'				=>strtoupper($row['F']),
-								'level'				=>strtoupper($row['K'])
+								'level'				=>strtoupper($row['K']),
+								'nama_cp'			=>strtoupper($row['L']),
+								'hubungan'			=>strtoupper($row['M']),
+								'kontak_cp'			=>strtoupper($row['N'])
 							));
 						} else {
 							// Kita push (add) array data ke variabel data_insert
@@ -215,7 +216,10 @@ class Naker extends MY_Controller {
 								'nama'				=>strtoupper($row['D']),
 								'sektor'			=>strtoupper($row['E']),
 								'rayon'				=>strtoupper($row['F']),
-								'level'				=>strtoupper($row['K'])
+								'level'				=>strtoupper($row['K']),
+								'nama_cp'			=>strtoupper($row['L']),
+								'hubungan'			=>strtoupper($row['M']),
+								'kontak_cp'			=>strtoupper($row['N'])
 							));
 						}
 					}
@@ -253,7 +257,7 @@ class Naker extends MY_Controller {
 	private function _do_upload()
     {
         $config['upload_path']          = './assets/backend/images/bpjs/';
-        $config['allowed_types']        = 'jpg|jpeg|png';
+        $config['allowed_types']        = 'pdf';
         $config['max_size']             = 5000; //set max size allowed in Kilobyte
         $config['file_name']            = $this->input->post('nik'); //just milisecond timestamp fot unique name
  
