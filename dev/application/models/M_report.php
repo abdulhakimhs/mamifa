@@ -66,4 +66,15 @@ class M_report extends CI_Model
         $result = $this->db->get();
         return $result;
     }
+
+    public function permint_material($periode_tgl)
+    {
+        $this->db->select('*');
+        $this->db->from('tb_material_trans mt');
+        $this->db->join('tb_material m', 'm.material_id = mt.material_id', 'left');
+        $this->db->where('tanggal', $periode_tgl);
+        $this->db->where('status', 1);
+        $data = $this->db->get('');
+        return $data;
+    }
 }

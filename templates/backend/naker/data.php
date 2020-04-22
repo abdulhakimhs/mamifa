@@ -144,7 +144,7 @@ function detail(id)
             if(data.bpjs)
             {
                 $('#label-photo').text('Change BPJS'); // label photo upload
-                $('#photo-preview div').html('<a href="naker/download_bpjs/'+data.naker_id+'"><i class="fa fa-cloud-download"></i> Download BPJS</a>'); // show photo
+                $('#photo-preview div').html('<a href="naker/download_bpjs/'+data.naker_id+'" target="_blank"><i class="fa fa-cloud-download"></i> Download BPJS</a>'); // show photo
             }
             else
             {

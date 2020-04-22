@@ -719,7 +719,182 @@ class Report extends MY_Controller {
 	public function permint()
 	{
 		if(isset($_POST['submit'])) {
+			include APPPATH.'third_party/PHPExcel/PHPExcel.php';
+	
+			$excel = new PHPExcel();
+			
+			$excel->getProperties()->setCreator('FIBER ACADEMY PEKALONGAN')
+							->setLastModifiedBy('FIBER ACADEMY PEKALONGAN')
+							->setTitle("Laporan Permintaan Material")
+							->setSubject("Admin")
+							->setDescription("Laporan Permintaan Material")
+							->setKeywords("Laporan Permintaan Material");
+			
+			$style_col = array(
+				'font' => array('bold' => true),
+				'alignment' => array(
+					'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+					'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+				),
+				'borders' => array(
+					'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+					'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+					'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+					'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+				)
+			);
 
+			$style_row_tengah = array(
+				'alignment' => array(
+					'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+					'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
+				),
+				'borders' => array(
+					'top' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+					'right' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+					'bottom' => array('style'  => PHPExcel_Style_Border::BORDER_THIN),
+					'left' => array('style'  => PHPExcel_Style_Border::BORDER_THIN)
+				)
+			);
+
+			//Set Semua Bold
+			$excel->getActiveSheet()->getStyle('A1:F49')->getFont()->setBold(TRUE);
+
+			//Set Header + Judul
+			$excel->setActiveSheetIndex(0)->setCellValue('A3', "No Form :");
+			$excel->setActiveSheetIndex(0)->setCellValue('A4', "FORM PERMINTAAN / PENGEMBALIAN / PENGELUARAN BARANG");
+			$excel->getActiveSheet()->mergeCells('A4:F4');
+			$excel->getActiveSheet()->getStyle('A4:F4')->getFont()->setSize(16);
+			$excel->getActiveSheet()->getStyle('A4:F4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->getActiveSheet()->getRowDimension('A4:F4')->setRowHeight(40);
+			$excel->setActiveSheetIndex(0)->setCellValue('A5', "NOMOR");
+			$excel->setActiveSheetIndex(0)->setCellValue('B5', ":");
+			$excel->setActiveSheetIndex(0)->setCellValue('A6', "ID GUDANG");
+			$excel->setActiveSheetIndex(0)->setCellValue('B6', ": ( PEKALONGAN )");
+			$excel->setActiveSheetIndex(0)->setCellValue('A7', "TANGGAL");
+			$excel->setActiveSheetIndex(0)->setCellValue('B7', ": ".date_indo($this->input->post('periode_tgl'))); // Menyesuaikan Periode Tanggal Yang di Pilih
+			$excel->setActiveSheetIndex(0)->setCellValue('A8', "ID PROJECT");
+			$excel->setActiveSheetIndex(0)->setCellValue('B8', ": HCM-1/2016 FIBER ACADEMY");
+			$excel->setActiveSheetIndex(0)->setCellValue('B9', ": FIBER ACADEMY PEKALONGAN");
+			$excel->setActiveSheetIndex(0)->setCellValue('A10', "NAMA MITRA");
+			$excel->setActiveSheetIndex(0)->setCellValue('B10', ": PT. TELKOM AKSES");
+			
+			//Set Heading
+			$excel->setActiveSheetIndex(0)->setCellValue('A12', "NO.");
+			$excel->setActiveSheetIndex(0)->setCellValue('B12', "NAMA BARANG");
+			$excel->setActiveSheetIndex(0)->setCellValue('C12', "SATUAN");
+			$excel->setActiveSheetIndex(0)->setCellValue('D12', "JUMLAH");
+			$excel->setActiveSheetIndex(0)->setCellValue('D13', "DIMINTA");
+			$excel->setActiveSheetIndex(0)->setCellValue('E13', "DIBERIKAN");
+			$excel->setActiveSheetIndex(0)->setCellValue('F12', "KETERANGAN");
+
+			$excel->getActiveSheet()->mergeCells('A12:A13'); // NO
+			$excel->getActiveSheet()->mergeCells('B12:B13'); // NAMA BARANG
+			$excel->getActiveSheet()->mergeCells('C12:C13'); // SATUAN
+			$excel->getActiveSheet()->mergeCells('D12:E12'); // JUMLAH
+			$excel->getActiveSheet()->mergeCells('F12:F13'); // KETERANGAN
+
+			$excel->getActiveSheet()->getStyle('A12:A13')->applyFromArray($style_col);
+			$excel->getActiveSheet()->getStyle('B12:B13')->applyFromArray($style_col);
+			$excel->getActiveSheet()->getStyle('C12:C13')->applyFromArray($style_col);
+			$excel->getActiveSheet()->getStyle('D12:E12')->applyFromArray($style_col); 
+			$excel->getActiveSheet()->getStyle('D13')->applyFromArray($style_col); 
+			$excel->getActiveSheet()->getStyle('E13')->applyFromArray($style_col); 
+			$excel->getActiveSheet()->getStyle('F12:F13')->applyFromArray($style_col);
+			
+			//Set Isi Tabel
+			$report 	= $this->m_report->permint_material($this->input->post('periode_tgl'))->result();
+			$no 		= 1;
+			$numrow 	= 14;
+			foreach($report as $data){
+				$excel->setActiveSheetIndex(0)->setCellValue('A'.$numrow, $no);
+				$excel->setActiveSheetIndex(0)->setCellValue('B'.$numrow, $data->material);
+				$excel->setActiveSheetIndex(0)->setCellValue('C'.$numrow, $data->satuan);
+				$excel->setActiveSheetIndex(0)->setCellValue('D'.$numrow, $data->jumlah);
+				$excel->setActiveSheetIndex(0)->setCellValue('E'.$numrow, $data->jumlah);
+				$excel->setActiveSheetIndex(0)->setCellValue('F'.$numrow, $data->keterangan);
+				
+				$excel->getActiveSheet()->getStyle('A'.$numrow)->applyFromArray($style_row_tengah);
+				$excel->getActiveSheet()->getStyle('B'.$numrow)->applyFromArray($style_row_tengah);
+				$excel->getActiveSheet()->getStyle('C'.$numrow)->applyFromArray($style_row_tengah);
+				$excel->getActiveSheet()->getStyle('D'.$numrow)->applyFromArray($style_row_tengah);
+				$excel->getActiveSheet()->getStyle('E'.$numrow)->applyFromArray($style_row_tengah);
+				$excel->getActiveSheet()->getStyle('F'.$numrow)->applyFromArray($style_row_tengah);
+				
+				$no++;
+				$numrow++;
+			}
+
+			$r = $numrow + 3;
+
+			//Set Tanda Tangan
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.$r, "PEMOHON,");
+			$excel->getActiveSheet()->mergeCells('A'.$r.':'.'B'.$r);
+			$excel->getActiveSheet()->getStyle('A'.$r.':'.'B'.$r)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->setActiveSheetIndex(0)->setCellValue('C'.$r, "MENGETAHUI,");
+			$excel->getActiveSheet()->mergeCells('C'.$r.':'.'D'.$r);
+			$excel->getActiveSheet()->getStyle('C'.$r.':'.'D'.$r)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->setActiveSheetIndex(0)->setCellValue('E'.$r, "MENYETUJUI,");
+			$excel->getActiveSheet()->mergeCells('E'.$r.':'.'F'.$r);
+			$excel->getActiveSheet()->getStyle('E'.$r.':'.'F'.$r)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+6), $this->input->post('pemohon'));
+			$excel->getActiveSheet()->mergeCells('A'.($r+6).':'.'B'.($r+6));
+			$excel->getActiveSheet()->getStyle('A'.($r+6))->getFont()->setUnderline(TRUE);
+			$excel->getActiveSheet()->getStyle('A'.($r+6))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+7), 'NIK. '.$this->input->post('nik_pemohon'));
+			$excel->getActiveSheet()->mergeCells('A'.($r+7).':'.'B'.($r+7));
+			$excel->getActiveSheet()->getStyle('A'.($r+7))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+			$excel->setActiveSheetIndex(0)->setCellValue('C'.($r+6), $this->input->post('mengetahui'));
+			$excel->getActiveSheet()->mergeCells('C'.($r+6).':'.'D'.($r+6));
+			$excel->getActiveSheet()->getStyle('C'.($r+6))->getFont()->setUnderline(TRUE);
+			$excel->getActiveSheet()->getStyle('C'.($r+6))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->setActiveSheetIndex(0)->setCellValue('C'.($r+7), 'NIK. '.$this->input->post('nik_mengetahui'));
+			$excel->getActiveSheet()->mergeCells('C'.($r+7).':'.'D'.($r+7));
+			$excel->getActiveSheet()->getStyle('C'.($r+7))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+			$excel->setActiveSheetIndex(0)->setCellValue('E'.($r+6), $this->input->post('menyetujui'));
+			$excel->getActiveSheet()->mergeCells('E'.($r+6).':'.'F'.($r+6));
+			$excel->getActiveSheet()->getStyle('E'.($r+6))->getFont()->setUnderline(TRUE);
+			$excel->getActiveSheet()->getStyle('E'.($r+6))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->setActiveSheetIndex(0)->setCellValue('E'.($r+7), 'NIK. '.$this->input->post('nik_menyetujui'));
+			$excel->getActiveSheet()->mergeCells('E'.($r+7).':'.'F'.($r+7));
+			$excel->getActiveSheet()->getStyle('E'.($r+7))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+10), "PETUGAS GUDANG,");
+			$excel->getActiveSheet()->mergeCells('A'.($r+10).':'.'B'.($r+10));
+			$excel->getActiveSheet()->getStyle('A'.($r+10))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+16), $this->input->post('petugas_gudang'));
+			$excel->getActiveSheet()->mergeCells('A'.($r+16).':'.'B'.($r+16));
+			$excel->getActiveSheet()->getStyle('A'.($r+16))->getFont()->setUnderline(TRUE);
+			$excel->getActiveSheet()->getStyle('A'.($r+16))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$excel->setActiveSheetIndex(0)->setCellValue('A'.($r+17), 'NIK. '.$this->input->post('nik_petugas_gudang'));
+			$excel->getActiveSheet()->mergeCells('A'.($r+17).':'.'B'.($r+17));
+			$excel->getActiveSheet()->getStyle('A'.($r+17))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			
+			//Set Lebar Tabel
+			$excel->getActiveSheet()->getColumnDimension('A')->setWidth(15);
+			$excel->getActiveSheet()->getColumnDimension('B')->setWidth(30);
+			$excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+			$excel->getActiveSheet()->getColumnDimension('D')->setWidth(15);
+			$excel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+			$excel->getActiveSheet()->getColumnDimension('F')->setWidth(20);
+			
+			$excel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(-1);
+			
+			$excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+			
+			$excel->getActiveSheet(0)->setTitle("Laporan Permintaan Material");
+			$excel->setActiveSheetIndex(0);
+			
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment; filename="PERMINTAAN_MATERIAL_'.date_indo($this->input->post('periode_tgl')).'.xlsx"');
+			header('Cache-Control: max-age=0');
+			$write = PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+			ob_end_clean();
+			$write->save('php://output');
 		}
 		else{
 			$data['title'] 			= 'Laporan';
