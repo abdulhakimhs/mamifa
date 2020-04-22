@@ -1,3 +1,11 @@
+<style type="text/css">
+  @media (min-width: 768px) {
+    .modal-xl {
+      width: 70%;
+     max-width:1200px;
+    }
+  }
+</style>
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
@@ -42,7 +50,7 @@
 		            </thead>
 		            <tbody>
 		            </tbody>
-	            </table>
+                </table>
 			</div>
 		</div>
 	</div>
@@ -125,6 +133,9 @@ function detail(id)
 			$('[name="sektor"]').val(data.sektor);
 			$('[name="rayon"]').val(data.rayon);
 			$('[name="level"]').val(data.level);
+            $('[name="nama_cp"]').val(data.nama_cp);
+            $('[name="hubungan"]').val(data.hubungan);
+            $('[name="kontak_cp"]').val(data.kontak_cp);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
 
@@ -133,13 +144,12 @@ function detail(id)
             if(data.bpjs)
             {
                 $('#label-photo').text('Change BPJS'); // label photo upload
-                $('#photo-preview div').html('<img src="'+base_url+'assets/backend/images/bpjs/'+data.bpjs+'" class="img-responsive">'); // show photo
-                $('#photo-preview div').append('<input type="checkbox" name="remove_photo" value="'+data.bpjs+'"/> Remove photo when saving'); // remove photo
+                $('#photo-preview div').html('<a href="naker/download_bpjs/'+data.naker_id+'"><i class="fa fa-cloud-download"></i> Download BPJS</a>'); // show photo
             }
             else
             {
                 $('#label-photo').text('Upload BPJS'); // label photo upload
-                $('#photo-preview div').text('(No photo)');
+                $('#photo-preview div').text('(No File)');
             }
  
         },
@@ -238,7 +248,7 @@ function delete_data(id)
 
 <!-- Bootstrap modal -->
 <div class="modal fade" id="modal_form" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -249,76 +259,111 @@ function delete_data(id)
                     <input type="hidden" value="" name="id"/>
                     <input type="hidden" value="" name="method"/>
                     <div class="form-body">
-                        <div class="form-group">
-                            <label class="control-label col-md-3">NIK</label>
-                            <div class="col-md-9">
-                                <input name="nik" class="form-control" type="text" placeholder="Nomor Induk Karyawan">
-                                <span class="help-block"></span>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">NIK</label>
+                                    <div class="col-md-9">
+                                        <input name="nik" class="form-control" type="text" placeholder="Nomor Induk Karyawan">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Nama</label>
+                                    <div class="col-md-9">
+                                        <input name="nama" class="form-control" type="text" placeholder="Nama Karyawan">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Position Name</label>
+                                    <div class="col-md-9">
+                                        <input name="position_name" class="form-control" type="text" placeholder="Nama Posisi Karyawan">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Position Title</label>
+                                    <div class="col-md-9">
+                                        <input name="position_title" class="form-control" type="text" placeholder="Title Posisi Karyawan">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Sektor</label>
+                                    <div class="col-md-9">
+                                        <input name="sektor" class="form-control" type="text" placeholder="Nama Sektor">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Rayon</label>
+                                    <div class="col-md-9">
+                                        <input name="rayon" class="form-control" type="text" placeholder="Nama Rayon">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Level</label>
+                                    <div class="col-md-9">
+                                        <select name="level" id="level" class="form-control">
+                                            <option value="Drafter">Drafter</option>
+                                            <option value="Helpdesk">Helpdesk</option>
+                                            <option value="Manager">Manager</option>
+                                            <option value="Site Manager">Site Manager</option>
+                                            <option value="Staff">Staff</option>
+                                            <option value="Surveyor">Surveyor</option>
+                                            <option value="Team Leader">Team Leader</option>
+                                            <option value="Teknisi">Teknisi</option>
+                                        </select>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="photo-preview">
+                                    <label class="control-label col-md-3">BPJS</label>
+                                    <div class="col-md-9">
+                                        (No File)
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" id="label-photo">Upload BPJS </label>
+                                    <div class="col-md-9">
+                                        <input name="photo" type="file">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Nama</label>
-                            <div class="col-md-9">
-                                <input name="nama" class="form-control" type="text" placeholder="Nama Karyawan">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Position Name</label>
-                            <div class="col-md-9">
-                                <input name="position_name" class="form-control" type="text" placeholder="Nama Posisi Karyawan">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Position Title</label>
-                            <div class="col-md-9">
-                                <input name="position_title" class="form-control" type="text" placeholder="Title Posisi Karyawan">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Sektor</label>
-                            <div class="col-md-9">
-                                <input name="sektor" class="form-control" type="text" placeholder="Nama Sektor">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Rayon</label>
-                            <div class="col-md-9">
-                                <input name="rayon" class="form-control" type="text" placeholder="Nama Rayon">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Level</label>
-                            <div class="col-md-9">
-                                <select name="level" id="level" class="form-control">
-                                    <option value="Drafter">Drafter</option>
-                                    <option value="Helpdesk">Helpdesk</option>
-                                    <option value="Manager">Manager</option>
-                                    <option value="Site Manager">Site Manager</option>
-                                    <option value="Staff">Staff</option>
-                                    <option value="Surveyor">Surveyor</option>
-                                    <option value="Team Leader">Team Leader</option>
-                                    <option value="Teknisi">Teknisi</option>
-                                </select>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group" id="photo-preview">
-                            <label class="control-label col-md-3">BPJS</label>
-                            <div class="col-md-9">
-                                (No photo)
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3" id="label-photo">Upload BPJS </label>
-                            <div class="col-md-9">
-                                <input name="photo" type="file">
-                                <span class="help-block"></span>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Nama CP</label>
+                                    <div class="col-md-9">
+                                        <input name="nama_cp" class="form-control" type="text" placeholder="Nama org yg dapat dihubungi">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Hubungan</label>
+                                    <div class="col-md-9">
+                                        <select name="hubungan" id="level" class="form-control">
+                                            <option value="">-PIlih Hubungan-</option>
+                                            <option value="BAPAK">BAPAK</option>
+                                            <option value="IBU">IBU</option>
+                                            <option value="ANAK">ANAK</option>
+                                            <option value="SAUDARA">SAUDARA</option>
+                                            <option value="ISTRI">ISTRI</option>
+                                            <option value="SUAMI">SUAMI</option>
+                                        </select>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">NO CP</label>
+                                    <div class="col-md-9">
+                                        <input name="nama_cp" class="form-control" type="text" placeholder="Nomor org yg dapat dihubungi">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
