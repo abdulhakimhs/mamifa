@@ -34,6 +34,7 @@
                             <th>Merk</th>
                             <th>Type</th>
                             <th>Jenis</th>
+                            <th>Satuan</th>
                             <th>Stok</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
@@ -137,6 +138,7 @@ function detail(id)
             $('[name="merk"]').val(data.merk);
             $('[name="type"]').val(data.type);
             $('[name="jenis"]').val(data.jenis);
+            $('[name="satuan"]').val(data.satuan);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
  
@@ -324,6 +326,13 @@ function delete_data(id)
                                 <span class="help-block"></span>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Satuan</label>
+                            <div class="col-md-9">
+                                <input name="satuan" class="form-control" placeholder="Misal : buah, meter" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -378,6 +387,13 @@ function delete_data(id)
                             <label class="control-label col-md-3">Tanggal</label>
                             <div class="col-md-9">
                                 <input name="tanggal" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Keterangan</label>
+                            <div class="col-md-9">
+                                <textarea name="keterangan" class="form-control" rows="5"></textarea>
                                 <span class="help-block"></span>
                             </div>
                         </div>

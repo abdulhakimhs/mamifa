@@ -715,4 +715,19 @@ class Report extends MY_Controller {
 		ob_end_clean();
 		$write->save('php://output');
 	}
+
+	public function permint()
+	{
+		if(isset($_POST['submit'])) {
+
+		}
+		else{
+			$data['title'] 			= 'Laporan';
+			$data['subtitle'] 		= 'Permintaan Material';
+			$data['material'] 		= $this->m_material->stok_tersedia()->result_array();
+			$this->load->view('backend/template',[
+				'content' => $this->load->view('backend/report/permint',$data,true)
+			]);
+		}
+	}
 }
