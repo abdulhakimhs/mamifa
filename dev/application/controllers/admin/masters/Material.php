@@ -37,6 +37,7 @@ class Material extends MY_Controller {
 		  $row[] = $mat->merk;
 		  $row[] = $mat->type;
 		  $row[] = $mat->jenis == 'HABIS PAKAI' ? '<span class="label label-success">'.$mat->jenis.'</span>' : '<span class="label label-primary">'.$mat->jenis.'</span>';
+		  $row[] = $mat->satuan; 
 		  $row[] = $mat->stok;
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$mat->material_id."'".')">
 				<i class="fa fa-edit"></i>
@@ -64,7 +65,8 @@ class Material extends MY_Controller {
 			'material'  => strtoupper($this->input->post('material')),
 			'merk'  	=> strtoupper($this->input->post('merk')),
 			'type'  	=> strtoupper($this->input->post('type')),
-			'jenis'  	=> strtoupper($this->input->post('jenis'))
+			'jenis'  	=> strtoupper($this->input->post('jenis')),
+			'satuan'  	=> strtolower($this->input->post('satuan'))
 		];
 
 		$this->db->insert('tb_material', $data);
@@ -100,7 +102,8 @@ class Material extends MY_Controller {
 			'material'  => strtoupper($this->input->post('material')),
 			'merk'  	=> strtoupper($this->input->post('merk')),
 			'type'  	=> strtoupper($this->input->post('type')),
-			'jenis'  	=> strtoupper($this->input->post('jenis'))
+			'jenis'  	=> strtoupper($this->input->post('jenis')),
+			'satuan'  	=> strtolower($this->input->post('satuan'))
 		];
 		$this->m_material->update(array('material_id' => $this->input->post('id')), $data);
 		echo json_encode(
@@ -132,6 +135,13 @@ class Material extends MY_Controller {
 			$data['status'] = FALSE;
 		}
 
+		if($this->input->post('satuan') == '')
+		{
+			$data['inputerror'][] = 'satuan';
+			$data['error_string'][] = 'Satuan is required';
+			$data['status'] = FALSE;
+		}
+
 		if($data['status'] === FALSE)
 		{
 			echo json_encode($data);
@@ -152,7 +162,8 @@ class Material extends MY_Controller {
 			'sumber_tujuan' => strtoupper($this->input->post('sumber')),
 			'tanggal'  		=> $this->input->post('tanggal'),
 			'status'  		=> 0,
-			'saldo'  		=> $saldo
+			'saldo'  		=> $saldo,
+			'keterangan'  	=> strtoupper($this->input->post('keterangan'))
 		];
 
 		$this->m_material->update(['material_id' => $this->input->post('material_id')], ['stok' => $saldo]);
