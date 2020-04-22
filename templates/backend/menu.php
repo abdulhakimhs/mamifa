@@ -203,6 +203,13 @@
                 </a>
                 <b class="arrow"></b>
               </li>
+              <li <?= $this->uri->segment(2) == 'report' && $this->uri->segment(3) == 'permint' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/report/permint'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Permint Material
+                </a>
+                <b class="arrow"></b>
+              </li>
             </ul>
           </li>
 
