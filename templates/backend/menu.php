@@ -69,6 +69,13 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+              <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/training_plan'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Show Plan
+                </a>
+                <b class="arrow"></b>
+              </li>
               <?php if($this->session->userdata('level') == 1){ ?>
               <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == 'add' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/training_plan/add'); ?>">
@@ -78,13 +85,6 @@
                 <b class="arrow"></b>
               </li>
               <?php } ?>
-              <li <?= $this->uri->segment(2) == 'training_plan' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
-                <a href="<?= site_url('admin/training_plan'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Show Plan
-                </a>
-                <b class="arrow"></b>
-              </li>
             </ul>
           </li>
 
@@ -99,15 +99,6 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-              <?php if($this->session->userdata('level') == 1){ ?>
-              <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == 'upload' ? 'class="hover active"' : 'class="hover"' ?>>
-                <a href="<?= site_url('admin/target/upload'); ?>">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  Upload Data
-                </a>
-                <b class="arrow"></b>
-              </li>
-              <?php } ?>
               <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/target'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
@@ -138,9 +129,19 @@
                     <b class="arrow"></b>
                   </li>
                 </ul>
+              <?php if($this->session->userdata('level') == 1){ ?>
+              <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == 'upload' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/target/upload'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Upload Data
+                </a>
+                <b class="arrow"></b>
+              </li>
+              <?php } ?>
             </ul>
           </li>
-
+          
+          <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'stok_material' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/stok_material'); ?>">
               <i class="menu-icon fa fa-recycle"></i>
@@ -148,7 +149,9 @@
             </a>
             <b class="arrow"></b>
           </li>
-
+          <?php } ?>
+          
+          <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'modul' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/modul'); ?>">
               <i class="menu-icon fa fa-file"></i>
@@ -156,8 +159,8 @@
             </a>
             <b class="arrow"></b>
           </li>
+          <?php } ?>
 
-          <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'monila' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="<?= site_url('admin/monila'); ?>">
               <i class="menu-icon fa fa-desktop"></i>
@@ -173,7 +176,8 @@
             </a>
             <b class="arrow"></b>
           </li>
-
+          
+          <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'report' ? 'class="hover active"' : 'class="hover"' ?>>
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-download"></i>

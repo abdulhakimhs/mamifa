@@ -40,9 +40,9 @@
   <div class="container">
     <a class="navbar-brand" href="<?= site_url() ?>">MAMI FA</a>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#loginModal">
+    <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#loginModal">
       <i class="icon icon-lock"></i> Login
-    </button>
+    </button> -->
   </div>
 </nav>
 

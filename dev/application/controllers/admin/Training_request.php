@@ -9,9 +9,6 @@ class Training_request extends MY_Controller {
 		if($this->session->userdata('logged_in') != TRUE){
         redirect(base_url("admin/auth"));
     }
-    if($this->session->userdata('level') == 0){
-      redirect(base_url("admin"));
-    }
 		$this->load->model('m_trainingrequest');
 	}
 
@@ -44,11 +41,13 @@ class Training_request extends MY_Controller {
       } else {
         $row[] = '<td><span class="badge badge-danger">Ditolak</span></td>';
       }
+      if($this->session->userdata('level') == 1) {
       $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$training->training_request_id."'".')">
             <i class="fa fa-edit"></i>
           </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$training->training_request_id."'".')">
       <i class="fa fa-trash"></i>
       </a>';
+      }
 
       $data[] = $row;
     }

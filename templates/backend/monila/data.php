@@ -42,7 +42,9 @@
                             <th>Lokasi Temuan</th>
                             <th>Koordinat/ODP</th>
                             <th>Status</th>
-			                <th width="100"><i class="fa fa-gear"></i></th>
+                            <?php if($this->session->userdata('level') == 1){ ?>
+                            <th width="100"><i class="fa fa-gear"></i></th>
+                            <?php } ?>
 		                </tr>
 		            </thead>
 		            <tbody>
