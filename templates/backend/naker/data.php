@@ -135,7 +135,7 @@ function detail(id)
 			$('[name="level"]').val(data.level);
             $('[name="nama_cp"]').val(data.nama_cp);
             $('[name="hubungan"]').val(data.hubungan);
-            $('[name="kontak_cp"]').val(data.kontak_cp);
+            $('[name="no_cp"]').val(data.kontak_cp);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
 
@@ -307,14 +307,14 @@ function delete_data(id)
                                     <label class="control-label col-md-3">Level</label>
                                     <div class="col-md-9">
                                         <select name="level" id="level" class="form-control">
-                                            <option value="Drafter">Drafter</option>
-                                            <option value="Helpdesk">Helpdesk</option>
-                                            <option value="Manager">Manager</option>
-                                            <option value="Site Manager">Site Manager</option>
-                                            <option value="Staff">Staff</option>
-                                            <option value="Surveyor">Surveyor</option>
-                                            <option value="Team Leader">Team Leader</option>
-                                            <option value="Teknisi">Teknisi</option>
+                                            <option value="DRAFTER">Drafter</option>
+                                            <option value="HELPDESK">Helpdesk</option>
+                                            <option value="MANAGER">Manager</option>
+                                            <option value="SITE MANAGER">Site Manager</option>
+                                            <option value="STAFF">Staff</option>
+                                            <option value="SURVEYOR">Surveyor</option>
+                                            <option value="TEAM LEADER">Team Leader</option>
+                                            <option value="TEKNISI">Teknisi</option>
                                         </select>
                                         <span class="help-block"></span>
                                     </div>
@@ -338,14 +338,14 @@ function delete_data(id)
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Nama CP</label>
                                     <div class="col-md-9">
-                                        <input name="nama_cp" class="form-control" type="text" placeholder="Nama org yg dapat dihubungi">
+                                        <input name="nama_cp" id="nama_cp" class="form-control" type="text" placeholder="Nama org yg dapat dihubungi">
                                         <span class="help-block"></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3">Hubungan</label>
                                     <div class="col-md-9">
-                                        <select name="hubungan" id="level" class="form-control">
+                                        <select name="hubungan" id="hubungan" class="form-control">
                                             <option value="">-PIlih Hubungan-</option>
                                             <option value="BAPAK">BAPAK</option>
                                             <option value="IBU">IBU</option>
@@ -360,7 +360,7 @@ function delete_data(id)
                                 <div class="form-group">
                                     <label class="control-label col-md-3">NO CP</label>
                                     <div class="col-md-9">
-                                        <input name="nama_cp" class="form-control" type="text" placeholder="Nomor org yg dapat dihubungi">
+                                        <input name="no_cp" id="no_cp" class="form-control" type="number" placeholder="Nomor org yg dapat dihubungi">
                                         <span class="help-block"></span>
                                     </div>
                                 </div>
