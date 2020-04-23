@@ -161,7 +161,7 @@ class Material extends MY_Controller {
 			'jumlah'  		=> $this->input->post('jumlah_masuk'),
 			'sumber_tujuan' => strtoupper($this->input->post('sumber')),
 			'tanggal'  		=> $this->input->post('tanggal'),
-			'status'  		=> 0,
+			'status'  		=> 1,
 			'saldo'  		=> $saldo,
 			'keterangan'  	=> strtoupper($this->input->post('keterangan'))
 		];

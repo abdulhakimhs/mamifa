@@ -95,7 +95,7 @@ class Ta extends MY_Controller {
 					'jumlah'		=> $jumlah[$key],
 					'sumber_tujuan'	=> $this->input->post('nama_pelatihan'),
 					'tanggal'		=> $this->input->post('periode_tgl'),
-					'status'		=> 1,
+					'status'		=> 0,
 					'saldo'			=> $saldo
 				];
 				//Mengupdate stok material

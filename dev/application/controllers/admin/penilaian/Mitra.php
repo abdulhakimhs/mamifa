@@ -92,7 +92,7 @@ class Mitra extends MY_Controller {
 					'jumlah'		=> $jumlah[$key],
 					'sumber_tujuan'	=> $this->input->post('nama_pelatihan'),
 					'tanggal'		=> $this->input->post('tgl_selesai'),
-					'status'		=> 1,
+					'status'		=> 0,
 					'saldo'			=> $saldo
 				];
 				//Mengupdate stok material
