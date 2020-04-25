@@ -7,7 +7,7 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <h4>Stok Material Bulan <?= date('M') ?> Tahun <?= date("Y") ?></h4>
+        <h4>Stok Material Saat Ini</h4>
         <div class="table-responsive">
             <table class="table table-bordered table-sm">
                 <thead>

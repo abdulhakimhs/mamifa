@@ -7,7 +7,8 @@
 </style>
 
 <div class="alert alert-success">
-	<b>Selamat Datang, Administrator</b>
+	<b>Selamat Datang, <?= $this->session->userdata('nama');
+     ?></b>
 	<p>Anda memiliki akses sebagai admin pada aplikasi ini.</p>
 </div>
 

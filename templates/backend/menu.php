@@ -129,6 +129,30 @@
                     <b class="arrow"></b>
                   </li>
                 </ul>
+                <li <?= $this->uri->segment(2) == 'sudah_pelatihan' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="#">
+                  Sudah Pelatihan
+                  <b class="arrow fa fa-angle-right"></b>
+                </a>
+                <b class="arrow"></b>
+                <ul class="submenu">
+                  <li <?= $this->uri->segment(2) == 'sudah_pelatihan' && $this->uri->segment(3) == 'ta' ? 'class="hover active"' : 'class="hover"' ?>>
+                    <a href="<?= site_url('admin/sudah_pelatihan/ta'); ?>">
+                      TA
+                    </a>
+
+                    <b class="arrow"></b>
+                  </li>
+
+                  <li <?= $this->uri->segment(2) == 'sudah_pelatihan' && $this->uri->segment(3) == 'mitra' ? 'class="hover active"' : 'class="hover"' ?>>
+                    <a href="<?= site_url('admin/sudah_pelatihan/mitra'); ?>">
+                      Mitra
+                    </a>
+
+                    <b class="arrow"></b>
+                  </li>
+                </ul>
+              </li>
               <?php if($this->session->userdata('level') == 1){ ?>
               <li <?= $this->uri->segment(2) == 'target' && $this->uri->segment(3) == 'upload' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/target/upload'); ?>">
@@ -143,11 +167,29 @@
           
           <?php if($this->session->userdata('level') == 1){ ?>
           <li <?= $this->uri->segment(2) == 'stok_material' ? 'class="hover active"' : 'class="hover"' ?>>
-            <a href="<?= site_url('admin/stok_material'); ?>">
+            <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-recycle"></i>
               <span class="menu-text"> Stok Material </span>
             </a>
             <b class="arrow"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li <?= $this->uri->segment(2) == 'stok_material' && $this->uri->segment(3) == null ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/stok_material'); ?>">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Stok Saat Ini
+                </a>
+                <b class="arrow"></b>
+                </li>
+                <li <?= $this->uri->segment(2) == 'stok_material' && $this->uri->segment(3) == 'keluar' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/stok_material/keluar'); ?>">
+                    <i class="menu-icon fa fa-caret-right"></i>
+                    Pengeluaran
+                </a>
+                <b class="arrow"></b>
+                </li>
+            </ul>
           </li>
           <?php } ?>
           
