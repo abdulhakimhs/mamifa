@@ -303,6 +303,8 @@
 
   function save()
   {
+    if(confirm('Yakin masukkan nilai ?'))
+    {
       $('#btnSave').text('saving...'); //change button text
       $('#btnSave').attr('disabled',true); //set button disable
 
@@ -346,6 +348,7 @@
 
           }
       });
+    }
   }
 
   function add_fields() {

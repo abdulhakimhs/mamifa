@@ -11,11 +11,11 @@
             <label class="form-control-label"><b>Pilih Target Tahun</b></label>
             <select name="tahun" id="tahun" class="form-control">
                 <option value="">-Pilih Tahun-</option>
+                <option value="<?= date('Y', strtotime('-4 years')) ?>"><?= date('Y', strtotime('-4 years')) ?></option>
+                <option value="<?= date('Y', strtotime('-3 years')) ?>"><?= date('Y', strtotime('-3 years')) ?></option>
                 <option value="<?= date('Y', strtotime('-2 years')) ?>"><?= date('Y', strtotime('-2 years')) ?></option>
                 <option value="<?= date('Y', strtotime('-1 years')) ?>"><?= date('Y', strtotime('-1 years')) ?></option>
                 <option value="<?= date('Y') ?>"><?= date('Y') ?></option>
-                <option value="<?= date('Y', strtotime('+1 years')) ?>"><?= date('Y', strtotime('+1 years')) ?></option>
-                <option value="<?= date('Y', strtotime('+2 years')) ?>"><?= date('Y', strtotime('+2 years')) ?></option>
             </select>
         </div>
     </div>
