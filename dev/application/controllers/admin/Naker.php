@@ -37,6 +37,9 @@ class Naker extends MY_Controller {
           $row[] = $naker->nama;
           $row[] = $naker->position_title;
           $row[] = $naker->position_name;
+          $row[] = $naker->nama_cp;
+          $row[] = $naker->hubungan;
+          $row[] = $naker->kontak_cp;
           $row[] = $naker->sektor;
           $row[] = $naker->rayon;
           $row[] = $naker->level;

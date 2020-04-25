@@ -42,6 +42,9 @@
                             <th>Nama</th>
                             <th>Position Title</th>
                             <th>Position Name</th>
+                            <th>Nama CP</th>
+                            <th>Hubungan</th>
+                            <th>Kontak CP</th>
                             <th>Sektor</th>
                             <th>Rayon</th>
                             <th>Level</th>
