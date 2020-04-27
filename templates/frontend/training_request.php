@@ -1,13 +1,25 @@
-<!-- Full Page Image Header with Vertically Centered Content -->
-<header class="mastheader text-white text-center">
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center"></div>
+<style>
+    .navbar-default{
+        background-color:#222 !important;
+    }
+</style>
+<section id="page-title" style="margin-top: 80px; background-color:#eeeeee;">
+    <div class="container">
+        <div class="page-title col-md-5">
+            <h1>Training Request</h1>
+        </div>
+        <div class="col-md-7">
+            <ol class="breadcrumb pull-right" style="background-color: #eeeeee;">
+                <li><a href="#"><i class="fa fa-home"></i></a>
+                </li>
+                <li><a href="#" ><span>Training Request</span></a></li>
+                <li class="active">Form Training Request</li>
+            </ol>
+        </div>
     </div>
-  </div>
-</header>
+</section>
 <div class="container">
-<div class="bd-callout bd-callout-warning">
+<div class="bs-callout bs-callout-warning">
     <p>Anda bisa melakukan permintaan pelatihan pada halaman ini.</p>
 </div>
 <?= $this->session->flashdata('message'); ?>
@@ -63,7 +75,7 @@
       <?= form_error('alasan', '<div class="error">', '</div>'); ?>
     </div>
   </div>
-  <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Submit</button>
+  <button type="submit" class="btn btn-success"><i class="fa fa-paper-plane"></i> Submit</button>
   <button type="reset" class="btn btn-danger"><i class="fa fa-ban"></i> Reset</button>
 </form>
 </div>

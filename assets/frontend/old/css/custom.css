@@ -1,0 +1,22 @@
+.bd-callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #eee;
+    border-left-width: .25rem;
+    border-radius: .25rem;
+}
+.bd-callout-warning {
+    border-left-color: #dc3545;
+}
+.mastheader {
+    height: 50vh;
+    min-height: 100px;
+    background: url('../img/bg-masthead.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.footer{
+    margin-top: 25px;
+}

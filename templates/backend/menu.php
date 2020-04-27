@@ -326,7 +326,7 @@
               <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'content' ? 'class="hover active"' : 'class="hover"' ?>>
                 <a href="<?= site_url('admin/masters/content'); ?>">
                   <i class="menu-icon fa fa-caret-right"></i>
-                  Headline Web
+                  Informasi FA
                 </a>
                 <b class="arrow"></b>
               </li>

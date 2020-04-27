@@ -109,6 +109,7 @@ function detail(id)
         {
             $('[name="id"]').val(data.slide_id);
 			$('[name="slide_title"]').val(data.slide_title);
+            $('[name="slide_desc"]').val(data.slide_desc);
 			$('[name="slide_active"]').val(data.slide_active);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
@@ -238,6 +239,13 @@ function delete_data(id)
                             <label class="control-label col-md-3">Judul Slider</label>
                             <div class="col-md-9">
                                 <input name="slide_title" class="form-control" type="text" placeholder="Judul Slilder">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Deskripsi</label>
+                            <div class="col-md-9">
+                                <textarea name="slide_desc" id="slide_desc" class="form-control" rows="5"></textarea>
                                 <span class="help-block"></span>
                             </div>
                         </div>

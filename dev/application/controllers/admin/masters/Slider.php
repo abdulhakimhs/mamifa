@@ -58,6 +58,7 @@ class Slider extends MY_Controller {
 		$this->_validate();
 		$data = [
 			'slide_title'  	=> strtoupper($this->input->post('slide_title')),
+			'slide_desc'  	=> ucfirst($this->input->post('slide_desc')),
 			'slide_active'  => $this->input->post('slide_active')
 		];
 
@@ -102,6 +103,7 @@ class Slider extends MY_Controller {
 		$this->_validate();
 		$data = [
 			'slide_title'  	=> strtoupper($this->input->post('slide_title')),
+			'slide_desc'  	=> ucfirst($this->input->post('slide_desc')),
 			'slide_active'  => $this->input->post('slide_active')
 		];
 

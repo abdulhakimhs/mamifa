@@ -53,5 +53,6 @@ $route['default_controller'] = 'welcome';
 $route['admin/auth'] = 'admin/auth/login';
 $route['admin'] = 'admin/dashboard';
 $route['admin/changePassword'] = 'admin/auth/changePassword';
+$route['news/(:any)'] = 'news/detail';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

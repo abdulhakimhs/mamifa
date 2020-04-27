@@ -1,7 +1,15 @@
+<style type="text/css">
+  @media (min-width: 768px) {
+    .modal-xl {
+      width: 100%;
+     max-width:1200px;
+    }
+  }
+</style>
 <div class="col-xs-12 col-sm-12 widget-container-col" id="widget-container-col-1">
 	<div class="widget-box widget-color-dark" id="widget-box-1">
 		<div class="widget-header">
-			<h5 class="widget-title">Data Headline Web</h5>
+			<h5 class="widget-title">Data Informasi FA</h5>
 			<div class="widget-toolbar">
 
 				<a href="#" data-action="fullscreen" class="orange2">
@@ -29,7 +37,10 @@
 	                <thead>
 		                <tr>
                             <th width="10">NO</th>
-                            <th>Judul Headline</th>
+                            <th>Judul</th>
+                            <th>Oleh</th>
+                            <th>Tgl Post</th>
+                            <th>Dilihat</th>
                             <th width="200">Status</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
@@ -89,7 +100,7 @@ function add_data()
     $('[name="method"]').val(save_method); // set input hiiden method
 
     $('#photo-preview').hide(); // hide photo preview modal
-    $('#label-photo').text('Upload Gambar Headline'); // label photo upload
+    $('#label-photo').text('Upload Gambar'); // label photo upload
 }
 
 function detail(id)
@@ -118,13 +129,13 @@ function detail(id)
 
             if(data.content_image)
             {
-                $('#label-photo').text('Change Headline Image'); // label photo upload
+                $('#label-photo').text('Ubah Gambar'); // label photo upload
                 $('#photo-preview div').html('<img src="'+base_url+'assets/backend/images/content/'+data.content_image+'" class="img-responsive">'); // show photo
                 $('#photo-preview div').append('<input type="checkbox" name="remove_photo" value="'+data.content_image+'"/> Remove photo when saving'); // remove photo
             }
             else
             {
-                $('#label-photo').text('Upload Gambar Headline'); // label photo upload
+                $('#label-photo').text('Upload Gambar'); // label photo upload
                 $('#photo-preview div').text('(No photo)');
             }
  
@@ -224,7 +235,7 @@ function delete_data(id)
 
 <!-- Bootstrap modal -->
 <div class="modal fade" id="modal_form" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -235,42 +246,46 @@ function delete_data(id)
                     <input type="hidden" value="" name="id"/>
                     <input type="hidden" value="" name="method"/>
                     <div class="form-body">
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Judul Headline</label>
-                            <div class="col-md-9">
-                                <input name="content_title" class="form-control" type="text" placeholder="Judul Headline">
-                                <span class="help-block"></span>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <input name="content_title" class="form-control" type="text" placeholder="Judul Informasi">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <textarea name="content" id="editor">Mulai menulis disini..</textarea>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Deskripsi</label>
-                            <div class="col-md-9">
-                                <textarea name="content_desc" id="content_desc" rows="5" class="form-control"></textarea>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3">Status</label>
-                            <div class="col-md-9">
-                                <select name="content_active" id="content_active" class="form-control">
-                                    <option value="1">Aktif</option>
-                                    <option value="0">Draft</option>
-                                </select>
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group" id="photo-preview">
-                            <label class="control-label col-md-3">Gambar Slider</label>
-                            <div class="col-md-9">
-                                (No photo)
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3" id="label-photo">Upload Gambar </label>
-                            <div class="col-md-9">
-                                <input name="photo" type="file">
-                                <span class="help-block"></span>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">Status</label>
+                                    <div class="col-md-9">
+                                        <select name="content_active" id="content_active" class="form-control">
+                                            <option value="1">Aktif</option>
+                                            <option value="0">Draft</option>
+                                        </select>
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="photo-preview">
+                                    <label class="control-label col-md-3">Gambar Slider</label>
+                                    <div class="col-md-9">
+                                        (No photo)
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3" id="label-photo">Upload Gambar </label>
+                                    <div class="col-md-9">
+                                        <input name="photo" type="file">
+                                        <span class="help-block"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

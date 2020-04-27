@@ -3,123 +3,98 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title><?= $title; ?> - <?= $subtitle; ?></title>
+    <title><?= $title; ?> - <?= $subtitle; ?></title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="<?= base_url() ?>assets/frontend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="<?= base_url() ?>assets/frontend/asset/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome CSS -->
+    <link href="<?= base_url() ?>assets/frontend/css/font-awesome.min.css" rel="stylesheet">
+    
+    
+    <!-- Animate CSS -->
+    <link href="<?= base_url() ?>assets/frontend/css/animate.css" rel="stylesheet" >
+    
+    <!-- Owl-Carousel -->
+    <link rel="stylesheet" href="<?= base_url() ?>assets/frontend/css/owl.carousel.css" >
+    <link rel="stylesheet" href="<?= base_url() ?>assets/frontend/css/owl.theme.css" >
+    <link rel="stylesheet" href="<?= base_url() ?>assets/frontend/css/owl.transitions.css" >
 
-  <!-- Custom fonts for this template -->
-  <link href="<?= base_url() ?>assets/frontend/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-  <link href="<?= base_url() ?>assets/frontend/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="<?= base_url() ?>assets/frontend/css/custom.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/frontend/css/style.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/frontend/css/responsive.css" rel="stylesheet">
+    
+    <!-- Colors CSS -->
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/light-red.css">
+    
+    
+    
+    <!-- Colors CSS -->
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/light-red.css" title="light-red">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/green.css" title="green">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/blue.css" title="blue">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/light-blue.css" title="light-blue">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/yellow.css" title="yellow">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>assets/frontend/css/color/light-green.css" title="light-green">
 
-  <!-- Custom styles for this template -->
-  <link href="<?= base_url() ?>assets/frontend/css/landing-page.min.css" rel="stylesheet">
-  <link href="<?= base_url() ?>assets/frontend/css/custom.css" rel="stylesheet">
-
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-  <style>
-    .error {
-      color: red;
-      font-size: 11px;
-    }
-  </style>
-
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    
+    <!-- jQuery Version 2.1.1 -->
+    <script src="<?= base_url() ?>/assets/frontend/js/jquery-2.1.1.min.js"></script>
+    <!-- Modernizer js -->
+    <script src="<?= base_url() ?>assets/frontend/js/modernizr.custom.js"></script>
 </head>
 
-<body>
+<body class="index">
 
-<!-- Navigation -->
-<nav class="navbar navbar-light bg-light static-top">
-  <div class="container">
-    <a class="navbar-brand" href="<?= site_url() ?>">MAMI FA</a>
-    <!-- Button trigger modal -->
-    <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#loginModal">
-      <i class="icon icon-lock"></i> Login
-    </button> -->
-  </div>
-</nav>
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="<?= site_url('') ?>">
+                    <img src="<?= base_url() ?>assets/frontend/images/logo.png" style="width: 150px; height: 30px;;" alt="">
+                </a>
+            </div>
 
-<!-- Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-      <form action="#" id="form" class="form-horizontal">
-        <div class="form-group">
-          <label for="username">username</label>
-          <input type="text" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter Username">
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden">
+                        <a href="#page-top">Home</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="<?= site_url('monila') ?>">Monila</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="<?= site_url('training_request') ?>">Training Request</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#berita">News</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#partner">Partner</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="<?= site_url('admin/auth') ?>" target="_blank">Login</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-        </div>
-      </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" id="btnLogin" onclick="login()">Login</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-    function login()
-    {
-        $('#btnLogin').text('wait...'); //change button text
-        $('#btnLogin').attr('disabled',true); //set button disable 
-        var url;
-    
-        url = "<?php echo site_url('welcome/login')?>";
-    
-        // ajax adding data to database
-        $.ajax({
-            url : url,
-            type: "POST",
-            data: $('#form').serialize(),
-            dataType: "JSON",
-            success: function(data)
-            {
-    
-                if(data.status) //if success close modal and reload ajax table
-                {
-                    $('#modal_form').modal('hide');
-                    reload_table();
-                    document.getElementById('pesan').innerHTML = data.pesan;
-                }
-                else
-                {
-                    for (var i = 0; i < data.inputerror.length; i++) 
-                    {
-                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
-                    }
-                }
-                $('#btnLogin').text('save'); //change button text
-                $('#btnLogin').attr('disabled',false); //set button enable 
-    
-    
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('Error adding / update data');
-                $('#btnLogin').text('save'); //change button text
-                $('#btnLogin').attr('disabled',false); //set button enable 
-    
-            }
-        });
-    }
-</script>
+        <!-- /.container-fluid -->
+    </nav>
