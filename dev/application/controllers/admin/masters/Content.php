@@ -34,9 +34,9 @@ class Content extends MY_Controller {
 		  $row[] = $no;
           $row[] = $content->content_title;
           $row[] = $content->fullname;
-          $row[] = $content->content_date;
+          $row[] = date_indo($content->content_date);
           $row[] = $content->content_count == null ? '0' : $content->content_count;
-		  $row[] = $content->content_active == 1 ? '<span class="label label-success">Active</span>' : '<span class="label label-secondary">Draft</span>';
+		  $row[] = $content->content_active == 1 ? '<span class="label label-success">Publish</span>' : '<span class="label label-secondary">Draft</span>';
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$content->content_id."'".')">
 				<i class="fa fa-edit"></i>
 			  </a>&nbsp<a class="btn btn-minier btn-danger" href="javascript:void(0)" title="Hapus" onclick="delete_data('."'".$content->content_id."'".')">
