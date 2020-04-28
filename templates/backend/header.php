@@ -36,7 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-    <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
+    <script src="<?= base_url() ?>assets/backend/ckeditor5-build-classic/ckeditor.js"></script>
     <script src="<?= base_url() ?>assets/backend/js/utils.js"></script>
 
 

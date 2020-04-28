@@ -97,18 +97,14 @@ $(document).ready(function() {
         .catch( error => {
             console.error( error );
         } );
-
-    // $('#btnSave').click(function(){
-    //     const editorData = editor.getData();
-    //     alert(editorData);
-    //     $('#editor').text(editorData);
-    // });
  
 });
 
 function add_data()
 {
     save_method = 'add';
+    deskripsi = 'Mulai menulis dari sini...';
+    editor.setData(deskripsi);
     $('#form')[0].reset(); // reset form on modals
     $('.form-group').removeClass('has-error'); // clear error class
     $('.help-block').empty(); // clear error string
