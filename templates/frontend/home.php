@@ -58,108 +58,55 @@
                 <div class="col-md-8" id="left-side">
                     <h5 class="heading-list">FIBER ACADEMY NEWS</h5><div class="hr-heading-list"></div>
                     <ul class="media-list news-item" id="berita-terbaru">
+                      <?php foreach ($content as $c) : ?>
                         <li class="media">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="media-left ">
-                                        <a href="#">
-                                          <img style="width: 275px; height: 175px;" class="media-object" src="https://i.ytimg.com/vi/YimoazCbArw/maxresdefault.jpg" alt="...">
+                                        <a href="<?= site_url('news/'.$c->content_slug) ?>">
+                                          <img style="width: 275px; height: 175px;" class="media-object" src="<?= base_url('assets/backend/images/content/'.$c->content_image) ?>" alt="...">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="media-body">
-                                        <a href="#"><h4>Pilih, Mereka Atau Kami Yang Mundur?</h4></a>
-                                        <span><i class="fa fa-clock-o"></i> 2 April 2020 - <i class="fa fa-user"></i> Benny Tarwidi</span>
+                                        <a href="<?= site_url('news/'.$c->content_slug) ?>"><h4><?= $c->content_title ?></h4></a>
+                                        <span><i class="fa fa-clock-o"></i> <?= $c->content_date ?> - <i class="fa fa-user"></i> <?= $c->fullname ?></span>
                                         <hr>
-                                        <p>Tuntutan kami jelas, delapan tuntutan dan deretan nama yang tidak berprestasi. Sekarang tinggal pilih, keluarkan semua yang tidak berkompeten atau kami yang keluar dari tribun selamanya/boikot semua pertandingan PS Sleman?</p>
-                                    </div>
-                                </div>
-                            </div>
-                            </li>
-                        <li class="media">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="media-left ">
-                                        <a href="#">
-                                          <img class="media-object" src="http://placehold.it/275x175" alt="...">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="media-body ">
-                                        <a href="#"><h4>Melatih Senjata Utama; Suara</h4></a>
-                                        <span><i class="fa fa-clock-o"></i> 2 April 2020 - <i class="fa fa-user"></i> Benny Tarwidi</span>
-                                        <hr>
-                                        <p>Bersorak saat terjadi gol maupun chants yang lantang selama pertandingan berlangsung seperti menjadi sebuah ‘keharusan’ bagi orang yang menganggap dirinya ultras. Karena di sinilah passion dan kebanggaan seorang ultras dinilai</p>
+                                        <p><?= $c->content_desc ?></p>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                      <?php endforeach; ?>
                     </ul>
                 </div>
                 <div class="col-md-4" id="right-side">
                     <h5 class="heading-list">Popular News</h5><div class="hr-heading-list"></div>
                     <ul class="media-list news-item">
-                      <li class="media">
-                        <div class="media-left">
-                          <a href="#">
-                            <img style="width: 120px; height: 80px;" class="media-object" src="https://i.ytimg.com/vi/YimoazCbArw/maxresdefault.jpg" alt="...">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <a href="<?= site_url('news/kewajiban-lapor') ?>" class="media-heading">Kewajiban Lapor Kartu Kredit Bikin Ekonomi Kian Lesu</a>
-                        </div>
-                      </li>
-                      <li class="media">
-                        <div class="media-left">
-                          <a href="#">
-                            <img class="media-object" src="http://placehold.it/120x80" alt="...">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <a href="#" class="media-heading">Wapres JK Kaji Masukan Mantan Presiden SBY</a>
-                        </div>
-                      </li>
-                      <li class="media">
-                        <div class="media-left">
-                          <a href="#">
-                            <img class="media-object" src="http://placehold.it/120x80" alt="...">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <a href="#" class="media-heading">Artha Graha Gelar Pasar Murah, Harga Daging Rp 75 Ribu Per Kilogram</a>
-                        </div>
-                      </li>
-                      <li class="media">
-                        <div class="media-left">
-                          <a href="#">
-                            <img class="media-object" src="http://placehold.it/120x80" alt="...">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <a href="#" class="media-heading">Pendapatan Indofood Diprediksi Rp 70 Triliun pada 2016</a>
-                        </div>
-                      </li>
+                      <?php foreach ($content_popular as $cp) : ?>
+                        <li class="media">
+                          <div class="media-left">
+                            <a href="<?= site_url('news/'.$cp->content_slug) ?>">
+                              <img style="width: 120px; height: 80px;" class="media-object" src="<?= base_url('assets/backend/images/content/'.$cp->content_image) ?>" alt="...">
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            <a href="<?= site_url('news/'.$cp->content_slug) ?>" class="media-heading"><?= $cp->content_title ?></a>
+                          </div>
+                        </li>
+                      <?php endforeach; ?>
                     </ul>
 
                     <h5 class="heading-list">Latest News</h5><div class="hr-heading-list"></div>
                     <ul class="media-list comment-list">
-                      <li class="media">
-                        <div class="media-body">
-                          <a href="#" class="media-heading">Investor Jepang Minati Sektor Ketenagalistrikan dan Gas</a>
-                        </div>
-                      </li>
-                      <li class="media">
-                        <div class="media-body">
-                          <a href="#" class="media-heading">Menteri Susi Ancam Tenggelamkan Rumpon Liar di Laut Timor  </a>
-                        </div>
-                      </li>
-                      <li class="media">
-                        <div class="media-body">
-                          <a href="#" class="media-heading">Kewajiban Lapor Kartu Kredit Bikin Ekonomi Kian Lesu</a>
-                        </div>
-                      </li>
+                      <?php foreach ($content_latest as $cl) : ?>
+                        <li class="media">
+                          <div class="media-body">
+                            <a href="<?= site_url('news/'.$cl->content_slug) ?>" class="media-heading"><?= $cl->content_title ?></a>
+                          </div>
+                        </li>
+                      <?php endforeach; ?>
                     </ul>
                     <br>
                     <h5 class="heading-list">SOCIAL MEDIA</h5><div class="hr-heading-list"></div>

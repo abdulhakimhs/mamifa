@@ -23,78 +23,42 @@
     <div class="container">
         <div class="row" id="content-list">
             <div class="col-md-8" id="left-side">
-                <h2><b>16 TIPS JITU MEMILIH JASA PEMBUATAN WEBSITE PROFESIONAL TERPERCAYA</b></h2>
-                <p class="post-meta">Posted by <i class="fa fa-user"></i> Benny Tarwidi on <i class="fa fa-clock-o"></i> 24 April 2020</p>
+                <h2><b><?= $news->content_title ?></b></h2>
+                <p class="post-meta">Posted by <i class="fa fa-user"></i> <?= $news->fullname ?> <i class="fa fa-clock-o"></i> <?= $news->content_date ?></p>
                 <div class="col-xs-12  no-gutter nopadding">
                 
-                    <img class="img-responsive" src="<?= base_url() ?>/assets/frontend/images/fa.png" style="width: 650px; height: 350px;" alt="...">
+                    <img class="img-responsive" src="<?= base_url('assets/backend/images/content/'.$news->content_image) ?>" style="width: 650px; height: 350px;" alt="...">
                     <br>
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa ut fuga quibusdam iure assumenda natus cumque dignissimos eum corporis, cum, qui officia aliquam perferendis laudantium tempore eligendi, quo nobis ratione.</p>
+                    <p><?= $news->content_desc ?></p>
 
                 </div>
             </div>
             <div class="col-md-4" id="right-side">
                 <h5 class="heading-list">Popular News</h5><div class="hr-heading-list"></div>
                 <ul class="media-list news-item">
-                    <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                        <img style="width: 120px; height: 80px;" class="media-object" src="https://i.ytimg.com/vi/YimoazCbArw/maxresdefault.jpg" alt="...">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Kewajiban Lapor Kartu Kredit Bikin Ekonomi Kian Lesu</a>
-                    </div>
-                    </li>
-                    <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                        <img class="media-object" src="http://placehold.it/120x80" alt="...">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Wapres JK Kaji Masukan Mantan Presiden SBY</a>
-                    </div>
-                    </li>
-                    <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                        <img class="media-object" src="http://placehold.it/120x80" alt="...">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Artha Graha Gelar Pasar Murah, Harga Daging Rp 75 Ribu Per Kilogram</a>
-                    </div>
-                    </li>
-                    <li class="media">
-                    <div class="media-left">
-                        <a href="#">
-                        <img class="media-object" src="http://placehold.it/120x80" alt="...">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Pendapatan Indofood Diprediksi Rp 70 Triliun pada 2016</a>
-                    </div>
-                    </li>
+                    <?php foreach ($content_popular as $cp) : ?>
+                        <li class="media">
+                          <div class="media-left">
+                            <a href="<?= site_url('news/'.$cp->content_slug) ?>">
+                              <img style="width: 120px; height: 80px;" class="media-object" src="<?= base_url('assets/backend/images/content/'.$cp->content_image) ?>" alt="...">
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            <a href="<?= site_url('news/'.$cp->content_slug) ?>" class="media-heading"><?= $cp->content_title ?></a>
+                          </div>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
 
                 <h5 class="heading-list">Latest News</h5><div class="hr-heading-list"></div>
                 <ul class="media-list comment-list">
-                    <li class="media">
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Investor Jepang Minati Sektor Ketenagalistrikan dan Gas</a>
-                    </div>
-                    </li>
-                    <li class="media">
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Menteri Susi Ancam Tenggelamkan Rumpon Liar di Laut Timor  </a>
-                    </div>
-                    </li>
-                    <li class="media">
-                    <div class="media-body">
-                        <a href="#" class="media-heading">Kewajiban Lapor Kartu Kredit Bikin Ekonomi Kian Lesu</a>
-                    </div>
-                    </li>
+                    <?php foreach ($content_latest as $cl) : ?>
+                        <li class="media">
+                          <div class="media-body">
+                            <a href="<?= site_url('news/'.$cl->content_slug) ?>" class="media-heading"><?= $cl->content_title ?></a>
+                          </div>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
                 <br>
                 <h5 class="heading-list">SOCIAL MEDIA</h5><div class="hr-heading-list"></div>

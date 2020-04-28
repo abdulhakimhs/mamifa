@@ -41,7 +41,7 @@
                             <th>Oleh</th>
                             <th>Tgl Post</th>
                             <th>Dilihat</th>
-                            <th width="200">Status</th>
+                            <th>Status</th>
 			                <th width="100"><i class="fa fa-gear"></i></th>
 		                </tr>
 		            </thead>
@@ -58,6 +58,8 @@
 var table;
 var save_method;
 var base_url = '<?php echo base_url();?>';
+
+let editor;
  
 $(document).ready(function() {
  
@@ -86,6 +88,21 @@ $(document).ready(function() {
       $(this).parent().parent().removeClass('has-error');
       $(this).parent().find('.help-block').empty();
     });
+
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .then( newEditor => {
+            editor = newEditor;
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+    // $('#btnSave').click(function(){
+    //     const editorData = editor.getData();
+    //     alert(editorData);
+    //     $('#editor').text(editorData);
+    // });
  
 });
 
@@ -120,13 +137,14 @@ function detail(id)
         {
             $('[name="id"]').val(data.content_id);
 			$('[name="content_title"]').val(data.content_title);
-            $('[name="content_desc"]').val(data.content_desc);
+            // $('[name="content_desc"]').text(data.content_desc);
+            editor.setData(data.content_desc);
 			$('[name="content_active"]').val(data.content_active);
             $('#modal_form').modal('show'); // show bootstrap modal when complete loaded
 			$('.modal-title').text('Ubah Data'); // Set title to Bootstrap modal title
 
             $('#photo-preview').show();
-
+                
             if(data.content_image)
             {
                 $('#label-photo').text('Ubah Gambar'); // label photo upload
@@ -154,6 +172,8 @@ function reload_table()
  
 function save()
 {
+    const editorData = editor.getData();
+    $('#editor').text(editorData);
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
     var url;
@@ -187,8 +207,13 @@ function save()
             {
                 for (var i = 0; i < data.inputerror.length; i++) 
                 {
-                    $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
-                    $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    if (data.inputerror[i] == 'content_desc') {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().next().text(data.error_string[i]); //select span help-block class set text error string
+                    } else {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
                 }
             }
             $('#btnSave').text('save'); //change button text
@@ -231,6 +256,8 @@ function delete_data(id)
  
     }
 }
+
+
 </script>
 
 <!-- Bootstrap modal -->
@@ -256,7 +283,7 @@ function delete_data(id)
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <textarea name="content" id="editor">Mulai menulis disini..</textarea>
+                                        <textarea name="content_desc" id="editor"></textarea>
                                         <span class="help-block"></span>
                                     </div>
                                 </div>
@@ -280,7 +307,7 @@ function delete_data(id)
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-md-3" id="label-photo">Upload Gambar </label>
+                                    <label class="control-label col-md-3" id="label-photo">Upload Gambar</label>
                                     <div class="col-md-9">
                                         <input name="photo" type="file">
                                         <span class="help-block"></span>

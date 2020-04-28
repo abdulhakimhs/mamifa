@@ -12,10 +12,12 @@ class Welcome extends MY_Controller {
 
 	public function index()
 	{
-		$data['title'] 		= 'MAMI FA';
-		$data['subtitle'] 	= 'Home';
-		$data['slider']		= $this->m_slider->ambil()->result();
-		$data['content']	= $this->m_content->ambil()->result();
+		$data['title'] 				= 'MAMI FA';
+		$data['subtitle'] 			= 'Home';
+		$data['slider']				= $this->m_slider->ambil()->result();
+		$data['content']			= $this->m_content->ambil()->result();
+		$data['content_popular']	= $this->m_content->ambil_popular()->result();
+		$data['content_latest']		= $this->m_content->ambil_latest()->result();
 		$this->load->view('frontend/template',[
 			'content' => $this->load->view('frontend/home',$data,true)
 		]);

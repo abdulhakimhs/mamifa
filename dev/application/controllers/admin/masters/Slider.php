@@ -17,8 +17,8 @@ class Slider extends MY_Controller {
 
 	public function index()
 	{
-		$data['title'] 			= 'Slider';
-		$data['subtitle'] 		= 'Data';
+		$data['title'] 			= 'Master Data';
+		$data['subtitle'] 		= 'Slider';
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/masters/slider/data',$data,true)
 		]);

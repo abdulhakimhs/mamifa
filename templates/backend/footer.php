@@ -58,14 +58,6 @@
         </script>
         <!-- inline scripts related to this page -->
         <script type="text/javascript">
-            ClassicEditor
-                .create( document.querySelector( '#editor' ) )
-                .then( editor => {
-                        console.log( editor );
-                } )
-                .catch( error => {
-                        console.error( error );
-            });
             jQuery(function($) {
 
              var $sidebar = $('.sidebar').eq(0);

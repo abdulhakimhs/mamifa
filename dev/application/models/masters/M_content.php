@@ -11,6 +11,7 @@ class M_content extends CI_Model
     private function _get_datatables_query() {
         $this->db->select('*');
         $this->db->from($this->table);
+        $this->db->join('tb_users u', 'u.users_id = tb_content.content_by', 'left');
 
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -58,7 +59,34 @@ class M_content extends CI_Model
     {
         $this->db->select('*');
         $this->db->from($this->table);
+        $this->db->join('tb_users u', 'u.users_id = tb_content.content_by', 'left');
         $this->db->where('content_active', 1);
+        $this->db->order_by('content_date', 'DESC');
+        $this->db->limit(5);
+        $data = $this->db->get('');
+        return $data;
+    }
+
+    public function ambil_popular()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->join('tb_users u', 'u.users_id = tb_content.content_by', 'left');
+        $this->db->where('content_active', 1);
+        $this->db->order_by('content_count', 'DESC');
+        $this->db->limit(4);
+        $data = $this->db->get('');
+        return $data;
+    }
+
+    public function ambil_latest()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->join('tb_users u', 'u.users_id = tb_content.content_by', 'left');
+        $this->db->where('content_active', 1);
+        $this->db->order_by('content_date', 'DESC');
+        $this->db->limit(3);
         $data = $this->db->get('');
         return $data;
     }
@@ -69,6 +97,15 @@ class M_content extends CI_Model
         $this->db->where('content_id',$id);
         $query = $this->db->get();
         return $query->row();
+    }
+
+    public function get_by_slug($slug)
+    {
+        $this->db->from($this->table);
+        $this->db->join('tb_users u', 'u.users_id = tb_content.content_by', 'left');
+        $this->db->where('content_slug',$slug);
+        $query = $this->db->get();
+        return $query;
     }
 
     public function update($where, $data)

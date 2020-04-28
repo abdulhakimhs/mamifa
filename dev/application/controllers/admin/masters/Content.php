@@ -17,8 +17,8 @@ class Content extends MY_Controller {
 
 	public function index()
 	{
-		$data['title'] 			= 'Headline';
-		$data['subtitle'] 		= 'Data';
+		$data['title'] 			= 'Master Data';
+		$data['subtitle'] 		= 'Informasi FA';
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/masters/content/data',$data,true)
 		]);
@@ -33,6 +33,9 @@ class Content extends MY_Controller {
 		  $row = array();
 		  $row[] = $no;
           $row[] = $content->content_title;
+          $row[] = $content->fullname;
+          $row[] = $content->content_date;
+          $row[] = $content->content_count == null ? '0' : $content->content_count;
 		  $row[] = $content->content_active == 1 ? '<span class="label label-success">Active</span>' : '<span class="label label-secondary">Draft</span>';
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$content->content_id."'".')">
 				<i class="fa fa-edit"></i>
@@ -57,9 +60,12 @@ class Content extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'content_title'  	=> strtoupper($this->input->post('content_title')),
+			'content_title'  	=> ucwords($this->input->post('content_title')),
 			'content_desc'  	=> $this->input->post('content_desc'),
-			'content_active'  	=> $this->input->post('content_active')
+			'content_by'  		=> $this->session->userdata('user_id'),
+			'content_date'  	=> date('Y-m-d'),
+			'content_slug' 		=> str_replace(' ', '-', strtolower($this->input->post('content_title'))),
+			'content_active'  	=> $this->input->post('content_active'),
 		];
 
 		if(!empty($_FILES['photo']['name']))
@@ -102,9 +108,12 @@ class Content extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'content_title'  	=> strtoupper($this->input->post('content_title')),
+			'content_title'  	=> ucwords($this->input->post('content_title')),
 			'content_desc'  	=> $this->input->post('content_desc'),
-			'content_active'  	=> $this->input->post('content_active')
+			'content_by'  		=> $this->session->userdata('user_id'),
+			'content_date'  	=> date('Y-m-d'),
+			'content_slug' 		=> str_replace(' ', '-', strtolower($this->input->post('content_title'))),
+			'content_active'  	=> $this->input->post('content_active'),
 		];
 
 		if($this->input->post('remove_photo')) // if remove photo checked
