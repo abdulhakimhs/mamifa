@@ -71,7 +71,7 @@
                                 <div class="col-md-7">
                                     <div class="media-body">
                                         <a href="<?= site_url('news/'.$c->content_slug) ?>"><h4><?= $c->content_title ?></h4></a>
-                                        <span><i class="fa fa-clock-o"></i> <?= $c->content_date ?> - <i class="fa fa-user"></i> <?= $c->fullname ?></span>
+                                        <span><i class="fa fa-clock-o"></i> <?= date_indo($c->content_date) ?> - <i class="fa fa-user"></i> <?= $c->fullname ?></span>
                                         <hr>
                                         <p><?= $c->content_desc ?></p>
                                     </div>

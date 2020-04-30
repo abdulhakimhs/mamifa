@@ -24,7 +24,7 @@
         <div class="row" id="content-list">
             <div class="col-md-8" id="left-side">
                 <h2><b><?= $news->content_title ?></b></h2>
-                <p class="post-meta">Posted by <i class="fa fa-user"></i> <?= $news->fullname ?> <i class="fa fa-clock-o"></i> <?= $news->content_date ?></p>
+                <p class="post-meta">Posted by <i class="fa fa-user"></i> <?= $news->fullname ?> <i class="fa fa-clock-o"></i> <?= date_indo($news->content_date) ?></p>
                 <div class="col-xs-12  no-gutter nopadding">
                 
                     <img class="img-responsive" src="<?= base_url('assets/backend/images/content/'.$news->content_image) ?>" style="width: 650px; height: 350px;" alt="...">
