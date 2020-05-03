@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Apr 2020 pada 11.12
+-- Waktu pembuatan: 03 Bulan Mei 2020 pada 22.11
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.4
 
@@ -337,6 +337,29 @@ INSERT INTO `tb_operation` (`operation_id`, `operation_code`, `operation_name`) 
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tb_partner`
+--
+
+CREATE TABLE `tb_partner` (
+  `partner_id` int(11) NOT NULL,
+  `partner_name` varchar(50) NOT NULL DEFAULT '',
+  `photo` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_partner`
+--
+
+INSERT INTO `tb_partner` (`partner_id`, `partner_name`, `photo`) VALUES
+(1, 'FOTO PERTAMA', 'Chrysanthemum.jpg'),
+(2, 'FOTO KEDUA', 'Desert1.jpg'),
+(3, 'FOTO KETIGA', 'Hydrangeas.jpg'),
+(6, 'FOTO KEEMPAT', 'Lighthouse.jpg'),
+(7, 'LOGO TELKOM AKSES', 'logo_ta.png');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tb_pelatihan`
 --
 
@@ -559,7 +582,7 @@ CREATE TABLE `tb_users` (
 --
 
 INSERT INTO `tb_users` (`users_id`, `email`, `username`, `password`, `fullname`, `level`, `active`, `last_login`) VALUES
-(1, 'abdulhakimhsn@gmail.com', 'Abdul_Hakim_Hs', '$2a$12$XOHwccCdzMSUbHx/u17JreZDeDnM6LOVJx2t54UFbXv4Bu9yG8v.a', 'Abdul Hakim Hs', 1, 1, '2020-04-28 11:01:20'),
+(1, 'abdulhakimhsn@gmail.com', 'Abdul_Hakim_Hs', '$2a$12$XOHwccCdzMSUbHx/u17JreZDeDnM6LOVJx2t54UFbXv4Bu9yG8v.a', 'Abdul Hakim Hs', 1, 1, '2020-05-04 02:40:16'),
 (2, 'nurilmuslichin16@gmail.com', 'nuril_muslichin', '$2a$12$HxbjGIvVWtjhvqfUZyXjqek27EPi.klwFJ5GluDefEr2D7f2W6k9K', 'Nuril Muslichin', 0, 1, '2020-04-25 14:58:35');
 
 --
@@ -637,6 +660,12 @@ ALTER TABLE `tb_nilai_ta`
 --
 ALTER TABLE `tb_operation`
   ADD PRIMARY KEY (`operation_id`);
+
+--
+-- Indeks untuk tabel `tb_partner`
+--
+ALTER TABLE `tb_partner`
+  ADD PRIMARY KEY (`partner_id`);
 
 --
 -- Indeks untuk tabel `tb_pelatihan`
@@ -755,6 +784,12 @@ ALTER TABLE `tb_nilai_ta`
 --
 ALTER TABLE `tb_operation`
   MODIFY `operation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `tb_partner`
+--
+ALTER TABLE `tb_partner`
+  MODIFY `partner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_pelatihan`

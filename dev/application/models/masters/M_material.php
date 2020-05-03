@@ -62,11 +62,21 @@ class M_material extends CI_Model
         return $data;
     }
 
+    public function ambilSelainHabisPakai()
+    {
+        $this->db->select('material_id, material');
+        $this->db->from($this->table);
+        $this->db->where('jenis !=', 'HABIS PAKAI');
+        $data = $this->db->get();
+        return $data;
+    }
+
     public function stok_tersedia()
     {
         $this->db->select('material_id, material');
         $this->db->from($this->table);
         $this->db->where('stok >', 0);
+        $this->db->where('jenis', 'HABIS PAKAI');
         $data = $this->db->get();
         return $data;
     }

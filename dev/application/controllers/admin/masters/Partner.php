@@ -19,6 +19,7 @@ class Partner extends MY_Controller {
 	{
 		$data['title'] 			= 'Master Data';
 		$data['subtitle'] 		= 'Foto';
+		$data['foto']			= $this->m_partner->getAll()->result();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/masters/partner/data',$data,true)
 		]);
@@ -57,18 +58,16 @@ class Partner extends MY_Controller {
 	{
 		$this->_validate();
 		$data = [
-			'slide_title'  	=> strtoupper($this->input->post('slide_title')),
-			'slide_desc'  	=> ucfirst($this->input->post('slide_desc')),
-			'slide_active'  => $this->input->post('slide_active')
+			'partner_name'  => strtoupper($this->input->post('partner_name')),
 		];
 
 		if(!empty($_FILES['photo']['name']))
         {
             $upload = $this->_do_upload();
-            $data['slide_image'] = $upload;
+            $data['photo'] = $upload;
         }
 
-		$this->db->insert('tb_slider', $data);
+		$this->db->insert('tb_partner', $data);
 		echo json_encode(
 			array(
 				"status" => TRUE,
@@ -85,9 +84,9 @@ class Partner extends MY_Controller {
 
 	public function ajax_delete($id)
 	{
-		$slide = $this->m_partner->get_by_id($id);
-        if(file_exists('./assets/backend/images/slider/'.$slide->slide_image) && $slide->slide_image)
-            unlink('./assets/backend/images/slider/'.$slide->slide_image);
+		$partner = $this->m_partner->get_by_id($id);
+        if(file_exists('./assets/backend/images/gallery/'.$partner->photo) && $partner->photo)
+            unlink('./assets/backend/images/gallery/'.$partner->photo);
 
 		$this->m_partner->delete_by_id($id);
 		echo json_encode(
@@ -136,9 +135,9 @@ class Partner extends MY_Controller {
 
 	private function _do_upload()
     {
-        $config['upload_path']          = './assets/backend/images/slider/';
+        $config['upload_path']          = './assets/backend/images/gallery/';
         $config['allowed_types']        = 'jpg|jpeg|png';
-        $config['max_size']             = 5000; //set max size allowed in Kilobyte
+        $config['max_size']             = 2000; //set max size allowed in Kilobyte
  
 		// $this->load->library('upload', $config);
 		$this->upload->initialize($config);
@@ -161,12 +160,12 @@ class Partner extends MY_Controller {
         $data['inputerror'] = array();
 		$data['status'] = TRUE;
  
-		if($this->input->post('slide_title') == '')
+		if($this->input->post('partner_name') == '')
         {
-            $data['inputerror'][] = 'slide_title';
-            $data['error_string'][] = 'Judul Slider is required';
+            $data['inputerror'][] = 'partner_name';
+            $data['error_string'][] = 'Judul Foto is required';
             $data['status'] = FALSE;
-        }
+		}
  
         if($data['status'] === FALSE)
         {

@@ -63,6 +63,14 @@ class M_partner extends CI_Model
         return $data;
     }
 
+    public function getAll()
+    {
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $data = $this->db->get('');
+        return $data;
+    }
+
     public function get_by_id($id)
     {
         $this->db->from($this->table);

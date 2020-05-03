@@ -26,7 +26,8 @@ class M_stok_material extends CI_Model
     {
         $this->db->select("material, jenis,
             SUM(CASE WHEN (m.jenis='MATERIAL') THEN mt.jumlah ELSE 0 END) AS jumlah_m,
-            SUM(CASE WHEN (m.jenis='HABIS PAKAI') THEN mt.jumlah ELSE 0 END) AS jumlah_mhp
+            SUM(CASE WHEN (m.jenis='HABIS PAKAI') THEN mt.jumlah ELSE 0 END) AS jumlah_mhp,
+            SUM(CASE WHEN (m.jenis='ALKER') THEN mt.jumlah ELSE 0 END) AS jumlah_alker
         ");
         $this->db->from('tb_material_trans mt');
         $this->db->join('tb_material m', 'm.material_id = mt.material_id', 'left');

@@ -20,6 +20,7 @@ class Material extends MY_Controller {
 		$data['title'] 			= 'Master Data';
 		$data['subtitle'] 		= 'Material';
 		$data['material']		= $this->m_material->ambil()->result_array();
+		$data['material_2']		= $this->m_material->ambilSelainHabisPakai()->result_array();
 		$this->load->view('backend/template',[
 			'content' => $this->load->view('backend/masters/material/data',$data,true)
 		]);
@@ -36,7 +37,13 @@ class Material extends MY_Controller {
 		  $row[] = $mat->material;
 		  $row[] = $mat->merk;
 		  $row[] = $mat->type;
-		  $row[] = $mat->jenis == 'HABIS PAKAI' ? '<span class="label label-success">'.$mat->jenis.'</span>' : '<span class="label label-primary">'.$mat->jenis.'</span>';
+		  if($mat->jenis == "HABIS PAKAI") {
+			$row[] = '<span class="label label-success">'.$mat->jenis.'</span>';
+		  } else if ($mat->jenis == "MATERIAL") {
+			$row[] = '<span class="label label-primary">'.$mat->jenis.'</span>';
+		  } else {
+			$row[] = '<span class="label label-warning">'.$mat->jenis.'</span>';
+		  }
 		  $row[] = $mat->satuan; 
 		  $row[] = $mat->stok;
 		  $row[] = '<a class="btn btn-minier btn-primary" href="javascript:void(0)" title="Follow UP" onclick="detail('."'".$mat->material_id."'".')">
@@ -163,10 +170,37 @@ class Material extends MY_Controller {
 			'tanggal'  		=> $this->input->post('tanggal'),
 			'status'  		=> 1,
 			'saldo'  		=> $saldo,
-			'keterangan'  	=> strtoupper($this->input->post('keterangan'))
+			'keterangan'  	=> $this->input->post('keterangan')
 		];
 
 		$this->m_material->update(['material_id' => $this->input->post('material_id')], ['stok' => $saldo]);
+		$this->db->insert('tb_material_trans', $data);
+		echo json_encode(
+			array(
+				"status" => TRUE,
+				'pesan'=>'<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><b>Well done!</b> Data successfully added!</div>'
+			)
+		);
+	}
+	
+	public function material_keluar()
+	{
+		$this->_validate_keluar();
+
+		$stok = $this->m_material->cek_stok($this->input->post('material_keluar'))->row_array();
+		$saldo = $stok['stok'] - $this->input->post('jumlah_keluar');
+
+		$data = [
+			'material_id'  	=> $this->input->post('material_keluar'),
+			'jumlah'  		=> $this->input->post('jumlah_keluar'),
+			'sumber_tujuan' => $this->input->post('keterangan_keluar'),
+			'tanggal'  		=> $this->input->post('tanggal_keluar'),
+			'status'  		=> 0,
+			'saldo'  		=> $saldo,
+			'keterangan'  	=> $this->input->post('keterangan_keluar')
+		];
+
+		$this->m_material->update(['material_id' => $this->input->post('material_keluar')], ['stok' => $saldo]);
 		$this->db->insert('tb_material_trans', $data);
 		echo json_encode(
 			array(
@@ -209,6 +243,61 @@ class Material extends MY_Controller {
 			$data['inputerror'][] = 'tanggal';
 			$data['error_string'][] = 'Tanggal is required';
 			$data['status'] = FALSE;
+		}
+
+		if($data['status'] === FALSE)
+		{
+			echo json_encode($data);
+			exit();
+		}
+	}
+
+	private function _validate_keluar()
+	{
+		$data = array();
+		$data['error_string'] = array();
+		$data['inputerror'] = array();
+		$data['status'] = TRUE;
+
+		if($this->input->post('material_keluar') == '')
+		{
+			$data['inputerror'][] = 'material_keluar';
+			$data['error_string'][] = 'Material is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('jumlah_keluar') == '')
+		{
+			$data['inputerror'][] = 'jumlah_keluar';
+			$data['error_string'][] = 'Jumlah Keluar is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('tanggal_keluar') == '')
+		{
+			$data['inputerror'][] = 'tanggal_keluar';
+			$data['error_string'][] = 'Tanggal is required';
+			$data['status'] = FALSE;
+		}
+
+		if($this->input->post('keterangan_keluar') == '')
+		{
+			$data['inputerror'][] = 'keterangan_keluar';
+			$data['error_string'][] = 'Keterangan is required';
+			$data['status'] = FALSE;
+		}
+
+		$material = $this->input->post('material_keluar');
+		$jumlah = $this->input->post('jumlah_keluar');
+
+		if(!empty($material))
+		{
+			$cek_stok = $this->m_material->cek_stok($material)->row_array();
+			if($jumlah > $cek_stok['stok']) {
+				$data['inputerror'][] = "jumlah_keluar";
+				$data['error_string'][] = 'Jumlah melebihi batas stok material';
+				$data['status'] = FALSE;
+			}
 		}
 
 		if($data['status'] === FALSE)

@@ -1,24 +1,27 @@
 <button class="btn btn-danger btn-sm" onclick="add_data()"><i class="fa fa-plus"></i> Tambah Data</button>
-<br/><br/>
+<div id="pesan" style="margin: 10px 5px;"></div>
+<br/>
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
         <div>
             <ul class="ace-thumbnails clearfix">
-                <li>
-                    <a href="<?= base_url() ?>/assets/backend/images/gallery/image-3.jpg" data-rel="colorbox">
-                        <img width="150" height="150" alt="150x150" src="<?= base_url() ?>/assets/backend/images/gallery/thumb-3.jpg" />
-                        <div class="text">
-                            <div class="inner">Sample Caption on Hover</div>
-                        </div>
-                    </a>
-
-                    <div class="tools tools-bottom">
-                        <a href="javascript:void(0)"  onclick="delete_data()" > <!-- kasih parameter ID nya ya -->
-                            <i class="ace-icon fa fa-times red"></i>
+                <?php foreach ($foto as $ft) : ?>
+                    <li>
+                        <a href="<?= base_url('/assets/backend/images/gallery/'. $ft->photo) ?>" data-rel="colorbox">
+                            <img width="150" height="150" alt="150x150" src="<?= base_url('/assets/backend/images/gallery/'. $ft->photo) ?>" />
+                            <div class="text">
+                                <div class="inner"><?= $ft->partner_name ?></div>
+                            </div>
                         </a>
-                    </div>
-                </li>
+    
+                        <div class="tools tools-bottom">
+                            <a href="javascript:void(0)"  onclick="delete_data(<?= $ft->partner_id ?>)" > <!-- kasih parameter ID nya ya -->
+                                <i class="ace-icon fa fa-times red"></i>
+                            </a>
+                        </div>
+                    </li>                    
+                <?php endforeach; ?>
             </ul>
         </div><!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
@@ -47,18 +50,11 @@ function save()
 {
     $('#btnSave').text('saving...'); //change button text
     $('#btnSave').attr('disabled',true); //set button disable 
-    var url;
- 
-    if(save_method == 'add') {
-        url = "<?php echo site_url('admin/masters/partner/ajax_add')?>";
-    } else {
-        url = "<?php echo site_url('admin/masters/partner/ajax_update')?>";
-	}
  
     // ajax adding data to database
     var formData = new FormData($('#form')[0]);
     $.ajax({
-        url : url,
+        url : "<?php echo site_url('admin/masters/partner/ajax_add')?>",
         type: "POST",
         data: formData,
         contentType: false,
@@ -70,9 +66,8 @@ function save()
             if(data.status) //if success close modal and reload ajax table
             {
                 $('#modal_form').modal('hide');
-                reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
-                setTimeout(function(){ $('#pesan').empty(); }, 3000);
+                setTimeout(function(){ window.location.reload(); }, 500);
             }
             else
             {
@@ -108,11 +103,8 @@ function delete_data(id)
             dataType: "JSON",
             success: function(data)
             {
-                //if success reload ajax table
-                $('#modal_form').modal('hide');
-                reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
-                setTimeout(function(){ $('#pesan').empty(); }, 3000);
+                setTimeout(function(){ window.location.reload(); }, 500);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -140,7 +132,7 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3">Judul Foto</label>
                             <div class="col-md-9">
-                                <input name="slide_title" class="form-control" type="text" placeholder="Judul Foto">
+                                <input name="partner_name" class="form-control" type="text" placeholder="Judul Foto">
                                 <span class="help-block"></span>
                             </div>
                         </div>

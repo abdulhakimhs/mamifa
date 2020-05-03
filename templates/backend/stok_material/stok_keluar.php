@@ -98,12 +98,12 @@
                         <th style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">JUMLAH</th>
                     </tr>
                 </thead>
-                <tbody id="material_habis">
+                <tbody id="material_alker">
                     <?php foreach ($material as $m) : ?>
                         <?php if ($m['jenis'] == 'ALKER') {  ?>
                             <tr>
                                 <td style="vertical-align : middle;text-align:center;"><?= $m['material'] ?></td>
-                                <td style="vertical-align : middle;text-align:center;"><?= $m['jumlah_mhp'] ?></td>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['jumlah_alker'] ?></td>
                             <tr>
                         <?php } ?>
                     <?php endforeach; ?>
@@ -137,6 +137,7 @@ function ambil_data(){
         {
             let isi_material = '';
             let isi_material_habis = '';
+            let isi_material_alker = '';
 
             for (let i = 0; i < data.material.length; i++) {
                 if(data.material[i].jenis == 'MATERIAL') {
@@ -144,28 +145,22 @@ function ambil_data(){
                             '<td style="vertical-align : middle;text-align:center;">'+ data.material[i].material +'</td>'+
                             '<td style="vertical-align : middle;text-align:center;">'+ data.material[i].jumlah_m +'</td>'+
                         '<tr>';
-                } else {
+                } else if(data.material[i].jenis == 'HABIS PAKAI') {
                     isi_material_habis += '<tr>'+
                             '<td style="vertical-align : middle;text-align:center;">'+ data.material[i].material +'</td>'+
                             '<td style="vertical-align : middle;text-align:center;">'+ data.material[i].jumlah_mhp +'</td>'+
                         '<tr>';
+                } else {
+                    isi_material_alker += '<tr>'+
+                            '<td style="vertical-align : middle;text-align:center;">'+ data.material[i].material +'</td>'+
+                            '<td style="vertical-align : middle;text-align:center;">'+ data.material[i].jumlah_alker +'</td>'+
+                        '<tr>';
                 }
             }
 
-            isi_material += '<tr>'+
-                        '<td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>'+
-                        '<td style="vertical-align : middle;text-align:center; text-decoration: none;"><b id="total_material"><?= $total['total_m'] ?></b></td>'+
-                    '</tr>';
-
-            isi_material_habis += '<tr>'+
-                        '<td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>'+
-                        '<td style="vertical-align : middle;text-align:center; text-decoration: none;"><b id="total_material_habis"><?= $total['total_mhp'] ?></b></td>'+
-                    '</tr>';
-
             $("#material").html(isi_material);
             $("#material_habis").html(isi_material_habis);
-            $("#total_material").text(data.total.total_m == null ? 0 : data.total.total_m);
-            $("#total_material_habis").text(data.total.total_mhp == null ? 0 : data.total.total_mhp);
+            $("#material_alker").html(isi_material_alker);
 
             if(title_bulan == 'Semua Bulan' && title_tahun == 'Semua Tahun') {
                 $('#judul').text('Stok Material Keluar');

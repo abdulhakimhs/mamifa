@@ -77,18 +77,20 @@
                     <li class="hidden">
                         <a href="#page-top">Home</a>
                     </li>
-                    <li>
+                    <li <?= $this->uri->segment(1) == 'monila' ? 'class="active"' : 'class=""' ?>>
                         <a class="page-scroll" href="<?= site_url('monila') ?>">Monila</a>
                     </li>
-                    <li>
+                    <li <?= $this->uri->segment(1) == 'training_request' ? 'class="active"' : 'class=""' ?>>
                         <a class="page-scroll" href="<?= site_url('training_request') ?>">Training Request</a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#berita">News</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#partner">Partner</a>
-                    </li>
+                    <?php if($this->uri->segment(1) == '') { ?>
+                        <li >
+                            <a class="page-scroll" href="#berita">News</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#partner">Partner</a>
+                        </li>
+                    <?php } ?>
                     <li>
                         <a class="page-scroll" href="<?= site_url('admin/auth') ?>" target="_blank">Login</a>
                     </li>

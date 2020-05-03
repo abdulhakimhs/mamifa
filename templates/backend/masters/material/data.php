@@ -92,6 +92,11 @@ $(document).ready(function() {
         $(this).parent().find('.help-block').empty();
     });
 
+    $("textarea").change(function(){
+        $(this).parent().parent().removeClass('has-error');
+        $(this).parent().find('.help-block').empty();
+    });
+
     $("select").change(function(){
         $(this).parent().parent().removeClass('has-error');
         $(this).parent().find('.help-block').empty();
@@ -275,14 +280,14 @@ function out_material()
     $.ajax({
         url : "<?php echo site_url('admin/masters/material/material_keluar')?>",
         type: "POST",
-        data: $('#form_in').serialize(),
+        data: $('#form_out').serialize(),
         dataType: "JSON",
         success: function(data)
         {
  
             if(data.status) //if success close modal and reload ajax table
             {
-                $('#modal_material_in').modal('hide');
+                $('#modal_material_out').modal('hide');
                 reload_table();
                 document.getElementById('pesan').innerHTML = data.pesan;
                 setTimeout(function(){ $('#pesan').empty(); }, 3000);
@@ -479,15 +484,15 @@ function delete_data(id)
                 <h3 class="modal-title">Data Form</h3>
             </div>
             <div class="modal-body form">
-                <form action="#" id="form_in" class="form-horizontal">
+                <form action="#" id="form_out" class="form-horizontal">
                     <input type="hidden" value="" name="id"/> 
                     <div class="form-body">
                         <div class="form-group">
                             <label class="control-label col-md-3">Pilih Material</label>
                             <div class="col-md-9">
-                                <select class="form-control" name="material_id" id="selmat">
+                                <select class="form-control" name="material_keluar" id="selmat">
                                     <option value="">-Pilih Material-</option>
-                                    <?php foreach ($material as $m) : ?>
+                                    <?php foreach ($material_2 as $m) : ?>
                                         <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>                                        
                                     <?php endforeach; ?>
                                 </select>
@@ -497,21 +502,21 @@ function delete_data(id)
                         <div class="form-group">
                             <label class="control-label col-md-3">Jumlah Keluar</label>
                             <div class="col-md-9">
-                                <input name="jumlah_masuk" class="form-control" placeholder="Jumlah Masuk" type="number">
+                                <input name="jumlah_keluar" class="form-control" placeholder="Jumlah Keluar" type="number">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Tanggal Keluar</label>
                             <div class="col-md-9">
-                                <input name="tanggal" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
+                                <input name="tanggal_keluar" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
                                 <span class="help-block"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3">Keterangan</label>
                             <div class="col-md-9">
-                                <textarea name="keterangan" class="form-control" rows="5"></textarea>
+                                <textarea name="keterangan_keluar" class="form-control" rows="5"></textarea>
                                 <span class="help-block"></span>
                             </div>
                         </div>
