@@ -330,6 +330,13 @@
                 </a>
                 <b class="arrow"></b>
               </li>
+              <li <?= $this->uri->segment(2) == 'masters' && $this->uri->segment(3) == 'partner' ? 'class="hover active"' : 'class="hover"' ?>>
+                <a href="<?= site_url('admin/masters/partner'); ?>">
+                  <i class="menu-icon fa fa-caret-right"></i>
+                  Foto
+                </a>
+                <b class="arrow"></b>
+              </li>
             </ul>
           </li>
           <?php } ?>

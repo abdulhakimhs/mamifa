@@ -25,6 +25,7 @@
 			<div class="widget-main">
 			<button class="btn btn-danger btn-xs" onclick="add_data()"><i class="fa fa-plus"></i> Tambah Material</button>
             <button class="btn btn-success btn-xs" onclick="material_in()"><i class="fa fa-shopping-cart"></i> Material Masuk</button>
+            <button class="btn btn-info btn-xs" onclick="material_out()"><i class="fa fa-sign-out"></i> Material Keluar</button>
 				<div id="pesan" style="margin: 10px 5px;"></div>
 	            <table id="table" class="table table-bordered table-hover table-sm text-nowrap" cellspacing="0" width="100%">
 	                <thead>
@@ -116,6 +117,16 @@ function material_in()
     $('.help-block').empty(); // clear error string
     $('#modal_material_in').modal('show'); // show bootstrap modal
     $('.modal-title').text('Tambah Material Masuk'); // Set Title to Bootstrap modal title
+}
+
+function material_out()
+{
+    save_method = 'add';
+    $('#form_in')[0].reset(); // reset form on modals
+    $('.form-group').removeClass('has-error'); // clear error class
+    $('.help-block').empty(); // clear error string
+    $('#modal_material_out').modal('show'); // show bootstrap modal
+    $('.modal-title').text('Tambah Material Keluar'); // Set Title to Bootstrap modal title
 }
 
 function detail(id)
@@ -254,6 +265,55 @@ function insert_material()
         }
     });
 }
+
+function out_material()
+{
+    $('#btnSave').text('saving...'); //change button text
+    $('#btnSave').attr('disabled',true); //set button disable 
+ 
+    // ajax adding data to database
+    $.ajax({
+        url : "<?php echo site_url('admin/masters/material/material_keluar')?>",
+        type: "POST",
+        data: $('#form_in').serialize(),
+        dataType: "JSON",
+        success: function(data)
+        {
+ 
+            if(data.status) //if success close modal and reload ajax table
+            {
+                $('#modal_material_in').modal('hide');
+                reload_table();
+                document.getElementById('pesan').innerHTML = data.pesan;
+                setTimeout(function(){ $('#pesan').empty(); }, 3000);
+            }
+            else
+            {
+                for (var i = 0; i < data.inputerror.length; i++) 
+                {
+                    if(data.inputerror[i] == 'material_id') {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().next().text(data.error_string[i]); //select span help-block class set text error string
+                    } else {
+                        $('[name="'+data.inputerror[i]+'"]').parent().parent().addClass('has-error'); //select parent twice to select div form-group class and add has-error class
+                        $('[name="'+data.inputerror[i]+'"]').next().text(data.error_string[i]); //select span help-block class set text error string
+                    }
+                }
+            }
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+ 
+        },
+        error: function (jqXHR, textStatus, errorThrown)
+        {
+            alert('Error adding / update data');
+            $('#btnSave').text('save'); //change button text
+            $('#btnSave').attr('disabled',false); //set button enable 
+ 
+        }
+    });
+}
  
 function delete_data(id)
 {
@@ -322,6 +382,7 @@ function delete_data(id)
                                     <option value="">-Pilih Jenis Material-</option>
                                     <option value="HABIS PAKAI">MATERIAL HABIS PAKAI</option>
                                     <option value="MATERIAL">MATERIAL</option>
+                                    <option value="ALKER">ALKER</option>
                                 </select>
                                 <span class="help-block"></span>
                             </div>
@@ -402,6 +463,63 @@ function delete_data(id)
             </div>
             <div class="modal-footer">
                 <button type="button" id="btnSave" onclick="insert_material()" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- End Bootstrap modal -->
+
+<!-- Bootstrap modal -->
+<div class="modal fade" id="modal_material_out" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">Data Form</h3>
+            </div>
+            <div class="modal-body form">
+                <form action="#" id="form_in" class="form-horizontal">
+                    <input type="hidden" value="" name="id"/> 
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Pilih Material</label>
+                            <div class="col-md-9">
+                                <select class="form-control" name="material_id" id="selmat">
+                                    <option value="">-Pilih Material-</option>
+                                    <?php foreach ($material as $m) : ?>
+                                        <option value="<?= $m['material_id'] ?>"><?= $m['material'] ?></option>                                        
+                                    <?php endforeach; ?>
+                                </select>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Jumlah Keluar</label>
+                            <div class="col-md-9">
+                                <input name="jumlah_masuk" class="form-control" placeholder="Jumlah Masuk" type="number">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Tanggal Keluar</label>
+                            <div class="col-md-9">
+                                <input name="tanggal" placeholder="yyyy-mm-dd" class="form-control datepicker" type="text">
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3">Keterangan</label>
+                            <div class="col-md-9">
+                                <textarea name="keterangan" class="form-control" rows="5"></textarea>
+                                <span class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" onclick="out_material()" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             </div>
         </div><!-- /.modal-content -->

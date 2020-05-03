@@ -13,22 +13,10 @@
             </a>
         </div><!-- /.main-container -->
 
-        <!-- basic scripts -->
-
-        <!--[if !IE]> -->
-        
-
-        <!-- <![endif]-->
-
-        <!--[if IE]>
-<script src="<?= base_url() ?>assets/backend/js/jquery-1.11.3.min.js"></script>
-<![endif]-->
         <script type="text/javascript">
             if('ontouchstart' in document.documentElement) document.write("<script src='<?= base_url() ?>assets/backend/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
         </script>
         <script src="<?= base_url() ?>assets/backend/js/bootstrap.min.js"></script>
-        <!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script> -->
         <script src="<?= base_url() ?>assets/backend/js/jquery.dataTables.min.js"></script>
         <script src="<?= base_url() ?>assets/backend/js/jquery.dataTables.bootstrap.min.js"></script>
         
@@ -41,21 +29,12 @@
         <script src="<?= base_url() ?>assets/backend/js/dataTables.select.min.js"></script>
         <script src="<?= base_url() ?>assets/backend/js/bootstrap-datepicker.min.js"></script>
         <script src="<?= base_url() ?>assets/backend/js/jquery-ui.custom.min.js"></script>
+        <script src="<?= base_url() ?>assets/backend/js/jquery.colorbox.min.js"></script>
         <!-- page specific plugin scripts -->
 
         <!-- ace scripts -->
         <script src="<?= base_url() ?>assets/backend/js/ace-elements.min.js"></script>
         <script src="<?= base_url() ?>assets/backend/js/ace.min.js"></script>
-
-        <script type="text/javascript">
-        // $(document).ready(function () {
-        //     var url = window.location;
-        //     $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
-        //     $('ul.nav a').filter(function() {
-        //          return this.href == url;
-        //     }).parent().addClass('active');
-        // });
-        </script>
         <!-- inline scripts related to this page -->
         <script type="text/javascript">
             jQuery(function($) {

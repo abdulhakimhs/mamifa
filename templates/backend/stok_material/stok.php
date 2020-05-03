@@ -6,7 +6,7 @@
 </style>
 
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <h4>Stok Material Saat Ini</h4>
         <div class="table-responsive">
             <table class="table table-bordered table-sm">
@@ -25,15 +25,11 @@
                             <tr>
                         <?php } ?>
                     <?php endforeach; ?>
-                    <tr>
-                        <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><?= $total['total_m'] ?></b></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <h4>&nbsp</h4>
         <div class="table-responsive" style="margin-top: 10px;">
             <table class="table table-bordered table-sm">
@@ -52,10 +48,29 @@
                             <tr>
                         <?php } ?>
                     <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <h4>&nbsp</h4>
+        <div class="table-responsive" style="margin-top: 10px;">
+            <table class="table table-bordered table-sm">
+                <thead>
                     <tr>
-                        <td style="vertical-align : middle;text-align:center;"><b>GRAND TOTAL</b></td>
-                        <td style="vertical-align : middle;text-align:center; text-decoration: none;"><b><?= $total['total_mhp'] ?></b></td>
+                        <th style="vertical-align : middle;text-align:center; background: #FFB752; color: #fff;">ALKER</th>
+                        <th style="vertical-align : middle;text-align:center; background: #DD4B39; color: #fff;">STOK</th>
                     </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($material as $m) : ?>
+                        <?php if ($m['jenis'] == 'ALKER') {  ?>
+                            <tr>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['material'] ?></td>
+                                <td style="vertical-align : middle;text-align:center;"><?= $m['stok'] ?></td>
+                            <tr>
+                        <?php } ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
